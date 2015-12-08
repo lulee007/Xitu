@@ -1,4 +1,4 @@
-package com.lulee007.xitu.Services;
+package com.lulee007.xitu.services;
 
 import com.lulee007.xitu.base.XTBaseService;
 import com.lulee007.xitu.models.Tag;
