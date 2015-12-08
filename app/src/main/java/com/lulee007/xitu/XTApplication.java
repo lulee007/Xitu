@@ -1,29 +1,9 @@
 package com.lulee007.xitu;
 
 import android.app.Application;
-import android.util.Log;
 
-import com.alibaba.fastjson.JSONObject;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVOSCloud;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.CountCallback;
-import com.avos.avoscloud.FindCallback;
-import com.lulee007.xitu.Models.Collection;
-import com.lulee007.xitu.Models.Comment;
-import com.lulee007.xitu.Models.Entry;
-import com.lulee007.xitu.Models.Read;
-import com.lulee007.xitu.Models.Subscribe;
-import com.lulee007.xitu.Models.Tag;
-import com.lulee007.xitu.Models.UserNotification;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
-
-import java.util.List;
-
-import rx.Observable;
-import rx.functions.Action1;
 
 /**
  * User: lulee007@live.com

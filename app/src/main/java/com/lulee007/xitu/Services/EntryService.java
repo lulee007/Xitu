@@ -1,11 +1,7 @@
 package com.lulee007.xitu.Services;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
-import com.lulee007.xitu.Base.XTBaseService;
-import com.lulee007.xitu.Models.Entry;
-import com.orhanobut.logger.Logger;
+import com.lulee007.xitu.base.XTBaseService;
+import com.lulee007.xitu.models.Entry;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +9,6 @@ import java.util.List;
 import retrofit.http.GET;
 import retrofit.http.QueryMap;
 import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * User: lulee007@live.com

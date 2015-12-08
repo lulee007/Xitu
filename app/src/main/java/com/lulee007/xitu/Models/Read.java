@@ -1,4 +1,4 @@
-package com.lulee007.xitu.Models;
+package com.lulee007.xitu.models;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;

@@ -1,7 +1,6 @@
 package com.lulee007.xitu.Services;
 
-import com.lulee007.xitu.Base.XTBaseService;
-import com.lulee007.xitu.Models.Tag;
+import com.lulee007.xitu.base.XTBaseService;
 
 import java.util.HashMap;
 import java.util.List;

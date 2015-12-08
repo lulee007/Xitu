@@ -1,6 +1,5 @@
-package com.lulee007.xitu.Base;
+package com.lulee007.xitu.base;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 

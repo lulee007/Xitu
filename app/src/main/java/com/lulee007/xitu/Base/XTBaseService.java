@@ -1,4 +1,4 @@
-package com.lulee007.xitu.Base;
+package com.lulee007.xitu.base;
 
 import com.avos.avoscloud.AVUtils;
 import com.lulee007.xitu.BuildConfig;

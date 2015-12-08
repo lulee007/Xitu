@@ -1,8 +1,7 @@
 package com.lulee007.xitu.Services;
 
-import com.lulee007.xitu.Models.Tag;
+import com.lulee007.xitu.models.Tag;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 import java.util.HashMap;

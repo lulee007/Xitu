@@ -1,4 +1,4 @@
-package com.lulee007.xitu.Models;
+package com.lulee007.xitu.models;
 
 //
 // Source code recreated from a .class file by IntelliJ IDEA

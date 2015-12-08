@@ -1,4 +1,4 @@
-package com.lulee007.xitu.Models;
+package com.lulee007.xitu.models;
 
 import com.google.gson.Gson;
 

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.lulee007.xitu.Base.XTBaseActivity;
+import com.lulee007.xitu.base.XTBaseActivity;
 
 import java.util.concurrent.TimeUnit;
 
