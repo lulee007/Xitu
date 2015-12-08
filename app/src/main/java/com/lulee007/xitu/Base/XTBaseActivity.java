@@ -2,13 +2,14 @@ package com.lulee007.xitu.Base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * User: lulee007@live.com
  * Date: 2015-12-08
  * Time: 12:50
  */
-public class XTBaseActivity extends Activity {
+public class XTBaseActivity extends AppCompatActivity {
 
 
     public void startActivity(Class target){

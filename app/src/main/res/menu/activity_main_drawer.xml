@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/drawer_action_share"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/nav_my_collection"
+            android:icon="@mipmap/drawer_action_collection"
+            android:title="@string/my_collection" />
+        <item
+            android:id="@+id/nav_read_history"
+            android:icon="@mipmap/drawer_action_read"
+            android:title="@string/read_history" />
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:title="@string/settings" />
+            <item
+                android:id="@+id/nav_editors"
+                android:title="@string/editors" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:title="@string/feedback" />
+            <item
+                android:id="@+id/nav_share"
+                android:title="@string/share" />
+        </menu>
+    </item>
+
+</menu>

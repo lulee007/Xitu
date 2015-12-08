@@ -2,7 +2,10 @@ package com.lulee007.xitu;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lulee007.xitu.Base.XTBaseActivity;
 import com.lulee007.xitu.Models.Entry;
 import com.lulee007.xitu.Services.EntryService;
 
@@ -18,7 +22,7 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends XTBaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +31,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-//        Box box = new Box();
-//        Cat schrodingerCat = new Cat();
-//        box.hiddenCat = schrodingerCat;
-//        Docker.container = box;
-//       new EntryService().getEntrys();
-//        new EntryService().getTags();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -58,12 +57,19 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.nav_settings){
+            startActivity(SettingsActivity.class);
+        }
+        return true;
+    }
 }

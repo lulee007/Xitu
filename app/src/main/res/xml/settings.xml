@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference android:layout="@layout/preference_item" android:title="接收推送的精选文章" android:key="push" android:defaultValue="true" />
+    <CheckBoxPreference android:layout="@layout/preference_item" android:title="移动网络下不显示首页图片" android:key="onlyWifi" android:defaultValue="false" />
+    <CheckBoxPreference android:layout="@layout/preference_item" android:title="使用默认浏览器打开文章" android:key="outsideBrowser" android:defaultValue="false" />
+    <PreferenceScreen android:layout="@layout/preference_item" android:title="关于">
+        <intent android:action="com.xitu.gold.about" />
+    </PreferenceScreen>
+    <PreferenceScreen android:layout="@layout/preference_item" android:title="给我们打分！">
+        <intent android:action="android.intent.action.VIEW" android:data="market://details?id=com.daimajia.gold" />
+    </PreferenceScreen>
+</PreferenceScreen>
