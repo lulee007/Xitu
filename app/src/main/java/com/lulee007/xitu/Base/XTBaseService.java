@@ -5,6 +5,7 @@ import com.lulee007.xitu.BuildConfig;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.security.cert.CertificateException;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -102,7 +103,9 @@ public abstract class XTBaseService {
                         return false;
                 }
             });
-
+            okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+            okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
+            okHttpClient.setReadTimeout(30,TimeUnit.SECONDS);
             return okHttpClient;
         } catch (Exception e) {
             throw new RuntimeException(e);

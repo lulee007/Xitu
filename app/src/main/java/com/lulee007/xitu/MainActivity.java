@@ -9,8 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lulee007.xitu.base.XTBaseActivity;
+import com.lulee007.xitu.presenter.MainViewPresenter;
+import com.lulee007.xitu.view.IMainView;
+import com.orhanobut.logger.Logger;
 
-public class MainActivity extends XTBaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends XTBaseActivity implements NavigationView.OnNavigationItemSelectedListener,IMainView{
+
+    private MainViewPresenter mainViewPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,10 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        mainViewPresenter=new MainViewPresenter(this);
+        mainViewPresenter.init();
+        Logger.d("在Main页，OnCreate结束");
+
     }
 
     @Override
@@ -59,5 +68,15 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
             startActivity(SettingsActivity.class);
         }
         return true;
+    }
+
+    @Override
+    public void showTagFollowGuideActivity() {
+        startActivity(TagFollowGuideActivity.class);
+    }
+
+    @Override
+    public void showExitAppToast() {
+
     }
 }

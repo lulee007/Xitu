@@ -16,7 +16,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"  >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SplashActivity"
@@ -31,8 +31,18 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.ActionBar"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.ActionBar" >
+        </activity>
+        <activity android:name=".LoginOptionsActivity" >
+        </activity>
+        <activity android:name=".RegisterByPhoneActivity" >
+        </activity>
+        <activity android:name=".LoginByPhoneActivity" >
+        </activity>
+        <activity android:name=".LoginByWeiboActivity" >
+        </activity>
+        <activity android:name=".TagFollowGuideActivity" android:theme="@style/AppTheme.ActionBar">
         </activity>
     </application>
 

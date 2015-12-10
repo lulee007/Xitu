@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:background="#88dcdbdb">
+
+    <TextView
+        android:id="@+id/tag_follow_category"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="20sp"
+        android:text="分类" />
+</RelativeLayout>
