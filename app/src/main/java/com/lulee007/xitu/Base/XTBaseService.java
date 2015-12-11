@@ -104,8 +104,8 @@ public abstract class XTBaseService {
                 }
             });
             okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-            okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
-            okHttpClient.setReadTimeout(30,TimeUnit.SECONDS);
+            okHttpClient.setReadTimeout(15, TimeUnit.SECONDS);
+            okHttpClient.setReadTimeout(15,TimeUnit.SECONDS);
             return okHttpClient;
         } catch (Exception e) {
             throw new RuntimeException(e);

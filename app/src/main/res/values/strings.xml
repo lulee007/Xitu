@@ -82,5 +82,7 @@
     <string name="phone_login">手机登陆/注册</string>
     <string name="skip_login">跳过</string>
     <string name="tag_follow_tip">关注你感兴趣的标签，相关优质文章将在你的首页显示。</string>
+    <string name="no_data">暂无数据，看看其他的吧</string>
+    <string name="btn_retry">重试</string>
 
 </resources>

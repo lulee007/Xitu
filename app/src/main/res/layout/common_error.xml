@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginTop="110dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/logo_gray" />
+
+    <TextView
+        android:id="@+id/error_tip"
+        android:paddingTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="出错了" />
+
+    <Button
+        android:id="@+id/retry_btn"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:textColor="@android:color/black"
+        android:background="@drawable/retry_btn_selector"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowColor="@android:color/background_dark"
+        android:text="@string/btn_retry"/>
+</LinearLayout>
