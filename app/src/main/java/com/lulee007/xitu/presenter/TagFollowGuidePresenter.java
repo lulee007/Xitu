@@ -8,6 +8,7 @@ import com.lulee007.xitu.services.TagService;
 import com.lulee007.xitu.view.ITagFollowGuideView;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import rx.functions.Func2;
 public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView> {
 
     private TagService tagService;
-    private int pageIndex;
+    private int pageIndex=1;
     private static final int PAGE_OFFSET = 100;
 
     public TagFollowGuidePresenter(ITagFollowGuideView view) {
@@ -66,7 +67,11 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
 
                     @Override
                     public void onNext(HashMap<String, List<Tag>> o) {
-                        mView.addNewTags(o);
+                        List<Tag> tags=new ArrayList<Tag>();
+                        tags.addAll(o.get("hot"));
+                        tags.addAll(o.get("normal"));
+                        mView.addNew(tags);
+
                         if(o.get("normal").size()==0)
                         {
                             mView.noData();
@@ -77,12 +82,12 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
 
                     }
                 });
-        mCompositeSubscription.add(loadNewTagsSubscription);
+        addSubscription(loadNewTagsSubscription);
         Logger.d("loadNewTagsSubscription added!");
     }
 
-    public void loadMore(int lastItemPosition) {
-        HashMap<String, String> normalTagParams = buildRequestParams("{\"hot\":{\"$ne\":true}}", lastItemPosition);
+    public void loadMore() {
+        HashMap<String, String> normalTagParams = buildRequestParams("{\"hot\":{\"$ne\":true}}", pageIndex*PAGE_OFFSET);
         Subscription loadMoreSubscription = tagService.getTags(normalTagParams)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Tag>>() {
@@ -99,14 +104,16 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
 
                     @Override
                     public void onNext(List<Tag> o) {
-                        mView.addMoreTags(o);
+                        mView.addMore(o);
                         if (o.size() < 100) {
                             mView.noMore();
+                        }else{
+                            pageIndex++;
                         }
 
                     }
                 });
-        mCompositeSubscription.add(loadMoreSubscription);
+        addSubscription(loadMoreSubscription);
     }
 
     /**
@@ -117,7 +124,7 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
      * @return HashMap
      */
     @NonNull
-    private HashMap<String, String> buildRequestParams(String where, int skip) {
+    protected HashMap<String, String> buildRequestParams(String where, int skip) {
         HashMap<String, String> hotTagParams = new HashMap<String, String>();
         hotTagParams.put("order", "-entriesCount");
         hotTagParams.put("limit", PAGE_OFFSET+"");
@@ -135,7 +142,7 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
      * @return HashMap
      */
     @NonNull
-    private HashMap<String, String> buildRequestParams(String where) {
+    protected HashMap<String, String> buildRequestParams(String where) {
         HashMap<String, String> hotTagParams = buildRequestParams(where, 0);
         return hotTagParams;
     }

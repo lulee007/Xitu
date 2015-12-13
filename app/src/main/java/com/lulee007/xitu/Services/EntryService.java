@@ -15,18 +15,18 @@ import rx.Observable;
  * Date: 2015-12-07
  * Time: 21:28
  */
-public class EntryService extends XTBaseService {
+public class EntryService extends XTBaseService<EntryService.EntryWebService> {
 
 
     private EntryWebService entryWebService;
 
 
     public EntryService() {
-        super();
+        super(EntryWebService.class);
         entryWebService = restAdapter.create(EntryWebService.class);
     }
 
-    public interface EntryWebService {
+    protected interface EntryWebService {
         @GET("/Entry")
         Observable<EntryDataEnvelope> getEntries(@QueryMap HashMap<String, String> params);
     }

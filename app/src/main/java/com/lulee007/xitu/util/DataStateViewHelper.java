@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.lulee007.xitu.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 /**
  * User: lulee007@live.com
@@ -19,6 +20,8 @@ public class DataStateViewHelper {
     private int loadingViewRsid;
     private int noDataViewRsid;
     private int errorViewRsid;
+    private int loadMoreErrorViewRsid;
+
     private DataStateViewListener dataStateViewListener;
     private View currentView;
 
@@ -28,12 +31,16 @@ public class DataStateViewHelper {
         LOADING,
         NO_DATA,
         ERROR,
-        CONTENT
+        CONTENT,
+        LOAD_MORE_ERROR,
+        LOADING_MORE
 
     }
 
     public interface DataStateViewListener {
         void onErrorRetry();
+
+        void onLoadMoreErrorRetry();
     }
 
     public void setDataStateViewListener(DataStateViewListener listener) {
@@ -47,18 +54,25 @@ public class DataStateViewHelper {
         this.loadingViewRsid = R.layout.loading_data_progressbar;
         this.noDataViewRsid = R.layout.common_no_data;
         this.errorViewRsid = R.layout.common_error;
+        this.loadMoreErrorViewRsid = R.layout.common_load_more_error;
     }
 
     public void setView(DateState state) {
         switch (state) {
             case LOADING:
-                setStateView(this.loadingViewRsid);
+                setStateOfContentView(this.loadingViewRsid);
                 break;
             case NO_DATA:
-                setStateView(this.noDataViewRsid);
+                setStateOfContentView(this.noDataViewRsid);
                 break;
             case ERROR:
-                setStateView(errorViewRsid);
+                setStateOfContentView(errorViewRsid);
+                break;
+            case LOAD_MORE_ERROR:
+                setStateOfLoadingView(loadMoreErrorViewRsid);
+                break;
+            case LOADING_MORE:
+                setStateOfLoadingView(loadingViewRsid);
                 break;
             default:
                 ultimateRecyclerView.mRecyclerView.setVisibility(View.VISIBLE);
@@ -67,7 +81,32 @@ public class DataStateViewHelper {
         }
     }
 
-    private void setStateView(int rsid) {
+    //// TODO: 15/12/11  修改后listview顶部heaerview有空白bug 如果ultimateRecyclerView setParallaxHeader
+    private void setStateOfLoadingView(int rsid) {
+        ViewGroup loadingViewGroup= (ViewGroup) ((UltimateViewAdapter) ultimateRecyclerView.getAdapter()).getCustomLoadMoreView();
+        if(loadingViewGroup!=null){
+            loadingViewGroup.removeAllViewsInLayout();
+        }
+        View loadingView = LayoutInflater.from(ultimateRecyclerView.getContext()).inflate(rsid, null);
+        if (loadingView instanceof LinearLayout) {
+            loadingView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        } else if (loadingView instanceof RelativeLayout) {
+            loadingView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+        if(rsid==R.layout.common_load_more_error){
+            loadingView.findViewById(R.id.retry_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (dataStateViewListener != null) {
+                            dataStateViewListener.onLoadMoreErrorRetry();
+                        }
+                    }
+                });
+            }
+        loadingViewGroup.addView(loadingView);
+    }
+
+    private void setStateOfContentView(int rsid) {
         if (rsid < 1)
             return;
         View view = ultimateRecyclerView.getEmptyView();
@@ -77,7 +116,7 @@ public class DataStateViewHelper {
             /**
              * 注意，view 外面必须有层layout包裹
              */
-            ViewGroup viewGroup = (ViewGroup)view;
+            ViewGroup viewGroup = (ViewGroup) view;
             viewGroup.removeAllViewsInLayout();
             View contentView = LayoutInflater.from(viewGroup.getContext()).inflate(rsid, null);
             if (contentView instanceof LinearLayout) {

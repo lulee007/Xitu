@@ -19,18 +19,21 @@ import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
 /**
+ * 网络请求：T 为自定义的webservice接口
+ * BaseDataEnvelope里的T1 为返回数据的类型如Tag，List<Author>
  * User: lulee007@live.com
  * Date: 2015-12-08
  * Time: 09:26
  */
-public abstract class XTBaseService {
+public abstract class XTBaseService<T> {
 
-    public final static String BASE_URL="https://api.leancloud.cn/1.1/classes";
+    public final static String BASE_URL="https://api.leancloud.cn/1.1";
 
+    protected T webService;
 
     protected RestAdapter restAdapter;
 
-    public  XTBaseService(){
+    public  XTBaseService(Class<T> cls){
         RequestInterceptor requestInterceptor=new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -50,6 +53,7 @@ public abstract class XTBaseService {
                 .setRequestInterceptor(requestInterceptor)
                 .setClient(getOkClient())
                 .build();
+        webService=restAdapter.create(cls);
     }
 
     private static String signRequest() {
@@ -120,8 +124,8 @@ public abstract class XTBaseService {
         return _client;
     }
 
-    public class BaseDataEnvelope<T>{
-        public T results;
+    public class BaseDataEnvelope<T1>{
+        public T1 results;
     }
 
 }

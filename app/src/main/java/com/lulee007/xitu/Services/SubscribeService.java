@@ -15,16 +15,16 @@ import rx.functions.Func1;
  * Date: 2015-12-08
  * Time: 09:44
  */
-public class SubscribeService extends XTBaseService {
+public class SubscribeService extends XTBaseService<SubscribeService.SubscribeWebService> {
 
     private SubscribeWebService tagWebService;
 
     public SubscribeService(){
-        super();
+        super(SubscribeWebService.class);
         tagWebService=restAdapter.create(SubscribeWebService.class);
     }
 
-    private  interface SubscribeWebService {
+    protected   interface SubscribeWebService {
 
         @GET("/Subscribe")
         Observable<SubscribeDataEnvelope> getTags(@QueryMap HashMap<String, String> params);

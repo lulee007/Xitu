@@ -5,61 +5,53 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.google.gson.Gson;
-import com.lulee007.xitu.adapter.TagFollowAdapter;
+import com.lulee007.xitu.adapter.AuthorAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
-import com.lulee007.xitu.models.Tag;
+import com.lulee007.xitu.models.Author;
+import com.lulee007.xitu.presenter.AuthorsPresenter;
 import com.lulee007.xitu.presenter.TagFollowGuidePresenter;
 import com.lulee007.xitu.util.DataStateViewHelper;
-import com.lulee007.xitu.view.ITagFollowGuideView;
+import com.lulee007.xitu.view.IAuthorsView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 
-public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollowGuideView, DataStateViewHelper.DataStateViewListener ,TagFollowAdapter.ItemListener{
+public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, DataStateViewHelper.DataStateViewListener ,AuthorAdapter.ItemListener{
 
     private UltimateRecyclerView ultimateRecyclerView;
-    private TagFollowAdapter tagFollowAdapter;
-    private TagFollowGuidePresenter tagFollowGuidePresenter;
+    private AuthorAdapter authorAdapter;
+    private AuthorsPresenter authorsPresenter;
     private DataStateViewHelper dataStateViewHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tag_follow_guide);
+        setContentView(R.layout.activity_authors);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("关注标签");
+            actionBar.setTitle("掘金者");
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ultimateRecyclerView = (UltimateRecyclerView) findViewById(R.id.rv_follow_tags);
+        ultimateRecyclerView = (UltimateRecyclerView) findViewById(R.id.rv_authors);
         ultimateRecyclerView.setHasFixedSize(false);
         ultimateRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ultimateRecyclerView.addItemDividerDecoration(this);
 
-        tagFollowAdapter = new TagFollowAdapter();
-        tagFollowAdapter.setItemListener(this);
-        ultimateRecyclerView.setAdapter(tagFollowAdapter);
+        authorAdapter = new AuthorAdapter();
+        authorAdapter.setItemListener(this);
+        ultimateRecyclerView.setAdapter(authorAdapter);
 
-        StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(tagFollowAdapter);
-        ultimateRecyclerView.addItemDecoration(headersDecor);
 
-        View header = getLayoutInflater().inflate(R.layout.tag_follow_view_header, ultimateRecyclerView.mRecyclerView, false);
-        ultimateRecyclerView.setNormalHeader(header);
 
-        tagFollowAdapter.setCustomLoadMoreView(LayoutInflater.from(this).inflate(R.layout.custom_bottom_progressbar, null));
+        authorAdapter.setCustomLoadMoreView(LayoutInflater.from(this).inflate(R.layout.custom_bottom_progressbar, null));
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                tagFollowGuidePresenter.loadMore();
+                authorsPresenter.loadMore();
             }
         });
 
@@ -67,19 +59,11 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
         dataStateViewHelper = new DataStateViewHelper(ultimateRecyclerView);
         dataStateViewHelper.setDataStateViewListener(this);
         dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
-        tagFollowGuidePresenter = new TagFollowGuidePresenter(this);
-        tagFollowGuidePresenter.loadNew();
-        Logger.d("在TagFollow页", "OnCreate结束");
+        authorsPresenter = new AuthorsPresenter(this);
+        authorsPresenter.loadNew();
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuItem skip = menu.add(0, 1, 0, "跳过");
-        skip.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,22 +78,22 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        tagFollowGuidePresenter.unSubscribeAll();
-        tagFollowGuidePresenter = null;
+        authorsPresenter.unSubscribeAll();
+        authorsPresenter = null;
     }
 
     @Override
-    public void addMore(List<Tag> tags) {
-        tagFollowAdapter.addMore(tags);
-        int lastPos = tagFollowAdapter.getItemCount();
-        tagFollowAdapter.notifyItemChanged(lastPos);
+    public void addMore(List<Author> tags) {
+        authorAdapter.addMore(tags);
+        int lastPos = authorAdapter.getItemCount();
+        authorAdapter.notifyItemChanged(lastPos);
     }
 
     @Override
-    public void addNew(List<Tag> newTags) {
+    public void addNew(List<Author> newTags) {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.CONTENT);
-        tagFollowAdapter.init(newTags);
-        tagFollowAdapter.notifyDataSetChanged();
+        authorAdapter.init(newTags);
+        authorAdapter.notifyDataSetChanged();
         ultimateRecyclerView.enableLoadmore();
     }
 
@@ -131,7 +115,7 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     @Override
     public void onLoadMoreErrorRetry() {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING_MORE);
-        tagFollowGuidePresenter.loadMore();
+        authorsPresenter.loadMore();
     }
 
     @Override
@@ -147,12 +131,12 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     @Override
     public void onErrorRetry() {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
-        tagFollowGuidePresenter.loadNew();
+        authorsPresenter.loadNew();
     }
 
 
     @Override
-    public void onFollowClick(Tag tag) {
-        Logger.json(new Gson().toJson(tag));
+    public void onFollowClick(Object item) {
+
     }
 }

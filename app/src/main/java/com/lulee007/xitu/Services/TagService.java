@@ -16,18 +16,16 @@ import rx.functions.Func1;
  * Date: 2015-12-08
  * Time: 09:44
  */
-public class TagService extends XTBaseService {
+public class TagService extends XTBaseService<TagService.TagWebService> {
 
-    private TagWebService tagWebService;
 
     public  TagService(){
-        super();
-        tagWebService=restAdapter.create(TagWebService.class);
+        super(TagWebService.class);
     }
 
-    private  interface  TagWebService{
+    protected   interface  TagWebService{
 
-        @GET("/Tag")
+        @GET("/classes/Tag")
         Observable<TagDataEnvelope> getTags(@QueryMap HashMap<String,String> params);
 
     }
@@ -49,7 +47,7 @@ public class TagService extends XTBaseService {
 
 
     public Observable<List<Tag>> getTags(HashMap<String,String> params){
-        return tagWebService.getTags(params).map(new Func1<TagDataEnvelope, List<Tag>>() {
+        return webService.getTags(params).map(new Func1<TagDataEnvelope, List<Tag>>() {
             @Override
             public List<Tag> call(TagDataEnvelope tagDataEnvelope) {
                 return tagDataEnvelope.results;

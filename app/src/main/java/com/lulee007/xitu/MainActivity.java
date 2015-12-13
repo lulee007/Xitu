@@ -64,9 +64,15 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.nav_settings){
+        switch (item.getItemId()){
+            case R.id.nav_settings:
             startActivity(SettingsActivity.class);
+                break;
+            case R.id.nav_editors:
+            startActivity(AuthorsActivity.class);
+                break;
         }
+
         return true;
     }
 

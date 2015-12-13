@@ -3,24 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_marginTop="110dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/logo_gray" />
 
     <TextView
         android:id="@+id/error_tip"
-        android:paddingTop="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="出错了" />
 
     <Button
         android:id="@+id/retry_btn"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:textColor="@android:color/black"

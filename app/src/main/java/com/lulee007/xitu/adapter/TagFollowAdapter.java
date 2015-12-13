@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,17 +24,12 @@ import java.util.List;
  */
 public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFollowViewHolder> {
 
-    private List<Tag> hotTags;
-    private List<Tag> normalTags;
     private List<Tag> allTags = new ArrayList<>();
 
-    public void init(List<Tag> hotTags, List<Tag> normalTags) {
+    public void init(List<Tag> hotTags) {
 
         allTags.clear();
-        this.hotTags = hotTags;
-        this.normalTags = normalTags;
-        allTags.addAll(this.hotTags);
-        allTags.addAll(normalTags);
+        allTags.addAll(hotTags);
     }
 
     @Override
@@ -69,11 +65,18 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
                 && (customHeaderView != null ?position <= allTags.size():position<allTags.size())
                 && (customHeaderView != null ? position > 0 : true)) {
 
-            Tag tag = allTags.get(customHeaderView != null ?position-1:position);
+            final Tag tag = allTags.get(customHeaderView != null ?position-1:position);
             holder.tagTitle.setText(tag.getTitle());
             holder.tagSubscribersCount.setText(String.format("%d 关注", tag.getSubscribersCount()));
             holder.tagEntriesCount.setText(String.format("%d 文章", tag.getEntriesCount()));
-
+            holder.follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(itemListener!=null){
+                        itemListener.onFollowClick(tag);
+                    }
+                }
+            });
             if(tag.getIcon()!=null) {
                 Glide.with(holder.tagIcon.getContext())
                         .load(tag.getIcon().getUrl())
@@ -100,12 +103,16 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
         }
     }
 
-    public int getLastItemPosition() {
-        return normalTags == null ? 0 : normalTags.size();
+    public interface ItemListener{
+        void onFollowClick(Tag tag);
+    }
+    private ItemListener itemListener;
+
+    public  void setItemListener(ItemListener listener){
+        this.itemListener=listener;
     }
 
     public void addMore(List<Tag> tags) {
-        normalTags.addAll(tags);
         allTags.addAll(tags);
     }
     public Tag getItem(int position) {
@@ -123,6 +130,7 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
 
         public TextView tagEntriesCount;
         public ImageView tagIcon;
+        public Button follow;
 
         public TagFollowViewHolder(View itemView, boolean isItem) {
 
@@ -133,6 +141,7 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
                 tagIcon = (ImageView) itemView.findViewById(R.id.tagIcon);
                 tagEntriesCount= (TextView) itemView.findViewById(R.id.tag_entries_count);
                 tagSubscribersCount= (TextView) itemView.findViewById(R.id.tag_subscribers_count);
+                follow= (Button) itemView.findViewById(R.id.follow_btn);
             }
         }
     }
