@@ -21,7 +21,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tabl_video_type"
+            android:id="@+id/tab_layout_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="scrollable">

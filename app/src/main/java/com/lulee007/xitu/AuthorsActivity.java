@@ -68,7 +68,7 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 1:
+            case android.R.id.home:
                 finish();
         }
         return true;

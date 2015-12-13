@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/entry_screenshot"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/entry_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:minLines="2"
+            android:text="asdfasf"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/entry_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="123" />
+
+            <TextView
+                android:id="@+id/entry_create_time"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/entry_author"
+                android:text="123" />
+
+            <TextView
+                android:id="@+id/entry_collection_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_collection"
+                android:layout_alignParentRight="true"
+                android:text="123" />
+
+            <TextView
+                android:id="@+id/entry_hot_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:drawableLeft="@mipmap/ic_view"
+                android:layout_toLeftOf="@+id/entry_collection_count"
+                android:text="123" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -17,7 +17,7 @@ import rx.subscriptions.CompositeSubscription;
  * Date: 2015-12-11
  * Time: 11:27
  */
-public abstract class XTBasePresenter<T1> {
+public abstract class XTBasePresenter<T1 extends IXTBaseView> {
 
     protected int pageIndex = 1;
     protected  int pageOffset = 100;

@@ -18,7 +18,7 @@ public class MainViewPresenter {
         if(isFirstTimeIn()){
             mainView.showTagFollowGuideActivity();
         }else{
-
+            mainView.showMainFragment();
         }
     }
 
