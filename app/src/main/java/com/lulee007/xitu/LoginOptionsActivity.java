@@ -47,7 +47,7 @@ public class LoginOptionsActivity extends XTBaseActivity implements View.OnClick
                 break;
             case R.id.skip_login:
                 startActivity(MainActivity.class);
-                Logger.d("在登录选项页，准备跳转Main");
+                Logger.d("点击了跳过按钮，跳转到主页");
                 finish();
                 break;
             default:

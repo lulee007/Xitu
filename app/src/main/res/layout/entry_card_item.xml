@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardCornerRadius="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+        <ImageView
+            android:id="@+id/entry_screenshot"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_login_choice" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/entry_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:maxLines="2"
+                android:paddingRight="6dp"
+                android:layout_gravity="center_vertical"
+                android:text="萨都剌；撒地方很和蔼撑很撑；阿萨德飞萨都剌；撒地方很和蔼很"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/entry_author_avatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_launcher" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/entry_content"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="本文主要介绍Android L新增加的两个UI控件RecyclerView，CardView的导入和使用。RecyclerView是ListView的升级版CardView则是Google提供的一个卡片式视图组件" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/entry_recommended"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/recommend_icon"
+
+                />
+            <TextView
+                android:id="@+id/entry_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="5dp"
+
+                android:layout_toRightOf="@+id/entry_recommended"
+                android:text="NodeJs" />
+
+            <TextView
+                android:id="@+id/entry_collection_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text="43" />
+
+            <ImageView
+                android:id="@+id/entry_to_collect"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_toLeftOf="@+id/entry_collection_count"
+                android:src="@mipmap/ic_action_favorite_outline" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -13,8 +13,6 @@ import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.util.DateUtil;
 
-import java.util.List;
-
 /**
  * User: lulee007@live.com
  * Date: 2015-12-13
@@ -29,7 +27,7 @@ public class EntryListItemAdapter extends XTBaseAdapter<Entry> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.entry_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.entry_list_item, parent,false);
 
         return getViewHolder(view);
     }
@@ -62,12 +60,6 @@ public class EntryListItemAdapter extends XTBaseAdapter<Entry> {
         }
     }
 
-    public void insert(List<Entry> entries,int pos){
-        if(items!=null){
-            items.addAll(0,entries);
-            notifyItemRangeInserted(0,entries.size());
-        }
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {

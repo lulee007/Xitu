@@ -145,9 +145,9 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                         HashMap<String, String> params = buildRequestParams("");
                         JSONObject json = new JSONObject();
                         try {
-                            json.put("tags", hashMaps);
+                            json.put("tags", new Gson().toJson(hashMaps));
                             json.put("createdAt", String.format("{\"$gt\":{\"__type\":\"Date\",\"iso\":\"%s\"}}", createdAt));
-                            params.put("", json.toString());
+                            params.put("where", json.toString());
 
                         } catch (JSONException e) {
                             e.printStackTrace();

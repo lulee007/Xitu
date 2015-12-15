@@ -24,12 +24,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecommendEntriesFragment extends XTBaseFragment implements IEntriesView, DataStateViewHelper.DataStateViewListener {
+public class RecommendEntriesFragment extends BaseListFragment<Entry> implements IEntriesView {
 
-    private UltimateRecyclerView ultimateRecyclerView;
-    private EntryListItemAdapter entryListItemAdapter;
-    private DataStateViewHelper dataStateViewHelper;
-    private RecommendedEntriesPresenter recommendedEntriesPresenter;
+
 
     public RecommendEntriesFragment() {
         // Required empty public constructor
@@ -40,102 +37,20 @@ public class RecommendEntriesFragment extends XTBaseFragment implements IEntries
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_entries, container, false);
-        ultimateRecyclerView = (UltimateRecyclerView) view.findViewById(R.id.rv_entries);
-        ultimateRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
-        ultimateRecyclerView.addItemDividerDecoration(this.getContext());
-        ultimateRecyclerView.setHasFixedSize(false);
 
-        entryListItemAdapter = new EntryListItemAdapter();
-        ultimateRecyclerView.setAdapter(entryListItemAdapter);
-        ultimateRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                recommendedEntriesPresenter.refresh();
-            }
-        });
+        View view = super.onCreateView(inflater,container,savedInstanceState);
+        mUltimateRecyclerView.addItemDividerDecoration(this.getContext());
 
-        ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                recommendedEntriesPresenter.loadMore();
-            }
-        });
 
-        dataStateViewHelper = new DataStateViewHelper(ultimateRecyclerView);
-        dataStateViewHelper.setDataStateViewListener(this);
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
+        mListAdapter = new EntryListItemAdapter();
+        mUltimateRecyclerView.setAdapter(mListAdapter);
 
-        recommendedEntriesPresenter = new RecommendedEntriesPresenter(this);
-        recommendedEntriesPresenter.loadNew();
+
+
+        mPresenter = new RecommendedEntriesPresenter(this);
+        mPresenter.loadNew();
 
         return view;
     }
 
-
-    @Override
-    public void refresh(List<Entry> entries) {
-        ultimateRecyclerView.setRefreshing(false);
-
-        entryListItemAdapter.insert(entries, Entry.class, entries.size());
-    }
-
-    @Override
-    public void refreshNoContent() {
-        ultimateRecyclerView.setRefreshing(false);
-        Toast.makeText(getContext(), "没啦，干货正在准备中呢！", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void refreshError() {
-        ultimateRecyclerView.setRefreshing(false);
-        Toast.makeText(getContext(), "服务器开小差了！", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void addMore(List<Entry> moreItems) {
-        entryListItemAdapter.addMore(moreItems);
-    }
-
-    @Override
-    public void addNew(List<Entry> newItems) {
-        entryListItemAdapter.init(newItems);
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.CONTENT);
-        View view=LayoutInflater.from(getContext()).inflate(R.layout.loading_data_progressbar,null);
-        ultimateRecyclerView.reenableLoadmore(view);
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING_MORE);
-    }
-
-    @Override
-    public void addNewError() {
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.ERROR);
-    }
-
-    @Override
-    public void addMoreError() {
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.LOAD_MORE_ERROR);
-    }
-
-    @Override
-    public void noMore() {
-        ultimateRecyclerView.disableLoadmore();
-    }
-
-    @Override
-    public void noData() {
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.NO_DATA);
-    }
-
-    @Override
-    public void onErrorRetry() {
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
-        recommendedEntriesPresenter.loadNew();
-    }
-
-    @Override
-    public void onLoadMoreErrorRetry() {
-        dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING_MORE);
-        recommendedEntriesPresenter.loadMore();
-    }
 }

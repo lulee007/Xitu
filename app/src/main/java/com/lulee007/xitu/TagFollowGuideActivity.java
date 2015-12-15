@@ -99,6 +99,21 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     }
 
     @Override
+    public void refresh(List<Tag> entries) {
+
+    }
+
+    @Override
+    public void refreshNoContent() {
+
+    }
+
+    @Override
+    public void refreshError() {
+
+    }
+
+    @Override
     public void addMore(List<Tag> moreItems) {
         tagFollowAdapter.addMore(moreItems);
     }

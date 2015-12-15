@@ -52,6 +52,8 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:cardview-v7:23.1.0'
+
     //retrofit
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.orhanobut:logger:1.11'

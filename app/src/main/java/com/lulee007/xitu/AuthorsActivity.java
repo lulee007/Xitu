@@ -83,6 +83,21 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
     }
 
     @Override
+    public void refresh(List<Author> entries) {
+
+    }
+
+    @Override
+    public void refreshNoContent() {
+
+    }
+
+    @Override
+    public void refreshError() {
+
+    }
+
+    @Override
     public void addMore(List<Author> moreItems) {
         authorAdapter.addMore(moreItems);
 

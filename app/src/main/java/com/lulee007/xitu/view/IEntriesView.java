@@ -11,9 +11,5 @@ import java.util.List;
  * Time: 16:30
  */
 public interface IEntriesView extends IXTBaseView<Entry> {
-    void refresh(List<Entry> entries);
 
-    void refreshNoContent();
-
-    void refreshError();
 }

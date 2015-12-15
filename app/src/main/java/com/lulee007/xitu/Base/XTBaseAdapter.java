@@ -27,6 +27,13 @@ public abstract class XTBaseAdapter<T> extends UltimateViewAdapter {
         notifyDataSetChanged();
     }
 
+    public void insert(List<T> items){
+        if(items!=null){
+            items.addAll(0,items);
+            notifyItemRangeInserted(0,items.size());
+        }
+    }
+
     protected boolean isItemViewHolder(int position){
         return position < getItemCount()
                 && (customHeaderView != null ?position <= items.size():position<items.size())

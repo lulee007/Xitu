@@ -31,6 +31,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Logger.d("主页onCreate开始");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,14 +48,15 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         mainViewPresenter = new MainViewPresenter(this);
-        mainViewPresenter.init();
-        Logger.d("在Main页，OnCreate结束");
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         MainFragment  mainFragment=new MainFragment(tabLayout);
         fragmentTransaction.replace(R.id.fragment_main,mainFragment);
         fragmentTransaction.commit();
+        mainViewPresenter.init();
+        Logger.d("主页onCreate结束");
+
     }
 
     @Override

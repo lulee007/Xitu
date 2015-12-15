@@ -47,7 +47,7 @@ public class MainFragment extends XTBaseFragment {
         List<String> titles = new ArrayList<>();
         if (!isLoggedIn()) {
             fragments = new ArrayList<>();
-            fragments.add(new MyTaggedEntriesFragment());
+            fragments.add(new TaggedEntriesFragment());
             fragments.add(new RecommendEntriesFragment());
             titles = new ArrayList<>();
             titles.add("我的关注");

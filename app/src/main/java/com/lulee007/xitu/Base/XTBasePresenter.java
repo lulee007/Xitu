@@ -23,11 +23,15 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
     protected  int pageOffset = 100;
 
     protected CompositeSubscription mCompositeSubscription;
-    protected T1 mView;
+    public T1 mView;
 
     public XTBasePresenter(T1 view) {
         mCompositeSubscription = new CompositeSubscription();
         mView = view;
+    }
+
+    public void bindViewListener(T1 view){
+        mView=view;
     }
 
     protected void addSubscription(Subscription subscription) {

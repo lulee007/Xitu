@@ -8,6 +8,12 @@ import java.util.List;
  */
 public interface IXTBaseView<T> {
 
+    void refresh(List<T> entries);
+
+    void refreshNoContent();
+
+    void refreshError();
+
     void addMore(List<T> moreItems);
     void addNew(List<T> newItems);
 
