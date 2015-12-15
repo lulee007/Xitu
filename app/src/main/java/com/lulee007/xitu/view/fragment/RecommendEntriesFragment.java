@@ -41,11 +41,8 @@ public class RecommendEntriesFragment extends BaseListFragment<Entry> implements
         View view = super.onCreateView(inflater,container,savedInstanceState);
         mUltimateRecyclerView.addItemDividerDecoration(this.getContext());
 
-
         mListAdapter = new EntryListItemAdapter();
         mUltimateRecyclerView.setAdapter(mListAdapter);
-
-
 
         mPresenter = new RecommendedEntriesPresenter(this);
         mPresenter.loadNew();

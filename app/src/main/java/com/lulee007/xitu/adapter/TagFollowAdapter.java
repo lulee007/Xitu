@@ -60,7 +60,7 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
     }
 
     @Override
-    public void onBindViewHolder(TagFollowViewHolder holder, int position) {
+    public void onBindViewHolder(final TagFollowViewHolder holder, int position) {
         if (position < getItemCount()
                 && (customHeaderView != null ?position <= allTags.size():position<allTags.size())
                 && (customHeaderView != null ? position > 0 : true)) {
@@ -73,7 +73,13 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
                 @Override
                 public void onClick(View view) {
                     if(itemListener!=null){
-                        itemListener.onFollowClick(tag);
+                        if(holder.follow.getText().toString().equalsIgnoreCase("关注")) {
+                            holder.follow.setText("已关注");
+                            itemListener.onFollowClick(tag);
+                        }else{
+                            holder.follow.setText("关注");
+                            itemListener.onFollowClick(tag);
+                        }
                     }
                 }
             });

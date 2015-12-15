@@ -26,8 +26,10 @@ import rx.functions.Func2;
 public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView> {
 
     private TagService tagService;
-    private int pageIndex=1;
-    private static final int PAGE_OFFSET = 100;
+
+
+
+    private List<Tag> followedTags=new ArrayList<>();
 
     public TagFollowGuidePresenter(ITagFollowGuideView view) {
         super(view);
@@ -76,7 +78,7 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
                         {
                             mView.noData();
                         }
-                        if(o.get("normal").size()<PAGE_OFFSET){
+                        if(o.get("normal").size()<pageOffset){
                             mView.noMore();
                         }
 
@@ -92,7 +94,7 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
     }
 
     public void loadMore() {
-        HashMap<String, String> normalTagParams = buildRequestParams("{\"hot\":{\"$ne\":true}}", pageIndex*PAGE_OFFSET);
+        HashMap<String, String> normalTagParams = buildRequestParams("{\"hot\":{\"$ne\":true}}", pageIndex*pageOffset);
         Subscription loadMoreSubscription = tagService.getTags(normalTagParams)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Tag>>() {
@@ -132,7 +134,7 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
     protected HashMap<String, String> buildRequestParams(String where, int skip) {
         HashMap<String, String> hotTagParams = new HashMap<String, String>();
         hotTagParams.put("order", "-entriesCount");
-        hotTagParams.put("limit", PAGE_OFFSET+"");
+        hotTagParams.put("limit", pageOffset+"");
         hotTagParams.put("where", where);
         if (skip > 0) {
             hotTagParams.put("skip", skip + "");
@@ -152,8 +154,20 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
         return hotTagParams;
     }
 
+    public void addTag(Tag tag){
+        if(this.followedTags.contains(tag)){
+            this.followedTags.remove(tag);
+        }else {
+            this.followedTags.add(tag);
+        }
+        if(this.followedTags.size()>0){
+            mView.showConfirm();
+        }
+    }
 
-
+    public List<Tag> getFollowedTags() {
+        return followedTags;
+    }
 
 
 }

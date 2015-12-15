@@ -147,6 +147,11 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     }
 
     @Override
+    public void onNoDataButtonClick() {
+
+    }
+
+    @Override
     public void noMore() {
         ultimateRecyclerView.disableLoadmore();
     }
@@ -165,6 +170,11 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
 
     @Override
     public void onFollowClick(Tag tag) {
-        Logger.json(new Gson().toJson(tag));
+        tagFollowGuidePresenter.addTag(tag);
+    }
+
+    @Override
+    public void showConfirm() {
+        //TODO showConfirm View and add click listener pass tags data to main activity
     }
 }

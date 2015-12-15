@@ -5,4 +5,5 @@ import com.lulee007.xitu.models.Tag;
 
 public interface ITagFollowGuideView extends IXTBaseView<Tag> {
 
+    void showConfirm();
 }

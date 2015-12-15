@@ -132,6 +132,11 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
     }
 
     @Override
+    public void onNoDataButtonClick() {
+
+    }
+
+    @Override
     public void noMore() {
         ultimateRecyclerView.disableLoadmore();
     }

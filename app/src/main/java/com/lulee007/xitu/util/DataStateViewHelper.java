@@ -21,7 +21,9 @@ public class DataStateViewHelper {
     private int noDataViewRsid;
     private int errorViewRsid;
     private int loadMoreErrorViewRsid;
-
+    private int errorRetryBtnId;
+    private int loadMoreErrorRetryBtnId;
+    private int noDataBtnId;
     private DataStateViewListener dataStateViewListener;
     private View currentView;
 
@@ -41,6 +43,8 @@ public class DataStateViewHelper {
         void onErrorRetry();
 
         void onLoadMoreErrorRetry();
+
+        void onNoDataButtonClick();
     }
 
     public void setDataStateViewListener(DataStateViewListener listener) {
@@ -53,17 +57,22 @@ public class DataStateViewHelper {
         this.ultimateRecyclerView = ultimateRecyclerView;
         this.loadingViewRsid = R.layout.loading_data_progressbar;
         this.noDataViewRsid = R.layout.common_no_data;
+
         this.errorViewRsid = R.layout.common_error;
+        this.errorRetryBtnId=R.id.retry_btn;
+
         this.loadMoreErrorViewRsid = R.layout.common_load_more_error;
+        this.loadMoreErrorRetryBtnId=R.id.retry_btn;
+
     }
 
     public void setView(DateState state) {
         switch (state) {
             case LOADING:
-                setStateOfContentView(this.loadingViewRsid);
+                setStateOfContentView(loadingViewRsid);
                 break;
             case NO_DATA:
-                setStateOfContentView(this.noDataViewRsid);
+                setStateOfContentView(noDataViewRsid);
                 break;
             case ERROR:
                 setStateOfContentView(errorViewRsid);
@@ -93,16 +102,17 @@ public class DataStateViewHelper {
         } else if (loadingView instanceof RelativeLayout) {
             loadingView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
-        if(rsid==R.layout.common_load_more_error){
-            loadingView.findViewById(R.id.retry_btn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (dataStateViewListener != null) {
-                            dataStateViewListener.onLoadMoreErrorRetry();
-                        }
+        if(rsid==loadMoreErrorViewRsid){
+            loadingView.findViewById(this.loadMoreErrorRetryBtnId).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dataStateViewListener != null) {
+                        dataStateViewListener.onLoadMoreErrorRetry();
                     }
-                });
+                }
+            });
             }
+
         loadingViewGroup.addView(loadingView);
     }
 
@@ -126,7 +136,7 @@ public class DataStateViewHelper {
             }
             viewGroup.addView(contentView);
             if (rsid == errorViewRsid) {
-                contentView.findViewById(R.id.retry_btn).setOnClickListener(new View.OnClickListener() {
+                contentView.findViewById(errorRetryBtnId).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (dataStateViewListener != null) {
@@ -134,6 +144,16 @@ public class DataStateViewHelper {
                         }
                     }
                 });
+            }else if(rsid==noDataViewRsid && noDataBtnId>0){
+                View btn=contentView.findViewById(noDataBtnId);
+                if(btn!=null){
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dataStateViewListener.onNoDataButtonClick();
+                        }
+                    });
+                }
             }
 
         } else {
@@ -148,5 +168,27 @@ public class DataStateViewHelper {
         this.loadingViewRsid = id;
     }
 
+    public void setNoDataViewRsid(int noDataViewRsid) {
+        this.noDataViewRsid = noDataViewRsid;
+    }
 
+    public void setErrorViewRsid(int errorViewRsid) {
+        this.errorViewRsid = errorViewRsid;
+    }
+
+    public void setLoadMoreErrorViewRsid(int loadMoreErrorViewRsid) {
+        this.loadMoreErrorViewRsid = loadMoreErrorViewRsid;
+    }
+
+    public void setErrorRetryBtnId(int errorRetryBtnId) {
+        this.errorRetryBtnId = errorRetryBtnId;
+    }
+
+    public void setLoadMoreErrorRetryBtnId(int loadMoreErrorRetryBtnId) {
+        this.loadMoreErrorRetryBtnId = loadMoreErrorRetryBtnId;
+    }
+
+    public void setNoDataBtnId(int noDataBtnId) {
+        this.noDataBtnId = noDataBtnId;
+    }
 }

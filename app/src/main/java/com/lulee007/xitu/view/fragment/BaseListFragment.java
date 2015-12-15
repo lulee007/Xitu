@@ -135,4 +135,8 @@ public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTB
         mPresenter.loadMore();
     }
 
+    @Override
+    public void onNoDataButtonClick() {
+
+    }
 }
