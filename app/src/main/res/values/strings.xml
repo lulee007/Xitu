@@ -85,5 +85,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="follow_tag_tip">点击下方关注标签，开始关注你感兴趣的内容，该标签下的优质文章将在本页展示</string>
+    <string name="follow_tag_btn">关注标签</string>
 
 </resources>

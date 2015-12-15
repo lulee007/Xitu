@@ -85,6 +85,11 @@ public class AuthorsPresenter extends XTBasePresenter<IAuthorsView> {
         addSubscription(subscription);
     }
 
+    @Override
+    public void refresh() {
+
+    }
+
     public void loadMore(){
         Subscription subscription=authorService.getAuthors(buildRequestParams("{\"role\":\"editor\"}",pageIndex*pageOffset))
                 .observeOn(AndroidSchedulers.mainThread())

@@ -69,10 +69,10 @@ public class DataStateViewHelper {
                 setStateOfContentView(errorViewRsid);
                 break;
             case LOAD_MORE_ERROR:
-                setStateOfLoadingView(loadMoreErrorViewRsid);
+                setStateOfLoadingMoreView(loadMoreErrorViewRsid);
                 break;
             case LOADING_MORE:
-                setStateOfLoadingView(loadingViewRsid);
+                setStateOfLoadingMoreView(loadingViewRsid);
                 break;
             default:
                 ultimateRecyclerView.mRecyclerView.setVisibility(View.VISIBLE);
@@ -82,7 +82,7 @@ public class DataStateViewHelper {
     }
 
     //// TODO: 15/12/11  修改后listview顶部heaerview有空白bug 如果ultimateRecyclerView setParallaxHeader
-    private void setStateOfLoadingView(int rsid) {
+    private void setStateOfLoadingMoreView(int rsid) {
         ViewGroup loadingViewGroup= (ViewGroup) ((UltimateViewAdapter) ultimateRecyclerView.getAdapter()).getCustomLoadMoreView();
         if(loadingViewGroup!=null){
             loadingViewGroup.removeAllViewsInLayout();

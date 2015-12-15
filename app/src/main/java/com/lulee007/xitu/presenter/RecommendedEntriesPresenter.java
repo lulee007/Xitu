@@ -21,13 +21,13 @@ import rx.functions.Action1;
  * Date: 2015-12-13
  * Time: 16:26
  */
-public class EntriesPresenter extends XTBasePresenter<IEntriesView> {
+public class RecommendedEntriesPresenter extends XTBasePresenter<IEntriesView> {
 
     private EntryService entryService;
     private double rankIndex;
     private  String createdAt;
 
-    public EntriesPresenter(IEntriesView view) {
+    public RecommendedEntriesPresenter(IEntriesView view) {
         super(view);
         pageOffset=30;
         entryService=new EntryService();
@@ -106,7 +106,7 @@ public class EntriesPresenter extends XTBasePresenter<IEntriesView> {
                         new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                mView.addNewError();
+                                mView.refreshError();
                             }
                         }
                 );
@@ -122,9 +122,14 @@ public class EntriesPresenter extends XTBasePresenter<IEntriesView> {
                     @Override
                     public void call(List<Entry> entries) {
                         mView.addMore(entries);
-                        if(entries.size()<pageOffset){
+                        if (entries.size() < pageOffset) {
                             mView.noMore();
+                            if (entries.size() > 0) {
+                                pageIndex++;
+                            }
                         }
+
+
                     }
                 }, new Action1<Throwable>() {
                     @Override

@@ -14,4 +14,6 @@ public interface IEntriesView extends IXTBaseView<Entry> {
     void refresh(List<Entry> entries);
 
     void refreshNoContent();
+
+    void refreshError();
 }

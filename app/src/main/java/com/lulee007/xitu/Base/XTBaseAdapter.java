@@ -24,6 +24,7 @@ public abstract class XTBaseAdapter<T> extends UltimateViewAdapter {
 
         items.clear();
         items.addAll(itemList);
+        notifyDataSetChanged();
     }
 
     protected boolean isItemViewHolder(int position){
@@ -59,7 +60,9 @@ public abstract class XTBaseAdapter<T> extends UltimateViewAdapter {
     }
 
     public void addMore(List<T> moreItems) {
+        int old=items.size();
         items.addAll(moreItems);
+        notifyItemRangeInserted(old,moreItems.size());
     }
 
     protected T getItem(int position) {

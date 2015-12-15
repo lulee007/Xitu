@@ -8,8 +8,8 @@ import java.util.List;
  */
 public interface IXTBaseView<T> {
 
-    void addMore(List<T> moreTags);
-    void addNew(List<T> newTags);
+    void addMore(List<T> moreItems);
+    void addNew(List<T> newItems);
 
     void addNewError();
     void addMoreError();

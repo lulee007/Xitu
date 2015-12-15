@@ -47,8 +47,8 @@ public class MainFragment extends XTBaseFragment {
         List<String> titles = new ArrayList<>();
         if (!isLoggedIn()) {
             fragments = new ArrayList<>();
-            fragments.add(new BlankFollowTagFragment());
-            fragments.add(new EntriesFragment());
+            fragments.add(new MyTaggedEntriesFragment());
+            fragments.add(new RecommendEntriesFragment());
             titles = new ArrayList<>();
             titles.add("我的关注");
             titles.add("发现");
@@ -58,10 +58,9 @@ public class MainFragment extends XTBaseFragment {
         mainFragmentPagerAdapter = new MainFragmentPagerAdapter(getChildFragmentManager(), fragments, titles);
         viewPager.setAdapter(mainFragmentPagerAdapter);
         parentTabLayout.setupWithViewPager(viewPager);
+        parentTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        parentTabLayout.setTabMode(TabLayout.MODE_FIXED);
         return view;
-//        TextView textView = new TextView(getActivity());
-//        textView.setText(R.string.hello_blank_fragment);
-//        return textView;
     }
 
 

@@ -1,6 +1,7 @@
 package com.lulee007.xitu.services;
 
 import com.lulee007.xitu.base.XTBaseService;
+import com.lulee007.xitu.models.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,32 +27,33 @@ public class SubscribeService extends XTBaseService<SubscribeService.SubscribeWe
 
     protected   interface SubscribeWebService {
 
-        @GET("/Subscribe")
+        @GET("/classes/Subscribe")
         Observable<SubscribeDataEnvelope> getTags(@QueryMap HashMap<String, String> params);
 
     }
 
-    private class SubscribeDataEnvelope extends BaseDataEnvelope<List<HashMap>>{}
+    private class SubscribeDataEnvelope extends BaseDataEnvelope<List<Subscribe>>{}
 
     //
-    /** 推荐（hot）
-     * order	-entriesCount
-     * where	{"hot":true}
-     * limit	100
-     */
-    /** 其他（not hot）
-     * order	-entriesCount
-     * where	{"hot":{"$ne":true}}
-     * limit	100
+
+    /** 获取用户所有的订阅标签
+     * order	-createAt
+     include	tag
+     where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9560b25749ea071246"}}
+     limit	500
      */
 
 
-
-    public Observable<List<HashMap>> getSubscribes(HashMap<String,String> params){
-        return tagWebService.getTags(params).map(new Func1<SubscribeDataEnvelope, List<HashMap>>() {
+    /**
+     *
+     * @param params
+     * @return
+     */
+    public Observable<List<Subscribe>> getSubscribes(HashMap<String,String> params){
+        return tagWebService.getTags(params).map(new Func1<SubscribeDataEnvelope, List<Subscribe>>() {
             @Override
-            public List<HashMap> call(SubscribeDataEnvelope tagDataEnvelope) {
-                return tagDataEnvelope.results;
+            public List<Subscribe> call(SubscribeDataEnvelope subscribeDataEnvelope) {
+                return subscribeDataEnvelope.results;
             }
         });
     }

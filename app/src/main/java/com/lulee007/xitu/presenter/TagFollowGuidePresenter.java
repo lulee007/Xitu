@@ -86,6 +86,11 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
         Logger.d("loadNewTagsSubscription added!");
     }
 
+    @Override
+    public void refresh() {
+
+    }
+
     public void loadMore() {
         HashMap<String, String> normalTagParams = buildRequestParams("{\"hot\":{\"$ne\":true}}", pageIndex*PAGE_OFFSET);
         Subscription loadMoreSubscription = tagService.getTags(normalTagParams)

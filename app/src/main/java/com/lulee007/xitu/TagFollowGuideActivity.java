@@ -99,17 +99,14 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     }
 
     @Override
-    public void addMore(List<Tag> tags) {
-        tagFollowAdapter.addMore(tags);
-        int lastPos = tagFollowAdapter.getItemCount();
-        tagFollowAdapter.notifyItemChanged(lastPos);
+    public void addMore(List<Tag> moreItems) {
+        tagFollowAdapter.addMore(moreItems);
     }
 
     @Override
-    public void addNew(List<Tag> newTags) {
+    public void addNew(List<Tag> newItems) {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.CONTENT);
-        tagFollowAdapter.init(newTags);
-        tagFollowAdapter.notifyDataSetChanged();
+        tagFollowAdapter.init(newItems);
         ultimateRecyclerView.enableLoadmore();
     }
 

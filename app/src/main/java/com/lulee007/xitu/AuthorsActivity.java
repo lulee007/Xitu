@@ -83,17 +83,15 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
     }
 
     @Override
-    public void addMore(List<Author> tags) {
-        authorAdapter.addMore(tags);
-        int lastPos = authorAdapter.getItemCount();
-        authorAdapter.notifyItemChanged(lastPos);
+    public void addMore(List<Author> moreItems) {
+        authorAdapter.addMore(moreItems);
+
     }
 
     @Override
-    public void addNew(List<Author> newTags) {
+    public void addNew(List<Author> newItems) {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.CONTENT);
-        authorAdapter.init(newTags);
-        authorAdapter.notifyDataSetChanged();
+        authorAdapter.init(newItems);
         ultimateRecyclerView.enableLoadmore();
     }
 

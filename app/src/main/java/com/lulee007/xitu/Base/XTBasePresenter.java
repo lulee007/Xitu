@@ -59,4 +59,11 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
      */
     @NonNull
     abstract protected HashMap<String, String> buildRequestParams(String where);
+
+
+    abstract public  void loadNew();
+
+    abstract public void refresh();
+
+    abstract public  void loadMore();
 }
