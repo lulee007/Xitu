@@ -40,6 +40,6 @@ public class SplashPresenter {
 
     private boolean isFirstLoad(){
 
-        return true;
+        return false;
     };
 }

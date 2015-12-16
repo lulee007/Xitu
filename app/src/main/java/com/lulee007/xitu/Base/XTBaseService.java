@@ -49,7 +49,7 @@ public abstract class XTBaseService<T> {
 
         restAdapter=new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setRequestInterceptor(requestInterceptor)
                 .setClient(getOkClient())
                 .build();

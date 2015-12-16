@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.lulee007.xitu.R;
 import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Author;
+import com.lulee007.xitu.util.GlideCircleTransform;
 import com.marshalchen.ultimaterecyclerview.animators.internal.ViewHelper;
 
 /**
@@ -45,6 +46,7 @@ public class AuthorAdapter extends XTBaseAdapter<Author> {
                 authorViewHolder.description.setText(author.getSelf_description());
                 Glide.with(authorViewHolder.icon.getContext())
                         .load(author.getAvatar_large())
+                        .transform(new GlideCircleTransform(authorViewHolder.icon.getContext()))
                         .crossFade()
                         .into(authorViewHolder.icon);
                 if (!isFirstOnly || position > mLastPosition) {

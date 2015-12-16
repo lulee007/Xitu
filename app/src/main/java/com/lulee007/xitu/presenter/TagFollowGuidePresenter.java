@@ -17,6 +17,7 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 /**
  * User: lulee007@live.com
@@ -85,7 +86,6 @@ public class TagFollowGuidePresenter extends XTBasePresenter<ITagFollowGuideView
                     }
                 });
         addSubscription(loadNewTagsSubscription);
-        Logger.d("loadNewTagsSubscription added!");
     }
 
     @Override

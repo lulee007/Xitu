@@ -4,6 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@mipmap/drawer_action_share"
             android:title="@string/home" />
         <item
@@ -20,6 +21,7 @@
         <menu>
             <item
                 android:id="@+id/nav_settings"
+                android:checkable="true"
                 android:title="@string/settings" />
             <item
                 android:id="@+id/nav_editors"

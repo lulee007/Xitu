@@ -36,7 +36,6 @@ public class TaggedEntriesFragment extends BaseListFragment<Entry> implements IE
         View view = super.onCreateView(inflater, container, savedInstanceState);
         mListAdapter = new EntryCardItemAdapter();
         mUltimateRecyclerView.setAdapter(mListAdapter);
-        mUltimateRecyclerView.addItemDividerDecoration(this.getContext());
         mPresenter = new TaggedEntriesPresenter(this);
         mPresenter.loadNew();
         mDataStateViewHelper.setNoDataViewRsid(R.layout.no_entries);

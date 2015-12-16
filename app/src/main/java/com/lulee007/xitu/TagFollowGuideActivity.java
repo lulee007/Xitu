@@ -32,6 +32,8 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Logger.d("在TagFollow页：OnCreate开始");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_follow_guide);
 
@@ -69,7 +71,7 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
         dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
         tagFollowGuidePresenter = new TagFollowGuidePresenter(this);
         tagFollowGuidePresenter.loadNew();
-        Logger.d("在TagFollow页", "OnCreate结束");
+        Logger.d("在TagFollow页：OnCreate结束");
 
     }
 
@@ -166,7 +168,6 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
         dataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
         tagFollowGuidePresenter.loadNew();
     }
-
 
     @Override
     public void onFollowClick(Tag tag) {
