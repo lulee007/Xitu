@@ -16,6 +16,9 @@ import com.lulee007.xitu.models.Author;
 import com.lulee007.xitu.util.GlideCircleTransform;
 import com.marshalchen.ultimaterecyclerview.animators.internal.ViewHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * User: lulee007@live.com
  * Date: 2015-12-09
@@ -39,9 +42,20 @@ public class AuthorAdapter extends XTBaseAdapter<Author> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (isItemViewHolder(position)) {
-            AuthorViewHolder authorViewHolder = (AuthorViewHolder) holder;
-            Author author = getItem(position);
+           final AuthorViewHolder authorViewHolder = (AuthorViewHolder) holder;
+            final Author author = getItem(position);
             if (author != null) {
+                authorViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(itemListener!=null){
+                            Map<String,Object> map=new HashMap<String, Object>();
+                            map.put("image",authorViewHolder.icon);
+                            map.put("url",author.getAvatar_large());
+                            itemListener.onItemClick(map);
+                        }
+                    }
+                });
                 authorViewHolder.name.setText(author.getUsername());
                 authorViewHolder.description.setText(author.getSelf_description());
                 Glide.with(authorViewHolder.icon.getContext())

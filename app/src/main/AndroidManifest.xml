@@ -42,9 +42,18 @@
         </activity>
         <activity android:name=".LoginByWeiboActivity" >
         </activity>
-        <activity android:name=".TagFollowGuideActivity" android:theme="@style/AppTheme.ActionBar">
+        <activity
+            android:name=".TagFollowGuideActivity"
+            android:theme="@style/AppTheme.ActionBar" >
         </activity>
-        <activity android:name=".AuthorsActivity" android:theme="@style/AppTheme.ActionBar">
+        <activity
+            android:name=".AuthorsActivity"
+            android:theme="@style/AppTheme.ActionBar" >
+        </activity>
+        <activity
+            android:name=".AuthorHomeActivity"
+            android:label="@string/title_activity_author_home"
+            android:theme="@style/AppTheme.ActionBar">
         </activity>
     </application>
 

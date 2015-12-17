@@ -10,6 +10,7 @@
         android:id="@+id/author_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:transitionName="transitionName"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout

@@ -57,10 +57,10 @@ public abstract class XTBaseAdapter<T> extends UltimateViewAdapter {
 
 
     public interface ItemListener {
-        void onFollowClick(Object item);
+        void onItemClick(Object item);
     }
 
-    private ItemListener itemListener;
+    protected ItemListener itemListener;
 
     public void setItemListener(ItemListener listener) {
         this.itemListener = listener;
