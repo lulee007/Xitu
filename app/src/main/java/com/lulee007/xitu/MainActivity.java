@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,7 +29,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
     private MainViewPresenter mainViewPresenter;
     private boolean doubleClickExit = false;
     private TabLayout tabLayout;
-
+    private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Logger.d("主页onCreate开始");
@@ -40,7 +41,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
         tabLayout= (TabLayout) findViewById(R.id.tab_layout_main);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -103,6 +104,10 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public void onBackPressed() {
+        if(drawer.isDrawerOpen(Gravity.LEFT)){
+            drawer.closeDrawer(Gravity.LEFT);
+            return;
+        }
         if (!doubleClickExit) {
             showToast("再按一次退出应用");
             doubleClickExit = true;
@@ -125,10 +130,6 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         startActivity(TagFollowGuideActivity.class);
     }
 
-    @Override
-    public void showExitAppToast() {
-
-    }
 
     @Override
     public void showMainFragment() {
