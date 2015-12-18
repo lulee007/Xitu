@@ -92,7 +92,6 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                             mView.noData();
                             return;
                         }
-                        pageIndex = 0;
                         createdAt = entries.get(0).getCreatedAt();
                         mView.addNew(entries);
                         if (entries.size() < pageOffset) {
@@ -159,7 +158,7 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                 .subscribe(new Action1<List<Entry>>() {
                     @Override
                     public void call(List<Entry> entries) {
-                        if(entries.size()==0){
+                        if (entries.size() == 0) {
                             mView.refreshNoContent();
                             return;
                         }
@@ -172,31 +171,24 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                         mView.refreshError();
                     }
                 });
-                addSubscription(su);
+        addSubscription(su);
     }
 
     @Override
     public void loadMore() {
-        Subscription subscription=getSubscribedTags()
+        Subscription subscription = getSubscribedTags()
                 .flatMap(new Func1<List<HashMap>, Observable<List<Entry>>>() {
                     @Override
                     public Observable<List<Entry>> call(List<HashMap> hashMaps) {
 
-                        return entryService.getEntryList(buildRequestParams(new Gson().toJson(hashMaps),pageOffset*pageIndex));
+                        return entryService.getEntryList(buildRequestParams(new Gson().toJson(hashMaps), pageOffset * pageIndex));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                     @Override
                     public void call(List<Entry> entries) {
-                        if(entries.size()==0){
-                            mView.noMore();
-                            return;
-                        }
-                        mView.addMore(entries);
-                        if(entries.size()<pageOffset){
-                            mView.noMore();
-                        }
+                        onLoadMoreComplete(entries);
                     }
                 }, new Action1<Throwable>() {
                     @Override

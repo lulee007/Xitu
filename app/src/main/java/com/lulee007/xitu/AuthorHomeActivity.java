@@ -1,8 +1,8 @@
 package com.lulee007.xitu;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +15,7 @@ public class AuthorHomeActivity extends XTBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_home);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("掘金者");
@@ -22,5 +23,16 @@ public class AuthorHomeActivity extends XTBaseActivity {
         }
         String url=getIntent().getStringExtra("url");
         Glide.with(this).load(url).transform(new GlideCircleTransform(this)).into((ImageView) findViewById(R.id.author_icon));
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

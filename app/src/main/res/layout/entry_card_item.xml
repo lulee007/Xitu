@@ -48,6 +48,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
+                android:transitionName="@string/transition_name_author_icon"
                 android:src="@mipmap/ic_launcher" />
         </LinearLayout>
 

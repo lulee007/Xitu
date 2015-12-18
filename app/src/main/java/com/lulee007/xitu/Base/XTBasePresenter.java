@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -21,7 +22,7 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
 
     protected int pageIndex = 1;
     protected  int pageOffset = 100;
-
+    protected  String createdAt;
     protected CompositeSubscription mCompositeSubscription;
     public T1 mView;
 
@@ -44,6 +45,18 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
         mView = null;
         mCompositeSubscription.unsubscribe();
         Logger.d("unsubscribe all");
+    }
+
+    protected void onLoadMoreComplete(List items){
+        if (items.size() == 0) {
+            mView.noMore();
+            return;
+        }
+        mView.addMore(items);
+        pageIndex++;
+        if (items.size() < pageOffset) {
+            mView.noMore();
+        }
     }
 
     /**

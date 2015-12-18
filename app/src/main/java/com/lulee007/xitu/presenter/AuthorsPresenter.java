@@ -96,13 +96,7 @@ public class AuthorsPresenter extends XTBasePresenter<IAuthorsView> {
                 .subscribe(new Action1<List<Author>>() {
                     @Override
                     public void call(List<Author> authors) {
-                        if(authors==null){
-                            return;
-                        }
-                        mView.addMore(authors);
-                        if(authors.size()<pageOffset){
-                            mView.noMore();
-                        }
+                        onLoadMoreComplete(authors);
                     }
                 }, new Action1<Throwable>() {
                     @Override

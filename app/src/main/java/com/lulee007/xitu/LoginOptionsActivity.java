@@ -1,6 +1,5 @@
 package com.lulee007.xitu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +20,7 @@ public class LoginOptionsActivity extends XTBaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_options);
+
         phoneBtn=(Button)findViewById(R.id.phone_login);
         skipBtn=(Button)findViewById(R.id.skip_login);
         weiboBtn=(LinearLayout)findViewById(R.id.weibo_login);

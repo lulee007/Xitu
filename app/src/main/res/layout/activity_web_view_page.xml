@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.lulee007.xitu.EntryWebPageActivity">
+
+    <include
+        android:id="@+id/entry_web_view_toolbar"
+        layout="@layout/entry_web_view_toolbar" />
+
+    <RelativeLayout
+
+        android:id="@+id/entry_detail_tool"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/view_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/view_comment"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/view_comment"
+            android:gravity="center_vertical"
+            android:text="5"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/entry_collection_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:text="12"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/entry_to_collect"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+
+            android:layout_toLeftOf="@+id/entry_collection_count"
+            android:src="@mipmap/ic_action_favorite_outline" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/web_view_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/entry_detail_tool"
+        android:layout_below="@+id/entry_web_view_toolbar" />
+
+    <include
+        android:id="@+id/loading_data"
+        layout="@layout/loading_data_progressbar" />
+</RelativeLayout>

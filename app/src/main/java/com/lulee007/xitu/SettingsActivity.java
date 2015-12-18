@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         setupActionBar();
         this.addPreferencesFromResource(R.xml.settings);
     }

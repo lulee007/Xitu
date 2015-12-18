@@ -34,6 +34,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         Logger.d("主页onCreate开始");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

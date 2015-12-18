@@ -6,7 +6,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -14,11 +13,9 @@ import com.lulee007.xitu.adapter.AuthorAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.Author;
 import com.lulee007.xitu.presenter.AuthorsPresenter;
-import com.lulee007.xitu.presenter.TagFollowGuidePresenter;
 import com.lulee007.xitu.util.DataStateViewHelper;
 import com.lulee007.xitu.view.IAuthorsView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -163,7 +160,7 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
         Map<String,Object> map= (Map<String, Object>) item;
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 (ImageView)map.get("image"),   // The view which starts the transition
-                "transitionName"    // The transitionName of the view we’re transitioning to
+                getString(R.string.transition_name_author_icon)    // The transitionName of the view we’re transitioning to
         );
         Intent intent=new Intent(this,AuthorHomeActivity.class);
         intent.putExtra("url",map.get("url").toString());

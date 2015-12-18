@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.gson.Gson;
 import com.lulee007.xitu.adapter.TagFollowAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.Tag;
@@ -18,9 +17,6 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 
 public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollowGuideView, DataStateViewHelper.DataStateViewListener ,TagFollowAdapter.ItemListener{

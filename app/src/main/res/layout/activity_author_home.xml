@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.lulee007.xitu.AuthorHomeActivity">
 
     <LinearLayout
@@ -13,7 +14,7 @@
         <ImageView
             android:id="@+id/author_icon"
             android:layout_width="match_parent"
-            android:transitionName="transitionName"
+            android:transitionName="@string/transition_name_author_icon"
             android:layout_height="120dp"
             android:src="@mipmap/entry_image_default" />
 

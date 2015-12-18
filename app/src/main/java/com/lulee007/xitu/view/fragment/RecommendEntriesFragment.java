@@ -2,24 +2,17 @@ package com.lulee007.xitu.view.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.lulee007.xitu.R;
+import com.lulee007.xitu.EntryWebPageActivity;
 import com.lulee007.xitu.adapter.EntryListItemAdapter;
-import com.lulee007.xitu.base.XTBaseFragment;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.presenter.RecommendedEntriesPresenter;
-import com.lulee007.xitu.util.DataStateViewHelper;
 import com.lulee007.xitu.view.IEntriesView;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +35,7 @@ public class RecommendEntriesFragment extends BaseListFragment<Entry> implements
         mUltimateRecyclerView.addItemDividerDecoration(this.getContext());
 
         mListAdapter = new EntryListItemAdapter();
+        mListAdapter.setItemListener(this);
         mUltimateRecyclerView.setAdapter(mListAdapter);
 
         mPresenter = new RecommendedEntriesPresenter(this);
@@ -50,4 +44,15 @@ public class RecommendEntriesFragment extends BaseListFragment<Entry> implements
         return view;
     }
 
+
+    @Override
+    public void onItemClick(Object item) {
+        Intent intent = EntryWebPageActivity.buildEntryWebPageParams(
+                getContext(),
+                ((Entry) item).getUrl(),
+                ((Entry) item).getUser().getUsername(),
+                ((Entry) item).getUser().getAvatar_large()
+        );
+        startActivity(intent);
+    }
 }

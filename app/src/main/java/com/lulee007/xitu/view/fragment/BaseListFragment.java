@@ -24,7 +24,7 @@ import java.util.List;
  * Date: 2015-12-15
  * Time: 17:42
  */
-public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTBaseView<T>, DataStateViewHelper.DataStateViewListener {
+public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTBaseView<T>, DataStateViewHelper.DataStateViewListener ,XTBaseAdapter.ItemListener{
 
     protected UltimateRecyclerView mUltimateRecyclerView;
     protected XTBaseAdapter mListAdapter;
@@ -137,6 +137,11 @@ public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTB
 
     @Override
     public void onNoDataButtonClick() {
+
+    }
+
+    @Override
+    public void onItemClick(Object item) {
 
     }
 }

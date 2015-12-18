@@ -36,8 +36,16 @@ public class EntryListItemAdapter extends XTBaseAdapter<Entry> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (isItemViewHolder(position)) {
             EntryViewHolder entryViewHolder = (EntryViewHolder) holder;
-            Entry entry = getItem(position);
+            final Entry entry = getItem(position);
             if (entry != null) {
+                entryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(itemListener!=null){
+                            itemListener.onItemClick(entry);
+                        }
+                    }
+                });
                 entryViewHolder.title.setText(entry.getTitle());
                 entryViewHolder.hotIndex.setText(entry.getHotIndex() + "");
                 entryViewHolder.createTime.setText(DateUtil.upToNow(entry.getCreatedAt()));

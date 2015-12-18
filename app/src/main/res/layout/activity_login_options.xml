@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@mipmap/icon_login_choice"
     android:gravity="center_horizontal|bottom"
+    android:fitsSystemWindows="true"
+
     tools:context="com.lulee007.xitu.LoginOptionsActivity">
 
     <LinearLayout

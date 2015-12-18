@@ -1,9 +1,7 @@
 package com.lulee007.xitu.presenter;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
-import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.base.XTBasePresenter;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.services.EntryService;
@@ -25,26 +23,26 @@ public class RecommendedEntriesPresenter extends XTBasePresenter<IEntriesView> {
 
     private EntryService entryService;
     private double rankIndex;
-    private  String createdAt;
+    private String createdAt;
 
     public RecommendedEntriesPresenter(IEntriesView view) {
         super(view);
-        pageOffset=30;
-        entryService=new EntryService();
+        pageOffset = 30;
+        entryService = new EntryService();
     }
 
 
     @Override
     protected HashMap<String, String> buildRequestParams(String where, int skip) {
-        HashMap<String,String> params=new HashMap<>();
-        params.put("order","-rankIndex");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("order", "-rankIndex");
         params.put("limit", pageOffset + "");
         params.put("include", "user,user.installation");
-        if(where!=null){
-            params.put("where",where);
+        if (where != null) {
+            params.put("where", where);
         }
-        if(skip>0){
-            params.put("skip",skip+"");
+        if (skip > 0) {
+            params.put("skip", skip + "");
         }
         return params;
     }
@@ -52,13 +50,13 @@ public class RecommendedEntriesPresenter extends XTBasePresenter<IEntriesView> {
     @NonNull
     @Override
     protected HashMap<String, String> buildRequestParams(String where) {
-        return buildRequestParams(where,0);
+        return buildRequestParams(where, 0);
     }
 
-    public void loadNew(){
-        HashMap<String ,String> params=buildRequestParams(null);
+    public void loadNew() {
+        HashMap<String, String> params = buildRequestParams(null);
 
-        Subscription subscription=entryService.getEntryList(params)
+        Subscription subscription = entryService.getEntryList(params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                                @Override
@@ -67,10 +65,9 @@ public class RecommendedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                        mView.noData();
                                        return;
                                    }
-                                   pageIndex=0;
-                                   Entry lastest=entries.get(0);
-                                   rankIndex=lastest.getRankIndex();
-                                   createdAt=lastest.getCreatedAt();
+                                   Entry lastest = entries.get(0);
+                                   rankIndex = lastest.getRankIndex();
+                                   createdAt = lastest.getCreatedAt();
                                    mView.addNew(entries);
                                    if (entries.size() < pageOffset) {
                                        mView.noMore();
@@ -87,20 +84,20 @@ public class RecommendedEntriesPresenter extends XTBasePresenter<IEntriesView> {
         addSubscription(subscription);
     }
 
-    public void refresh(){
-        String where=String.format("{\"createdAt\":{\"$gt\":{\"__type\":\"Date\",\"iso\":\"%s\"}},\"rankIndex\":{\"$gt\":%f}}",createdAt,rankIndex);
-        HashMap<String ,String> params=buildRequestParams(where);
+    public void refresh() {
+        String where = String.format("{\"createdAt\":{\"$gt\":{\"__type\":\"Date\",\"iso\":\"%s\"}},\"rankIndex\":{\"$gt\":%f}}", createdAt, rankIndex);
+        HashMap<String, String> params = buildRequestParams(where);
         params.remove("limit");
-        Subscription subscription=entryService.getEntryList(params)
+        Subscription subscription = entryService.getEntryList(params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                                @Override
                                public void call(List<Entry> entries) {
-                                    if(entries.size()==0){
-                                        mView.refreshNoContent();
-                                    }else{
-                                        mView.refresh(entries);
-                                    }
+                                   if (entries.size() == 0) {
+                                       mView.refreshNoContent();
+                                   } else {
+                                       mView.refresh(entries);
+                                   }
                                }
                            },
                         new Action1<Throwable>() {
@@ -114,21 +111,14 @@ public class RecommendedEntriesPresenter extends XTBasePresenter<IEntriesView> {
 
     }
 
-    public void loadMore(){
-        HashMap<String ,String> params=buildRequestParams(null,pageIndex*pageOffset);
-        Subscription subscription  = entryService.getEntryList(params)
+    public void loadMore() {
+        HashMap<String, String> params = buildRequestParams(null, pageIndex * pageOffset);
+        Subscription subscription = entryService.getEntryList(params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                     @Override
                     public void call(List<Entry> entries) {
-                        mView.addMore(entries);
-                        if (entries.size() < pageOffset) {
-                            mView.noMore();
-                            if (entries.size() > 0) {
-                                pageIndex++;
-                            }
-                        }
-
+                        onLoadMoreComplete(entries);
 
                     }
                 }, new Action1<Throwable>() {
