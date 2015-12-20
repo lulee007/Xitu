@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 
 public class Tag {
 
+    private boolean isSubscribed;
+
     private boolean official;
     private String updatedAt;
     private String color;
@@ -169,6 +171,14 @@ public class Tag {
 
     public int getEntriesCount() {
         return entriesCount;
+    }
+
+    public boolean isSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setIsSubscribed(boolean isSubscribed) {
+        this.isSubscribed = isSubscribed;
     }
 
     public static class BackgroundEntity {

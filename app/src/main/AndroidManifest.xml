@@ -57,7 +57,10 @@
         </activity>
         <activity android:name=".EntryWebPageActivity" >
         </activity>
-        <activity android:name=".EntriesByTagActivity">
+        <activity android:name=".EntriesByTagActivity" >
+        </activity>
+        <activity android:name=".ManageTagsActivity"
+            android:theme="@style/AppTheme.ActionBar" >
         </activity>
     </application>
 

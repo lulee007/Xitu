@@ -181,5 +181,6 @@
     <string name="action_view_in_browser">用浏览器打开</string>
     <string name="action_share">分享</string>
     <string name="transition_name_author_icon">author_icon_image_view</string>
+    <string name="manage_tag_activity_title">关注标签</string>
 
 </resources>

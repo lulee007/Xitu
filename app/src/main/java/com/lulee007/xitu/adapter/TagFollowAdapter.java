@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lulee007.xitu.R;
+import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Tag;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
@@ -22,15 +23,9 @@ import java.util.List;
  * Date: 2015-12-09
  * Time: 17:27
  */
-public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFollowViewHolder> {
+public class TagFollowAdapter extends XTBaseAdapter<Tag> {
 
-    private List<Tag> allTags = new ArrayList<>();
 
-    public void init(List<Tag> hotTags) {
-
-        allTags.clear();
-        allTags.addAll(hotTags);
-    }
 
     @Override
     public TagFollowViewHolder getViewHolder(View view) {
@@ -45,10 +40,6 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
         return tagFollowViewHolder;
     }
 
-    @Override
-    public int getAdapterItemCount() {
-        return allTags.size();
-    }
 
     @Override
     public long generateHeaderId(int position) {
@@ -60,34 +51,37 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
     }
 
     @Override
-    public void onBindViewHolder(final TagFollowViewHolder holder, int position) {
-        if (position < getItemCount()
-                && (customHeaderView != null ?position <= allTags.size():position<allTags.size())
-                && (customHeaderView != null ? position > 0 : true)) {
-
-            final Tag tag = allTags.get(customHeaderView != null ?position-1:position);
-            holder.tagTitle.setText(tag.getTitle());
-            holder.tagSubscribersCount.setText(String.format("%d 关注", tag.getSubscribersCount()));
-            holder.tagEntriesCount.setText(String.format("%d 文章", tag.getEntriesCount()));
-            holder.follow.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        if (isItemViewHolder(position)) {
+            final TagFollowViewHolder holder1=(TagFollowViewHolder)holder;
+            final Tag tag = getItem(position);
+            holder1.tagTitle.setText(tag.getTitle());
+            holder1.tagSubscribersCount.setText(String.format("%d 关注", tag.getSubscribersCount()));
+            holder1.tagEntriesCount.setText(String.format("%d 文章", tag.getEntriesCount()));
+            if(tag.isSubscribed()){
+                holder1.follow.setText("√已关注");
+            }else{
+                holder1.follow.setText("关注");
+            }
+            holder1.follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(itemListener!=null){
-                        if(holder.follow.getText().toString().equalsIgnoreCase("关注")) {
-                            holder.follow.setText("已关注");
+                        if(holder1.follow.getText().toString().equalsIgnoreCase("关注")) {
+                            holder1.follow.setText("已关注");
                             itemListener.onFollowClick(tag);
                         }else{
-                            holder.follow.setText("关注");
+                            holder1.follow.setText("关注");
                             itemListener.onFollowClick(tag);
                         }
                     }
                 }
             });
             if(tag.getIcon()!=null) {
-                Glide.with(holder.tagIcon.getContext())
+                Glide.with(holder1.tagIcon.getContext())
                         .load(tag.getIcon().getUrl())
                         .crossFade()
-                        .into(holder.tagIcon);
+                        .into(holder1.tagIcon);
             }
         }
     }
@@ -101,13 +95,13 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
     @Override
     public void onBindHeaderViewHolder(ViewHolder holder, int position) {
         TagFollowHeaderViewHolder tagFollowHeaderViewHolder=(TagFollowHeaderViewHolder)holder;
-        if (position < getItemCount()
-                && (customHeaderView != null ?position <= allTags.size():position<allTags.size())
-                && (customHeaderView != null ? position > 0 : true)) {
-            String category=allTags.get(customHeaderView!=null?position-1:position).isHot()?"推荐标签":"其他标签";
+        if (isItemViewHolder(position)) {
+            String category=getItem(position).isHot()?"推荐标签":"其他标签";
             tagFollowHeaderViewHolder.tagCategory.setText(category);
         }
     }
+
+
 
     public interface ItemListener{
         void onFollowClick(Tag tag);
@@ -118,14 +112,13 @@ public class TagFollowAdapter extends UltimateViewAdapter<TagFollowAdapter.TagFo
         this.itemListener=listener;
     }
 
-    public void addMore(List<Tag> tags) {
-        allTags.addAll(tags);
-    }
+
+
     public Tag getItem(int position) {
         if (customHeaderView != null)
             position--;
-        if (position < allTags.size())
-            return allTags.get(position);
+        if (position < items.size())
+            return items.get(position);
         else return null;
     }
 

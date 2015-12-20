@@ -20,6 +20,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!-- Remove shadow below action bar Android < 5.0 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- Support library compatibility -->
+        <item name="elevation">0dp</item>
         <!-- Used to for the title of the Toolbar -->
         <item name="android:textColorPrimary">#fff</item>
         <!-- Used to for the title of the Toolbar when parent is Theme.AppCompat.Light -->

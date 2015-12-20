@@ -1,5 +1,6 @@
 package com.lulee007.xitu.presenter;
 
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.IMainView;
 
 /**
@@ -24,5 +25,13 @@ public class MainViewPresenter {
 
     private boolean isFirstTimeIn(){
         return false;
+    }
+
+    public void showManageTagActivity() {
+        if(AuthUserHelper.getInstance().isLoggedIn()){
+            mainView.showManageTagActivity();
+        }else{
+            mainView.showNeedLoginDialog();
+        }
     }
 }

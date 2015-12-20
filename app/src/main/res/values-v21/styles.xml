@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppTheme.ActionBar">
+                <item name="windowActionBar">true</item>
+                <item name="windowNoTitle">false</item>
+                <item name="colorPrimary">@color/colorPrimary</item>
+                <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+                <item name="colorAccent">@color/colorAccent</item>
+
+                <!-- remove shadow below action bar -->
+                <item name="android:elevation">0dp</item>
+                <!-- Support library compatibility -->
+                <item name="elevation">0dp</item>
+                <!-- Used to for the title of the Toolbar -->
+                <item name="android:textColorPrimary">#fff</item>
+                <!-- Used to for the title of the Toolbar when parent is Theme.AppCompat.Light -->
+                <item name="android:textColorPrimaryInverse">#000</item>
+                <!-- Used to color the text of the action menu icons -->
+                <item name="android:textColorSecondary">#eee</item>
+                <!-- Used to color the overflow menu icon -->
+                <item name="actionMenuTextColor">#000</item>
+        </style>
+</resources>

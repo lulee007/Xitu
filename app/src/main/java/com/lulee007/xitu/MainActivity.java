@@ -1,5 +1,6 @@
 package com.lulee007.xitu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,8 @@ import android.view.MenuItem;
 
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.presenter.MainViewPresenter;
+import com.lulee007.xitu.presenter.TagWithUserStatusPresenter;
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.IMainView;
 import com.lulee007.xitu.view.fragment.MainFragment;
 import com.orhanobut.logger.Logger;
@@ -75,7 +78,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
             case R.id.action_add_tag:
-
+                mainViewPresenter.showManageTagActivity();
                 break;
         }
 
@@ -133,6 +136,18 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public void showMainFragment() {
+
+    }
+
+    @Override
+    public void showManageTagActivity() {
+        Intent intent=new Intent(this,ManageTagsActivity.class);
+        intent.putExtra(ManageTagsActivity.INTENT_KEY_USER,AuthUserHelper.getInstance().getUser().toString());
+        startActivity(intent);
+    }
+
+    @Override
+    public void showNeedLoginDialog() {
 
     }
 }
