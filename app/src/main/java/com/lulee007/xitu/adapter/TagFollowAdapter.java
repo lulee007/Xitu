@@ -13,10 +13,6 @@ import com.bumptech.glide.Glide;
 import com.lulee007.xitu.R;
 import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Tag;
-import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: lulee007@live.com
@@ -51,28 +47,34 @@ public class TagFollowAdapter extends XTBaseAdapter<Tag> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (isItemViewHolder(position)) {
             final TagFollowViewHolder holder1=(TagFollowViewHolder)holder;
             final Tag tag = getItem(position);
+            holder1.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(itemListener!=null){
+                        itemListener.onItemClick(tag);
+                    }
+                }
+            });
             holder1.tagTitle.setText(tag.getTitle());
             holder1.tagSubscribersCount.setText(String.format("%d 关注", tag.getSubscribersCount()));
             holder1.tagEntriesCount.setText(String.format("%d 文章", tag.getEntriesCount()));
             if(tag.isSubscribed()){
                 holder1.follow.setText("√已关注");
             }else{
-                holder1.follow.setText("关注");
+                holder1.follow.setText("+关注");
             }
             holder1.follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(itemListener!=null){
-                        if(holder1.follow.getText().toString().equalsIgnoreCase("关注")) {
-                            holder1.follow.setText("已关注");
-                            itemListener.onFollowClick(tag);
+                    if(tagItemListener !=null){
+                        if(!tag.isSubscribed()) {
+                            tagItemListener.onFollowClick(tag,position);
                         }else{
-                            holder1.follow.setText("关注");
-                            itemListener.onFollowClick(tag);
+                            tagItemListener.onUnSubscribeClick(tag, position);
                         }
                     }
                 }
@@ -101,15 +103,25 @@ public class TagFollowAdapter extends XTBaseAdapter<Tag> {
         }
     }
 
-
-
-    public interface ItemListener{
-        void onFollowClick(Tag tag);
+    public void remove(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
     }
-    private ItemListener itemListener;
 
-    public  void setItemListener(ItemListener listener){
-        this.itemListener=listener;
+    public void onSubscribeDataChanged(int position, boolean b) {
+        getItem(position).setIsSubscribed(b);
+        notifyItemChanged(position);
+    }
+
+
+    public interface TagItemListener {
+        void onFollowClick(Tag tag, int position);
+        void onUnSubscribeClick(Tag tag,int position);
+    }
+    private TagItemListener tagItemListener;
+
+    public  void setTagItemListener(TagItemListener listener){
+        this.tagItemListener =listener;
     }
 
 

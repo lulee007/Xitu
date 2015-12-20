@@ -14,6 +14,7 @@ import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscription;
@@ -81,6 +82,7 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
                     public Tag call(Subscribe subscribe) {
                         Tag tag = Tag.objectFromData(new Gson().toJson(subscribe.getTag()));
                         tag.setIsSubscribed(true);
+                        tag.setSubscribedId(subscribe.getObjectId());
                         return tag;
                     }
                 })
@@ -141,6 +143,24 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
                     @Override
                     public void call(Throwable throwable) {
                         mView.addMoreError();
+                    }
+                });
+        addSubscription(subscription);
+    }
+
+    public void unSubscribeTag(String subscribedId,final int position) {
+        Subscription subscription=subscribeService.unSubscribe(subscribedId)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        ((ITagFollowGuideView) mView).onUnSubscribeTag(position);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        ((ITagFollowGuideView) mView).onUnSubscribeTagError();
                     }
                 });
         addSubscription(subscription);

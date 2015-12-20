@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.lulee007.xitu.base.XTBasePresenter;
 import com.lulee007.xitu.models.Subscribe;
 import com.lulee007.xitu.models.Tag;
+import com.lulee007.xitu.services.CommonSaveService;
 import com.lulee007.xitu.services.SubscribeService;
 import com.lulee007.xitu.services.TagService;
 import com.lulee007.xitu.util.AuthUserHelper;
@@ -15,6 +16,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscription;
@@ -39,6 +41,7 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
         super(view);
         tagService = new TagService();
         subscribeService = new SubscribeService();
+
     }
 
     @Override
@@ -79,6 +82,7 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
     public void loadNew() {
         final List<Tag> allTagList = new ArrayList<>();
         final List<HashMap<String, String>> allTagJsonList = new ArrayList<>();
+        final List<String> singleSubcribeId = new ArrayList<>(1);
         Subscription subscription =
                 Observable
                         .zip(tagService.getTags(buildRequestParams("{\"hot\":true}")),
@@ -125,6 +129,8 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
                                         .map(new Func1<Subscribe, String>() {
                                             @Override
                                             public String call(Subscribe subscribe) {
+                                                singleSubcribeId.clear();
+                                                singleSubcribeId.add(subscribe.getObjectId());
                                                 return subscribe.getTag().getObjectId();
                                             }
                                         });
@@ -144,19 +150,14 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
                                             @Override
                                             public Tag call(Tag tag) {
                                                 tag.setIsSubscribed(true);
+                                                tag.setSubscribedId(singleSubcribeId.get(0));
                                                 return tag;
                                             }
                                         });
                             }
                         })
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnError(new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                Logger.e("load new :", throwable);
-                                mView.addNewError();
-                            }
-                        })
+
                         .doOnCompleted(new Action0() {
                             @Override
                             public void call() {
@@ -169,7 +170,21 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
                                 }
                             }
                         })
-                        .subscribe();
+                        .subscribe(new Action1<Tag>() {
+                                       @Override
+                                       public void call(Tag tag) {
+
+                                       }
+                                   },
+                                new Action1<Throwable>() {
+                                    @Override
+                                    public void call(Throwable throwable) {
+                                        Logger.e("load new :" + throwable.getMessage(), throwable);
+                                        mView.addNewError();
+                                    }
+                                }
+
+                        );
         addSubscription(subscription);
     }
 
@@ -253,4 +268,40 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
         addSubscription(subscription);
 
     }
+
+    public void unSubscribeTag(String subscribedId, final int position) {
+        Subscription subscription = subscribeService.unSubscribe(subscribedId)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        ((ITagWithUserStatsView) mView).onUnSubscribeTag(position);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        ((ITagWithUserStatsView) mView).onUnSubscribeTagError();
+                    }
+                });
+        addSubscription(subscription);
+    }
+
+    public void subscribeTag(String cid, final int position) {
+        Subscription subscription = new CommonSaveService().saveSubscription(cid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Object>() {
+                    @Override
+                    public void call(Object o) {
+                        ((ITagWithUserStatsView) mView).onSubscribeTag(position);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        ((ITagWithUserStatsView) mView).onSubscribeTagError();
+                    }
+                });
+        addSubscription(subscription);
+    }
 }
+

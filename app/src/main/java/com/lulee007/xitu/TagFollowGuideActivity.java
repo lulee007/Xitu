@@ -19,7 +19,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollowGuideView, DataStateViewHelper.DataStateViewListener ,TagFollowAdapter.ItemListener{
+public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollowGuideView, DataStateViewHelper.DataStateViewListener ,TagFollowAdapter.TagItemListener {
 
     private UltimateRecyclerView ultimateRecyclerView;
     private TagFollowAdapter tagFollowAdapter;
@@ -44,7 +44,7 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
         ultimateRecyclerView.addItemDividerDecoration(this);
 
         tagFollowAdapter = new TagFollowAdapter();
-        tagFollowAdapter.setItemListener(this);
+        tagFollowAdapter.setTagItemListener(this);
         ultimateRecyclerView.setAdapter(tagFollowAdapter);
 
         StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(tagFollowAdapter);
@@ -166,12 +166,27 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     }
 
     @Override
-    public void onFollowClick(Tag tag) {
+    public void onFollowClick(Tag tag, int position) {
         tagFollowGuidePresenter.addTag(tag);
+    }
+
+    @Override
+    public void onUnSubscribeClick(Tag tag, int position) {
+
     }
 
     @Override
     public void showConfirm() {
         //TODO showConfirm View and add click listener pass tags data to main activity
+    }
+
+    @Override
+    public void onUnSubscribeTag(int position) {
+
+    }
+
+    @Override
+    public void onUnSubscribeTagError() {
+
     }
 }

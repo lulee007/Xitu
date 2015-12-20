@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 public class Tag {
 
     private boolean isSubscribed;
+    private String subscribedId;
 
     private boolean official;
     private String updatedAt;
@@ -179,6 +180,14 @@ public class Tag {
 
     public void setIsSubscribed(boolean isSubscribed) {
         this.isSubscribed = isSubscribed;
+    }
+
+    public String getSubscribedId() {
+        return subscribedId;
+    }
+
+    public void setSubscribedId(String subscribedId) {
+        this.subscribedId = subscribedId;
     }
 
     public static class BackgroundEntity {

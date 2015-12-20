@@ -52,4 +52,17 @@ public class SubscribeServiceTest {
     }
 
 
+
+    @Test
+    public void testUnSubscribe() throws Exception {
+      Object o=  subscribeService.unSubscribe("566f798a60b20de5463fde89")
+                .map(new Func1<Boolean, Object>() {
+                    @Override
+                    public Object call(Boolean aBoolean) {
+                        return null;
+                    }
+                }).toBlocking().single();
+
+        assertThat(o,equalTo(null));
+    }
 }
