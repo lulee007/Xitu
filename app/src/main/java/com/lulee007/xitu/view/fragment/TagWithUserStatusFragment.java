@@ -2,11 +2,13 @@ package com.lulee007.xitu.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.EntriesByTagActivity;
 import com.lulee007.xitu.R;
 import com.lulee007.xitu.adapter.TagFollowAdapter;
@@ -14,6 +16,10 @@ import com.lulee007.xitu.models.Tag;
 import com.lulee007.xitu.presenter.TagWithUserStatusPresenter;
 import com.lulee007.xitu.view.ITagWithUserStatsView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 /**
  * User: lulee007@live.com
@@ -25,16 +31,17 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
     private boolean showHeader = false;
     private boolean showConfirm = false;
     public static final String BUNDLE_KEY_SHOW_HEADER = "show_header";
+    private FloatingActionButton subscribeDone;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        containerId = R.layout.fragment_tags_container;
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
             showHeader = arguments.getBoolean(BUNDLE_KEY_SHOW_HEADER);
         }
-
 
         mListAdapter = new TagFollowAdapter();
         mListAdapter.setItemListener(this);
@@ -45,10 +52,24 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
         StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mListAdapter);
         mUltimateRecyclerView.addItemDecoration(headersDecor);
         mUltimateRecyclerView.enableDefaultSwipeRefresh(false);
-        if (showHeader)  {
+        if (showHeader) {
             showConfirm = true;
             View header = getActivity().getLayoutInflater().inflate(R.layout.tag_follow_view_header, mUltimateRecyclerView.mRecyclerView, false);
             mUltimateRecyclerView.setNormalHeader(header);
+
+        }
+        subscribeDone = (FloatingActionButton) view.findViewById(R.id.subscribe_done);
+        if (subscribeDone != null && showConfirm) {
+
+            RxView.clicks(subscribeDone).throttleFirst(500, TimeUnit.MILLISECONDS)
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            getActivity().finish();
+                        }
+                    });
+            subscribeDone.setVisibility(View.VISIBLE);
+
         }
 
         mPresenter = new TagWithUserStatusPresenter(this);

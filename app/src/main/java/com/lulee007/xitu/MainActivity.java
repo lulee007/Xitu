@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -15,8 +16,8 @@ import android.view.MenuItem;
 
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.presenter.MainViewPresenter;
-import com.lulee007.xitu.presenter.TagWithUserStatusPresenter;
 import com.lulee007.xitu.util.AuthUserHelper;
+import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IMainView;
 import com.lulee007.xitu.view.fragment.MainFragment;
 import com.orhanobut.logger.Logger;
@@ -33,6 +34,9 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
     private boolean doubleClickExit = false;
     private TabLayout tabLayout;
     private DrawerLayout drawer;
+    private FragmentTransaction fragmentTransaction;
+    private Fragment currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Logger.d("主页onCreate开始");
@@ -42,7 +46,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        tabLayout= (TabLayout) findViewById(R.id.tab_layout_main);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout_main);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -54,10 +58,10 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
         mainViewPresenter = new MainViewPresenter(this);
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MainFragment  mainFragment=new MainFragment(tabLayout);
-        fragmentTransaction.replace(R.id.fragment_main,mainFragment);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        currentFragment = new MainFragment(tabLayout);
+        fragmentTransaction.replace(R.id.fragment_main, currentFragment);
         fragmentTransaction.commit();
         mainViewPresenter.init();
         Logger.d("主页onCreate结束");
@@ -76,7 +80,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_add_tag:
                 mainViewPresenter.showManageTagActivity();
                 break;
@@ -107,7 +111,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(Gravity.LEFT)){
+        if (drawer.isDrawerOpen(Gravity.LEFT)) {
             drawer.closeDrawer(Gravity.LEFT);
             return;
         }
@@ -123,14 +127,29 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
                             return null;
                         }
                     }).subscribe();
-        }else{
+        } else {
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE:
+                if (resultCode == XTConstant.ACTIVITY_RESULT_CODE.TAG_FOLLOW_GUIDE_SUBSCRIBE_DONE
+                        && currentFragment instanceof MainFragment){
+                    ((MainFragment)currentFragment).notifyChildRefreshEntries();
+                }
+                    break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public void showTagFollowGuideActivity() {
-        startActivity(TagFollowGuideActivity.class);
+        startActivityForResult(new Intent(this, TagFollowGuideActivity.class), XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE);
     }
 
 
@@ -141,8 +160,8 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public void showManageTagActivity() {
-        Intent intent=new Intent(this,ManageTagsActivity.class);
-        intent.putExtra(ManageTagsActivity.INTENT_KEY_USER,AuthUserHelper.getInstance().getUser().toString());
+        Intent intent = new Intent(this, ManageTagsActivity.class);
+        intent.putExtra(ManageTagsActivity.INTENT_KEY_USER, AuthUserHelper.getInstance().getUser().toString());
         startActivity(intent);
     }
 
@@ -150,4 +169,5 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
     public void showNeedLoginDialog() {
 
     }
+
 }

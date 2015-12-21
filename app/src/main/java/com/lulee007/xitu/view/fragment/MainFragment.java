@@ -26,6 +26,7 @@ public class MainFragment extends XTBaseFragment {
     private MainFragmentPagerAdapter mainFragmentPagerAdapter;
 
     private TabLayout parentTabLayout;
+    private TaggedEntriesFragment taggedEntriesFragment;
 
     public MainFragment(TabLayout tabLayout) {
         // Required empty public constructor
@@ -47,7 +48,7 @@ public class MainFragment extends XTBaseFragment {
         List<String> titles = new ArrayList<>();
         if (!isLoggedIn()) {
             fragments = new ArrayList<>();
-            fragments.add(new TaggedEntriesFragment());
+            fragments.add(taggedEntriesFragment=new TaggedEntriesFragment());
             fragments.add(new RecommendEntriesFragment());
             titles = new ArrayList<>();
             titles.add("我的关注");
@@ -64,4 +65,7 @@ public class MainFragment extends XTBaseFragment {
     }
 
 
+    public void notifyChildRefreshEntries() {
+        taggedEntriesFragment.mPresenter.loadNew();
+    }
 }

@@ -30,7 +30,7 @@ public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTB
     protected XTBaseAdapter mListAdapter;
     protected DataStateViewHelper mDataStateViewHelper;
     protected XTBasePresenter mPresenter;
-
+    protected int containerId=0;
 
     public BaseListFragment() {
         // Required empty public constructor
@@ -41,7 +41,8 @@ public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTB
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_entries, container, false);
+
+        View view = inflater.inflate(containerId==0?R.layout.fragment_list_container :containerId, container, false);
         mUltimateRecyclerView = (UltimateRecyclerView) view.findViewById(R.id.rv_entries);
         mUltimateRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         mUltimateRecyclerView.setHasFixedSize(false);

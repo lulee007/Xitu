@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lulee007.xitu.base.XTBaseActivity;
+import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.fragment.TagWithUserStatusFragment;
 import com.orhanobut.logger.Logger;
 
@@ -46,11 +47,15 @@ public class TagFollowGuideActivity extends XTBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
-                finish();
+                onBackPressed();
         }
         return true;
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        setResult(XTConstant.ACTIVITY_RESULT_CODE.TAG_FOLLOW_GUIDE_SUBSCRIBE_DONE);
+        super.onBackPressed();
+    }
 }
