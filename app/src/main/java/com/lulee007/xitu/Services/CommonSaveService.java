@@ -3,18 +3,23 @@ package com.lulee007.xitu.services;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.lulee007.xitu.base.XTBaseService;
 import com.lulee007.xitu.util.AuthUserHelper;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import retrofit.http.Body;
 import retrofit.http.POST;
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * User: lulee007@live.com
@@ -30,10 +35,10 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
 
     protected interface CommonSaveWebService {
         @POST("/batch/save")
-        Observable<Object> save(@Body PostEntity postEntity);
+        Observable<Object> save(@Body SaveRequest request);
     }
 
-    public Observable<Object> saveSubscription(String cid) {
+    public Observable<JSONObject> saveSubscription(String cid) {
         String className = "Subscribe";
 
         PostEntity.BodyEntity.ChildrenEntity childTagEntity = new PostEntity.BodyEntity.ChildrenEntity();
@@ -41,9 +46,23 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         childTagEntity.setClassName("Tag");
         childTagEntity.setKey("tag");
 
-        PostEntity postEntity = buildPostEntity(className, childTagEntity);
+        final PostEntity postEntity = buildPostEntity(className, childTagEntity);
 
-        return webService.save(postEntity);
+        SaveRequest saveRequest=new SaveRequest();
+        saveRequest.addRequest(postEntity);
+        return webService.save(saveRequest)
+                .map(new Func1<Object, JSONObject>() {
+                    @Override
+                    public JSONObject call(Object o) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(new Gson().toJson(o));
+                            return jsonObject.getJSONObject(postEntity.getBody().get__internalId());
+                        } catch (Exception e) {
+                            Logger.e(e.getCause(), "common save service save put internalId error: " + e.getMessage());
+                        }
+                        return null;
+                    }
+                });
 
     }
 
@@ -66,7 +85,7 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         try {
             childrenEntity.setCid(AuthUserHelper.getInstance().getUser().getString("objectId"));
 //            childrenEntity.setCid("563c1d9560b25749ea071246");
-            childrenEntity.setClassName("User");
+            childrenEntity.setClassName("_User");
             childrenEntity.setKey("user");
             //user
             childrenEntities.add(childrenEntity);
@@ -81,18 +100,44 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         return postEntity;
     }
 
-    private PostEntity  buildPostEntity(String className, List<PostEntity.BodyEntity.ChildrenEntity> childrenEntities){
-        PostEntity postEntity=buildPostEntity(className, (PostEntity.BodyEntity.ChildrenEntity) null);
-        List<PostEntity.BodyEntity.ChildrenEntity> childrenEntityList= postEntity.getBody().get__children();
-        if(childrenEntityList==null){
-            childrenEntityList=new ArrayList<>();
+    private PostEntity buildPostEntity(String className, List<PostEntity.BodyEntity.ChildrenEntity> childrenEntities) {
+        PostEntity postEntity = buildPostEntity(className, (PostEntity.BodyEntity.ChildrenEntity) null);
+        List<PostEntity.BodyEntity.ChildrenEntity> childrenEntityList = postEntity.getBody().get__children();
+        if (childrenEntityList == null) {
+            childrenEntityList = new ArrayList<>();
             postEntity.getBody().set__children(childrenEntityList);
         }
-        if( childrenEntities!=null){
+        if (childrenEntities != null) {
             childrenEntityList.addAll(childrenEntities);
         }
         return postEntity;
 
+    }
+
+    public static class SaveRequest {
+
+        public SaveRequest() {
+            this.requests = new ArrayList<>();
+        }
+
+        private List<PostEntity> requests;
+
+
+        public List<PostEntity> getRequests() {
+            return requests;
+        }
+
+        public void setRequests(List<PostEntity> requests) {
+            this.requests = requests;
+        }
+
+        public void addRequest(PostEntity postEntity) {
+            if (this.requests == null) {
+                this.requests = new ArrayList<>();
+            }
+            if (postEntity != null)
+                this.requests.add(postEntity);
+        }
     }
 
     public static class PostEntity {

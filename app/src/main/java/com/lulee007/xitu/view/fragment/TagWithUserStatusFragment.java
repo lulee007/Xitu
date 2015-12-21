@@ -41,6 +41,17 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //第一次不进此，在oncreate view中进行第一次，这里相当于切换页面刷新
+        if(getUserVisibleHint()){
+            if(mPresenter!=null){
+                mPresenter.loadNew();
+            }
+        }
+    }
+
+    @Override
     public void onItemClick(Object item) {
         Tag tag = (Tag) item;
         Intent intent = new Intent(getContext(), EntriesByTagActivity.class);
@@ -57,7 +68,7 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
      */
     @Override
     public void onFollowClick(Tag tag, int position) {
-        ((TagWithUserStatusPresenter)mPresenter).subscribeTag(tag.getSubscribedId(),position);
+        ((TagWithUserStatusPresenter)mPresenter).subscribeTag(tag.getObjectId(), position);
 
     }
 
@@ -84,7 +95,7 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
 
     @Override
     public void onUnSubscribeTag(int position) {
-        ((TagFollowAdapter)mListAdapter).onSubscribeDataChanged(position,false);
+        ((TagFollowAdapter)mListAdapter).onSubscribeDataChanged(null, position,false);
     }
 
     @Override
@@ -93,7 +104,7 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
     }
 
     @Override
-    public void onSubscribeTag(int position) {
-        ((TagFollowAdapter)mListAdapter).onSubscribeDataChanged(position,true);
+    public void onSubscribeTag(String objectId, int position) {
+        ((TagFollowAdapter)mListAdapter).onSubscribeDataChanged(objectId,position,true);
     }
 }

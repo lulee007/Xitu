@@ -40,6 +40,17 @@ public class SubscribedTagsFragment extends BaseListFragment<Tag> implements ITa
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //第一次不进此，在oncreate view中进行第一次，这里相当于切换页面刷新
+        if(getUserVisibleHint()){
+            if(mPresenter!=null){
+                mPresenter.loadNew();
+            }
+        }
+    }
+
+    @Override
     public void showConfirm() {
 
     }

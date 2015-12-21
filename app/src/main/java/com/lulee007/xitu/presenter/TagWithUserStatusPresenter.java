@@ -12,6 +12,7 @@ import com.lulee007.xitu.view.ITagWithUserStatsView;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -271,7 +272,6 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
 
     public void unSubscribeTag(String subscribedId, final int position) {
         Subscription subscription = subscribeService.unSubscribe(subscribedId)
-                .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Boolean>() {
                     @Override
@@ -289,11 +289,18 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
 
     public void subscribeTag(String cid, final int position) {
         Subscription subscription = new CommonSaveService().saveSubscription(cid)
+                .throttleFirst(500,TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Object>() {
+                .subscribe(new Action1<JSONObject>() {
                     @Override
-                    public void call(Object o) {
-                        ((ITagWithUserStatsView) mView).onSubscribeTag(position);
+                    public void call(JSONObject o) {
+                        Logger.json(o.toString());
+                        try {
+                            String objectId=o.getString("objectId");
+                            ((ITagWithUserStatsView) mView).onSubscribeTag(objectId,position);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override

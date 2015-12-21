@@ -10,9 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.R;
 import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Tag;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 /**
  * User: lulee007@live.com
@@ -51,14 +56,17 @@ public class TagFollowAdapter extends XTBaseAdapter<Tag> {
         if (isItemViewHolder(position)) {
             final TagFollowViewHolder holder1=(TagFollowViewHolder)holder;
             final Tag tag = getItem(position);
-            holder1.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(itemListener!=null){
-                        itemListener.onItemClick(tag);
-                    }
-                }
-            });
+            RxView.clicks(holder1.itemView)
+                    .throttleFirst(500,TimeUnit.MILLISECONDS)
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            if (itemListener != null) {
+                                itemListener.onItemClick(tag);
+                            }
+                        }
+                    });
+
             holder1.tagTitle.setText(tag.getTitle());
             holder1.tagSubscribersCount.setText(String.format("%d 关注", tag.getSubscribersCount()));
             holder1.tagEntriesCount.setText(String.format("%d 文章", tag.getEntriesCount()));
@@ -67,18 +75,26 @@ public class TagFollowAdapter extends XTBaseAdapter<Tag> {
             }else{
                 holder1.follow.setText("+关注");
             }
-            holder1.follow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(tagItemListener !=null){
-                        if(!tag.isSubscribed()) {
-                            tagItemListener.onFollowClick(tag,position);
-                        }else{
-                            tagItemListener.onUnSubscribeClick(tag, position);
+            RxView.clicks(holder1.follow).
+                    throttleFirst(1000, TimeUnit.MILLISECONDS)
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            if(tagItemListener !=null){
+                                if(!tag.isSubscribed()) {
+                                    tagItemListener.onFollowClick(tag,position);
+                                }else{
+                                    tagItemListener.onUnSubscribeClick(tag, position);
+                                }
+                            }
                         }
-                    }
-                }
-            });
+                    });
+//            holder1.follow.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
             if(tag.getIcon()!=null) {
                 Glide.with(holder1.tagIcon.getContext())
                         .load(tag.getIcon().getUrl())
@@ -108,7 +124,8 @@ public class TagFollowAdapter extends XTBaseAdapter<Tag> {
         notifyItemRemoved(position);
     }
 
-    public void onSubscribeDataChanged(int position, boolean b) {
+    public void onSubscribeDataChanged(String objectId, int position, boolean b) {
+        getItem(position).setSubscribedId(objectId);
         getItem(position).setIsSubscribed(b);
         notifyItemChanged(position);
     }

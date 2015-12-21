@@ -68,6 +68,12 @@ public abstract class BaseListFragment<T> extends XTBaseFragment implements IXTB
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.unSubscribeAll();
+        mPresenter=null;
+    }
 
     @Override
     public void refresh(List<T> entries) {

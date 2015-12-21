@@ -150,7 +150,6 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
 
     public void unSubscribeTag(String subscribedId,final int position) {
         Subscription subscription=subscribeService.unSubscribe(subscribedId)
-                .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Boolean>() {
                     @Override

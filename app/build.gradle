@@ -76,6 +76,8 @@ dependencies {
     compile 'com.orhanobut:logger:1.11'
 
     compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+
     //An image loading and caching library for Android focused on smooth scrolling
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.android.support:support-v4:23.1.0'

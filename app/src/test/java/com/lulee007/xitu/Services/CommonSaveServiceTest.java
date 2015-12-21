@@ -15,7 +15,7 @@ public class CommonSaveServiceTest {
 
     @Test
     public void testSaveTag() throws Exception {
-       Object o= commonSaveService.saveSubscription("5597a04de4b08a686ce56e63", "Subscribe")
+       Object o= commonSaveService.saveSubscription("5597a04de4b08a686ce56e63")
                 .map(new Func1<Object, Object>() {
                     @Override
                     public Object call(Object o) {

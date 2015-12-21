@@ -19,7 +19,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollowGuideView, DataStateViewHelper.DataStateViewListener ,TagFollowAdapter.TagItemListener {
+public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollowGuideView, DataStateViewHelper.DataStateViewListener, TagFollowAdapter.TagItemListener {
 
     private UltimateRecyclerView ultimateRecyclerView;
     private TagFollowAdapter tagFollowAdapter;
@@ -124,7 +124,6 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     }
 
 
-
     @Override
     public void addNewError() {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.ERROR);
@@ -165,6 +164,7 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
         tagFollowGuidePresenter.loadNew();
     }
 
+    //adapter click listener
     @Override
     public void onFollowClick(Tag tag, int position) {
         tagFollowGuidePresenter.addTag(tag);
@@ -174,6 +174,9 @@ public class TagFollowGuideActivity extends XTBaseActivity implements ITagFollow
     public void onUnSubscribeClick(Tag tag, int position) {
 
     }
+
+
+    //ui view
 
     @Override
     public void showConfirm() {
