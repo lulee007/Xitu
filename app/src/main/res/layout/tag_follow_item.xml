@@ -39,14 +39,18 @@
                 android:id="@+id/tag_entries_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ccc" />
+
+                android:text="ccc"
+                android:textColor="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/tag_subscribers_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="bbb" />
+
+                android:text="bbb"
+                android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
     </LinearLayout>

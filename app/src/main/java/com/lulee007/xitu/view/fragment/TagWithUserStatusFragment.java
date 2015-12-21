@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lulee007.xitu.EntriesByTagActivity;
+import com.lulee007.xitu.R;
 import com.lulee007.xitu.adapter.TagFollowAdapter;
 import com.lulee007.xitu.models.Tag;
 import com.lulee007.xitu.presenter.TagWithUserStatusPresenter;
@@ -21,19 +22,35 @@ import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecy
  */
 public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements ITagWithUserStatsView, TagFollowAdapter.TagItemListener {
 
+    private boolean showHeader = false;
+    private boolean showConfirm = false;
+    public static final String BUNDLE_KEY_SHOW_HEADER = "show_header";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            showHeader = arguments.getBoolean(BUNDLE_KEY_SHOW_HEADER);
+        }
+
+
         mListAdapter = new TagFollowAdapter();
         mListAdapter.setItemListener(this);
-        ((TagFollowAdapter)mListAdapter).setTagItemListener(this);
+        ((TagFollowAdapter) mListAdapter).setTagItemListener(this);
 
         mUltimateRecyclerView.setAdapter(mListAdapter);
-        mUltimateRecyclerView.addItemDividerDecoration(this.getContext());
+        mUltimateRecyclerView.addItemDividerDecoration(getContext());
         StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mListAdapter);
         mUltimateRecyclerView.addItemDecoration(headersDecor);
         mUltimateRecyclerView.enableDefaultSwipeRefresh(false);
+        if (showHeader)  {
+            showConfirm = true;
+            View header = getActivity().getLayoutInflater().inflate(R.layout.tag_follow_view_header, mUltimateRecyclerView.mRecyclerView, false);
+            mUltimateRecyclerView.setNormalHeader(header);
+        }
+
         mPresenter = new TagWithUserStatusPresenter(this);
         mPresenter.loadNew();
 
@@ -44,8 +61,8 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         //第一次不进此，在oncreate view中进行第一次，这里相当于切换页面刷新
-        if(getUserVisibleHint()){
-            if(mPresenter!=null){
+        if (getUserVisibleHint()) {
+            if (mPresenter != null) {
                 mPresenter.loadNew();
             }
         }
@@ -63,30 +80,37 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
 
     /**
      * TagItemListener
+     *
      * @param tag
      * @param position
      */
     @Override
     public void onFollowClick(Tag tag, int position) {
-        ((TagWithUserStatusPresenter)mPresenter).subscribeTag(tag.getObjectId(), position);
+        ((TagWithUserStatusPresenter) mPresenter).subscribeTag(tag.getObjectId(), position);
 
     }
 
     /**
      * TagItemListener
+     *
      * @param tag
      * @param position
      */
     @Override
     public void onUnSubscribeClick(Tag tag, int position) {
-        ((TagWithUserStatusPresenter)mPresenter).unSubscribeTag(tag.getSubscribedId(),position);
+        ((TagWithUserStatusPresenter) mPresenter).unSubscribeTag(tag.getSubscribedId(), position);
 
     }
-
 
     /**
      * I_VIEW
      */
+
+    @Override
+    public void showConfirm() {
+
+    }
+
 
     @Override
     public void onUnSubscribeTagError() {
@@ -95,7 +119,7 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
 
     @Override
     public void onUnSubscribeTag(int position) {
-        ((TagFollowAdapter)mListAdapter).onSubscribeDataChanged(null, position,false);
+        ((TagFollowAdapter) mListAdapter).onSubscribeDataChanged(null, position, false);
     }
 
     @Override
@@ -105,6 +129,6 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
 
     @Override
     public void onSubscribeTag(String objectId, int position) {
-        ((TagFollowAdapter)mListAdapter).onSubscribeDataChanged(objectId,position,true);
+        ((TagFollowAdapter) mListAdapter).onSubscribeDataChanged(objectId, position, true);
     }
 }

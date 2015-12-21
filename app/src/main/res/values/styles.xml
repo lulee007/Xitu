@@ -8,30 +8,31 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
-        <item name="android:colorBackground">@color/background_material_light</item>
+        <item name="android:windowBackground">@color/background_light</item>
+
+
+
     </style>
 
 
     <!--带ActionBar页面-->
-    <style name="AppTheme.ActionBar" >
+    <style name="XTActionBar" parent="@style/AppTheme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+
 
         <!-- Remove shadow below action bar Android < 5.0 -->
         <item name="android:windowContentOverlay">@null</item>
+        <!-- remove shadow below action bar 5.0 -->
+        <!-- <item name="android:elevation">0dp</item> -->
         <!-- Support library compatibility -->
         <item name="elevation">0dp</item>
-        <!-- Used to for the title of the Toolbar -->
-        <item name="android:textColorPrimary">#fff</item>
-        <!-- Used to for the title of the Toolbar when parent is Theme.AppCompat.Light -->
-        <item name="android:textColorPrimaryInverse">#000</item>
-        <!-- Used to color the text of the action menu icons -->
-        <item name="android:textColorSecondary">#eee</item>
-        <!-- Used to color the overflow menu icon -->
-        <item name="actionMenuTextColor">#000</item>
+        <item name="android:windowBackground">@color/background_light</item>
+
+
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -52,5 +53,5 @@
     </style>
 
 
-
+    <color name="light_gray">#f4f4f4</color>
 </resources>

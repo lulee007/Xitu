@@ -24,7 +24,7 @@ public class MainViewPresenter {
     }
 
     private boolean isFirstTimeIn(){
-        return false;
+        return true;
     }
 
     public void showManageTagActivity() {

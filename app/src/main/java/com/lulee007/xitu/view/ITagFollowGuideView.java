@@ -10,4 +10,8 @@ public interface ITagFollowGuideView extends IXTBaseView<Tag> {
     void onUnSubscribeTag(int position);
 
     void onUnSubscribeTagError();
+
+    void onSubscribeTagError();
+
+    void onSubscribeTag(String objectId, int position);
 }

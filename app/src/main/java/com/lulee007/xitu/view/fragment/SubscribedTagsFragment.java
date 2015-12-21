@@ -66,6 +66,16 @@ public class SubscribedTagsFragment extends BaseListFragment<Tag> implements ITa
     }
 
     @Override
+    public void onSubscribeTagError() {
+
+    }
+
+    @Override
+    public void onSubscribeTag(String objectId, int position) {
+
+    }
+
+    @Override
     public void onItemClick(Object item) {
         Tag tag = (Tag) item;
         Intent intent = new Intent(getContext(), EntriesByTagActivity.class);

@@ -86,4 +86,6 @@ dependencies {
 
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
 
+//    compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
+
 }
