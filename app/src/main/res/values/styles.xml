@@ -6,6 +6,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Remove shadow below action bar Android < 5.0 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- remove shadow below action bar 5.0 -->
+         <!--<item name="android:elevation">0dp</item>-->
+        <!-- Support library compatibility -->
+        <!--<item name="elevation">0dp</item>-->
+
+
         <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
         <item name="android:windowBackground">@color/background_light</item>
@@ -35,6 +44,7 @@
 
     </style>
 
+    <!--use for custom action bar with toolbar etc-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 

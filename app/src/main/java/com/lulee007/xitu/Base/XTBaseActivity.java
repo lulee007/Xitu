@@ -21,6 +21,10 @@ public class XTBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null) {
+            actionBar.setElevation(0);
+        }
 
     }
 
