@@ -67,9 +67,9 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
                             .crossFade()
                             .into(entryCardViewHolder.screenshot);
 
-                if (entry.getUser().getAvatar_hd() != null)
+                if (entry.getUser().getAvatar_large() != null)
                     Glide.with(entryCardViewHolder.itemView.getContext())
-                            .load(entry.getUser().getAvatar_hd())
+                            .load(entry.getUser().getAvatar_large())
                             .crossFade()
                             .into(entryCardViewHolder.authorAvatar);
                 entryCardViewHolder.authorAvatar.setOnClickListener(new View.OnClickListener() {

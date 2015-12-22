@@ -13,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.lulee007.xitu.adapter.MainFragmentPagerAdapter;
+import com.lulee007.xitu.adapter.CommonFragmentPagerAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.Tag;
 import com.lulee007.xitu.presenter.EntriesByTagPresenter;
+import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
 import com.lulee007.xitu.view.IEntriesByTagView;
-import com.lulee007.xitu.view.fragment.EntriesByTagFragment;
+import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +63,11 @@ public class EntriesByTagActivity extends XTBaseActivity implements IEntriesByTa
         titles.add("热门");
         titles.add("最新");
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(EntriesByTagFragment.newInstance("-createdAt", tagTitle));
-        fragments.add(EntriesByTagFragment.newInstance("-rankIndex", tagTitle));
+        fragments.add(ListEntriesFragment.newInstance(ListEntriesFragmentPresenter.BY_TAG_HOT, tagTitle));
+        fragments.add(ListEntriesFragment.newInstance(ListEntriesFragmentPresenter.BY_TAG_LATEST, tagTitle));
         FragmentManager fragmentManager = getSupportFragmentManager();
-        MainFragmentPagerAdapter mainFragmentPagerAdapter = new MainFragmentPagerAdapter(fragmentManager, fragments, titles);
-        viewPager.setAdapter(mainFragmentPagerAdapter);
+        CommonFragmentPagerAdapter commonFragmentPagerAdapter = new CommonFragmentPagerAdapter(fragmentManager, fragments, titles);
+        viewPager.setAdapter(commonFragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);

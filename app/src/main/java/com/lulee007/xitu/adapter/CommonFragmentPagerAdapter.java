@@ -12,12 +12,12 @@ import java.util.List;
  * Date: 2015-12-13
  * Time: 15:47
  */
-public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class CommonFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> fragments;
     private List<String> titles;
 
-    public MainFragmentPagerAdapter(FragmentManager fm, @NonNull List<Fragment> fragments1,@NonNull List<String> titles) {
+    public CommonFragmentPagerAdapter(FragmentManager fm, @NonNull List<Fragment> fragments1, @NonNull List<String> titles) {
         super(fm);
         this.fragments = fragments1;
         this.titles = titles;

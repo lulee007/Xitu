@@ -25,11 +25,11 @@ import com.lulee007.xitu.view.IEntriesView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaggedEntriesFragment extends BaseListFragment<Entry> implements IEntriesView, EntryCardItemAdapter.EntryCardItemListener {
+public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implements IEntriesView, EntryCardItemAdapter.EntryCardItemListener {
 
     private static final int ON_TAG_FOLLOW_ACTIVITY_REQUEST = 1;
 
-    public TaggedEntriesFragment() {
+    public TaggedCardEntriesFragment() {
         // Required empty public constructor
     }
 

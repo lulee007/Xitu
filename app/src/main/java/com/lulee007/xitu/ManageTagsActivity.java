@@ -1,13 +1,12 @@
 package com.lulee007.xitu;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 
-import com.lulee007.xitu.adapter.MainFragmentPagerAdapter;
+import com.lulee007.xitu.adapter.CommonFragmentPagerAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.view.fragment.SubscribedTagsFragment;
 import com.lulee007.xitu.view.fragment.TagWithUserStatusFragment;
@@ -34,8 +33,8 @@ public class ManageTagsActivity extends XTBaseActivity {
         titles.add("所有标签");
         titles.add("已关注标签");
         FragmentManager fragmentManager=getSupportFragmentManager();
-        MainFragmentPagerAdapter mainFragmentPagerAdapter=new MainFragmentPagerAdapter(fragmentManager,fragments,titles);
-        viewPager.setAdapter(mainFragmentPagerAdapter);
+        CommonFragmentPagerAdapter commonFragmentPagerAdapter =new CommonFragmentPagerAdapter(fragmentManager,fragments,titles);
+        viewPager.setAdapter(commonFragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
     }

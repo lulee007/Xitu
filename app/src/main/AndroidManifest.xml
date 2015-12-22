@@ -43,8 +43,7 @@
             android:name=".AuthorsActivity"
             android:theme="@style/XTActionBar"/>
         <activity
-            android:name=".AuthorHomeActivity"
-            android:theme="@style/XTActionBar"/>
+            android:name=".AuthorHomeActivity"/>
         <activity android:name=".EntryWebPageActivity"/>
         <activity android:name=".EntriesByTagActivity"/>
         <activity
