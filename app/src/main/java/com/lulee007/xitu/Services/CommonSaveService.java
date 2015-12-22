@@ -3,16 +3,13 @@ package com.lulee007.xitu.services;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 import com.lulee007.xitu.base.XTBaseService;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,14 +45,14 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
 
         final PostEntity postEntity = buildPostEntity(className, childTagEntity);
 
-        SaveRequest saveRequest=new SaveRequest();
+        SaveRequest saveRequest = new SaveRequest();
         saveRequest.addRequest(postEntity);
         return webService.save(saveRequest)
                 .map(new Func1<Object, JSONObject>() {
                     @Override
                     public JSONObject call(Object o) {
                         try {
-                            JSONObject jsonObject=new JSONObject(new Gson().toJson(o));
+                            JSONObject jsonObject = new JSONObject(new Gson().toJson(o));
                             return jsonObject.getJSONObject(postEntity.getBody().get__internalId());
                         } catch (Exception e) {
                             Logger.e(e.getCause(), "common save service save put internalId error: " + e.getMessage());
@@ -82,17 +79,13 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
             childrenEntities.add(childTagEntity);
 
         PostEntity.BodyEntity.ChildrenEntity childrenEntity = new PostEntity.BodyEntity.ChildrenEntity();
-        try {
-            childrenEntity.setCid(AuthUserHelper.getInstance().getUser().getString("objectId"));
+        childrenEntity.setCid((String) AuthUserHelper.getInstance().getUser().get("objectId"));
 //            childrenEntity.setCid("563c1d9560b25749ea071246");
-            childrenEntity.setClassName("_User");
-            childrenEntity.setKey("user");
-            //user
-            childrenEntities.add(childrenEntity);
+        childrenEntity.setClassName("_User");
+        childrenEntity.setKey("user");
+        //user
+        childrenEntities.add(childrenEntity);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         bodyEntity.set__children(childrenEntities);
 

@@ -24,6 +24,7 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
 
     public static final String BUNDLE_KEY_REQUEST_TYPE = "request_type";
     public static final String BUNDLE_KEY_TAG_NAME = "tag_name";
+    private static final String BUNDLE_KEY_AUTHOR_ID = "author_id";
 
     public ListEntriesFragment() {
 
@@ -41,8 +42,18 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
         return fragment;
     }
 
-    public static ListEntriesFragment newInstance(int type) {
+    public static ListEntriesFragment newInstanceForRecommended(int type) {
         return newInstance(type, null);
+    }
+
+    public static ListEntriesFragment newInstanceForAuthor(int type, String authorId) {
+        Bundle args = new Bundle();
+        args.putInt(BUNDLE_KEY_REQUEST_TYPE, type);
+
+        args.putString(BUNDLE_KEY_AUTHOR_ID, authorId);
+        ListEntriesFragment fragment = new ListEntriesFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -59,14 +70,20 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
         if (args != null) {
             ListEntriesFragmentPresenter p = null;
             int type = args.getInt(BUNDLE_KEY_REQUEST_TYPE);
+            Map<String, String> whereMap = null;
             switch (type) {
                 case ListEntriesFragmentPresenter.BY_RECOMMENDED:
-                case ListEntriesFragmentPresenter.BY_USER:
                     p = new ListEntriesFragmentPresenter(this, type, null);
+                    break;
+                case ListEntriesFragmentPresenter.BY_USER:
+                    whereMap = new HashMap<>();
+                    whereMap.put("authorId", args.getString(BUNDLE_KEY_AUTHOR_ID));
+                    p = new ListEntriesFragmentPresenter(this, type, whereMap);
+
                     break;
                 case ListEntriesFragmentPresenter.BY_TAG_HOT:
                 case ListEntriesFragmentPresenter.BY_TAG_LATEST:
-                    Map<String, String> whereMap = new HashMap<>();
+                    whereMap = new HashMap<>();
                     whereMap.put("tagsTitleArray", args.getString(BUNDLE_KEY_TAG_NAME));
                     p = new ListEntriesFragmentPresenter(this, type, whereMap);
                     break;

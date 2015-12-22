@@ -1,9 +1,13 @@
 package com.lulee007.xitu;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -15,9 +19,13 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.lulee007.xitu.adapter.CommonFragmentPagerAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
+import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
 import com.lulee007.xitu.util.BlurTransformation;
 import com.lulee007.xitu.util.GlideCircleTransform;
-import com.orhanobut.logger.Logger;
+import com.lulee007.xitu.view.fragment.ListEntriesFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -35,6 +43,7 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         authorIcon = (ImageView) findViewById(R.id.author_icon);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.vp_author_home);
 
         setSupportActionBar(toolbar);
@@ -45,26 +54,40 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         collapsingToolbar.setTitle("掘金者");
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbar.setExpandedTitleColor(Color.WHITE);
-        int color = getResources().getColor(R.color.juejin_blue);
-        collapsingToolbar.setContentScrimColor(Color.argb((int) (0.4 * 255),
-                Color.red(color),
-                Color.green(color),
-                Color.blue(color)
-        ));
+//        int color = getResources().getColor(R.color.juejin_blue);
+//        collapsingToolbar.setContentScrimColor(Color.argb((int) (0.5 * 255),
+//                Color.red(color),
+//                Color.green(color),
+//                Color.blue(color)
+//        ));
         final String url = getIntent().getStringExtra("url");
-        Glide.with(AuthorHomeActivity.this)
-                .load(url)
-                .bitmapTransform(new BlurTransformation(AuthorHomeActivity.this))
-                .into((ImageView) findViewById(R.id.author_icon_blur));
+        String userId=getIntent().getStringExtra("author_id");
+//        Glide.with(AuthorHomeActivity.this)
+//                .load(url)
+//                .bitmapTransform(new BlurTransformation(AuthorHomeActivity.this))
+//                .into((ImageView) findViewById(R.id.author_icon_blur));
         Glide.with(this)
                 .load(url)
                 .transform(new GlideCircleTransform(this))
                 .into(authorIcon);
 
         FragmentManager fragmentManager=getSupportFragmentManager();
-        CommonFragmentPagerAdapter fragmentPagerAdapter=new CommonFragmentPagerAdapter(fragmentManager,null,null);
+        List<Fragment> fragments=new ArrayList<>();
+        fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER,userId));
+        List<String > titles=new ArrayList<>();
+        titles.add("分享");
+        CommonFragmentPagerAdapter fragmentPagerAdapter=new CommonFragmentPagerAdapter(fragmentManager,fragments,titles);
+        viewPager.setAdapter(fragmentPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setBackgroundColor(Color.TRANSPARENT);
 
+    }
 
+    public static Intent buildIntent(Context context,String authorIconUrl,String authorId){
+        Intent intent = new Intent(context, AuthorHomeActivity.class);
+        intent.putExtra("url", authorIconUrl);
+        intent.putExtra("author_id",authorId);
+        return intent;
     }
 
     private void setActionBarAlpha(float alpha) {
@@ -91,7 +114,6 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) authorIcon.getLayoutParams();
         layoutParams.width = layoutParams.height = newSize;
         authorIcon.setLayoutParams(layoutParams);
-        Logger.d("height:" + authorIcon.getLayoutParams().height);
     }
 
 

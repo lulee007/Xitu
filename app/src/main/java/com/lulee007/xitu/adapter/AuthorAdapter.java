@@ -52,6 +52,7 @@ public class AuthorAdapter extends XTBaseAdapter<Author> {
                             Map<String,Object> map=new HashMap<String, Object>();
                             map.put("image",authorViewHolder.icon);
                             map.put("url",author.getAvatar_large());
+                            map.put("authorId",author.getObjectId());
                             itemListener.onItemClick(map);
                         }
                     }

@@ -31,7 +31,6 @@ public class ListEntriesFragmentPresenter extends XTBasePresenter<IEntriesByTagF
 
     private EntryService entryService;
     private String orderBy;
-    private String tagTitle = null;
     private double rankIndex = 0.0;
     private int requestType = BY_RECOMMENDED;
     private Map<String, String> whereMap;
@@ -107,7 +106,7 @@ public class ListEntriesFragmentPresenter extends XTBasePresenter<IEntriesByTagF
                             createdAt,
                             new Gson().toJson(AuthUserHelper.getInstance().getUser()));
                 } else {
-                    myWhere = String.format("{\"user\":%s}", new Gson().toJson(AuthUserHelper.getInstance().getUser()));
+                    myWhere = String.format("{\"user\":{\"__type\":\"Pointer\",\"objectId\":\"%s\",\"className\":\"_User\"}}\n", whereMap.get("authorId"));
                 }
                 break;
         }

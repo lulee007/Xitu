@@ -10,11 +10,8 @@ import com.lulee007.xitu.services.SubscribeService;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.ITagFollowGuideView;
 
-import org.json.JSONException;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscription;
@@ -36,11 +33,8 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
         super(view);
         pageOffset = 100;
         subscribeService = new SubscribeService();
-        try {
-            userId = AuthUserHelper.getInstance().getUser().getString("objectId");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        userId = (String) AuthUserHelper.getInstance().getUser().get("objectId");
+
     }
 
     @Override
@@ -148,8 +142,8 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
         addSubscription(subscription);
     }
 
-    public void unSubscribeTag(String subscribedId,final int position) {
-        Subscription subscription=subscribeService.unSubscribe(subscribedId)
+    public void unSubscribeTag(String subscribedId, final int position) {
+        Subscription subscription = subscribeService.unSubscribe(subscribedId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Boolean>() {
                     @Override

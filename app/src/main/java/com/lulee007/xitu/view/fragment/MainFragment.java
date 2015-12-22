@@ -50,7 +50,7 @@ public class MainFragment extends XTBaseFragment {
         if (!isLoggedIn()) {
             fragments = new ArrayList<>();
             fragments.add(taggedCardEntriesFragment = new TaggedCardEntriesFragment());
-            fragments.add(ListEntriesFragment.newInstance(ListEntriesFragmentPresenter.BY_RECOMMENDED));
+            fragments.add(ListEntriesFragment.newInstanceForRecommended(ListEntriesFragmentPresenter.BY_RECOMMENDED));
             titles = new ArrayList<>();
             titles.add("我的关注");
             titles.add("发现");

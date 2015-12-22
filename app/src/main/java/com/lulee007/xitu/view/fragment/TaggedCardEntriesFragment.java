@@ -84,8 +84,7 @@ public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implement
                 icon,   // The view which starts the transition
                 getString(R.string.transition_name_author_icon)    // The transitionName of the view we’re transitioning to
         );
-        Intent intent = new Intent(getContext(), AuthorHomeActivity.class);
-        intent.putExtra("url", entry.getUser().getAvatar_large());
+        Intent intent = AuthorHomeActivity.buildIntent(getContext(),entry.getUser().getAvatar_large(),entry.getUser().getObjectId());
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
 

@@ -67,14 +67,12 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
     private HashMap<String, String> buildSubscribeParams(String where) {
         HashMap<String, String> hotTagParams = new HashMap<String, String>();
 
-        try {
-            hotTagParams.put("where",
-                    String.format("{\"tag\":{\"$in\":%s},\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"%s\"}}",
-                            where
-                            , AuthUserHelper.getInstance().getUser().getString("objectId")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        hotTagParams.put("where",
+                String.format("{\"tag\":{\"$in\":%s},\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"%s\"}}",
+                        where
+                        , AuthUserHelper.getInstance().getUser().get("objectId")));
+
 
         return hotTagParams;
     }
@@ -289,15 +287,15 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
 
     public void subscribeTag(String cid, final int position) {
         Subscription subscription = new CommonSaveService().saveSubscription(cid)
-                .throttleFirst(500,TimeUnit.MILLISECONDS)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<JSONObject>() {
                     @Override
                     public void call(JSONObject o) {
                         Logger.json(o.toString());
                         try {
-                            String objectId=o.getString("objectId");
-                            ((ITagWithUserStatsView) mView).onSubscribeTag(objectId,position);
+                            String objectId = o.getString("objectId");
+                            ((ITagWithUserStatsView) mView).onSubscribeTag(objectId, position);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

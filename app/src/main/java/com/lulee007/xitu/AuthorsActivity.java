@@ -20,7 +20,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import java.util.List;
 import java.util.Map;
 
-public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, DataStateViewHelper.DataStateViewListener ,AuthorAdapter.ItemListener{
+public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, DataStateViewHelper.DataStateViewListener, AuthorAdapter.ItemListener {
 
     private UltimateRecyclerView ultimateRecyclerView;
     private AuthorAdapter authorAdapter;
@@ -45,7 +45,6 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
         authorAdapter = new AuthorAdapter();
         authorAdapter.setItemListener(this);
         ultimateRecyclerView.setAdapter(authorAdapter);
-
 
 
         authorAdapter.setCustomLoadMoreView(LayoutInflater.from(this).inflate(R.layout.custom_bottom_progressbar, null));
@@ -113,7 +112,6 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
     }
 
 
-
     @Override
     public void addNewError() {
         dataStateViewHelper.setView(DataStateViewHelper.DateState.ERROR);
@@ -157,13 +155,13 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
 
     @Override
     public void onItemClick(Object item) {
-        Map<String,Object> map= (Map<String, Object>) item;
+        Map<String, Object> map = (Map<String, Object>) item;
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                (ImageView)map.get("image"),   // The view which starts the transition
+                (ImageView) map.get("image"),   // The view which starts the transition
                 getString(R.string.transition_name_author_icon)    // The transitionName of the view we’re transitioning to
         );
-        Intent intent=new Intent(this,AuthorHomeActivity.class);
-        intent.putExtra("url",map.get("url").toString());
+        Intent intent = AuthorHomeActivity.buildIntent(this, (String) map.get("url"), (String) map.get("authorId"));
+
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 }
