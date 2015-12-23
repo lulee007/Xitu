@@ -36,7 +36,7 @@ public class EntriesByTagActivity extends XTBaseActivity implements IEntriesByTa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entries_by_tag);
+        setContentView(R.layout.activity_tag_home);
 
         String tagTitle = getIntent().getStringExtra(BUNDLE_KEY_TAG_TITLE);
 
