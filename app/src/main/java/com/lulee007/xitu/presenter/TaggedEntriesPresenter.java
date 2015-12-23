@@ -318,6 +318,7 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                        Collection newCollection = new Collection();
                                        newCollection.setObjectId(s);
                                        entry.setCollection(newCollection);
+                                       entry.setCollectionCount(entry.getCollectionCount()+1);
                                        ((IEntriesView) mView).onCollected(position);
                                    }
                                },
