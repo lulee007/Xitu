@@ -289,16 +289,11 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
         Subscription subscription = new CommonSaveService().saveSubscription(cid)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<JSONObject>() {
+                .subscribe(new Action1<String>() {
                     @Override
-                    public void call(JSONObject o) {
+                    public void call(String o) {
                         Logger.json(o.toString());
-                        try {
-                            String objectId = o.getString("objectId");
-                            ((ITagWithUserStatsView) mView).onSubscribeTag(objectId, position);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                            ((ITagWithUserStatsView) mView).onSubscribeTag( o, position);
                     }
                 }, new Action1<Throwable>() {
                     @Override

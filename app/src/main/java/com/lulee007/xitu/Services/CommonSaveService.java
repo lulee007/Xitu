@@ -3,6 +3,7 @@ package com.lulee007.xitu.services;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.lulee007.xitu.base.XTBaseService;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.orhanobut.logger.Logger;
@@ -35,25 +36,25 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         Observable<Object> save(@Body SaveRequest request);
     }
 
-    public Observable<JSONObject> saveSubscription(String cid) {
-        String className = "Subscribe";
+    public Observable<String> saveSubscription(String cid) {
+        String classNameToSave = "Subscribe";
 
         PostEntity.BodyEntity.ChildrenEntity childTagEntity = new PostEntity.BodyEntity.ChildrenEntity();
         childTagEntity.setCid(cid);
         childTagEntity.setClassName("Tag");
         childTagEntity.setKey("tag");
 
-        final PostEntity postEntity = buildPostEntity(className, childTagEntity);
+        final PostEntity postEntity = buildPostEntity(classNameToSave, childTagEntity);
 
         SaveRequest saveRequest = new SaveRequest();
         saveRequest.addRequest(postEntity);
         return webService.save(saveRequest)
-                .map(new Func1<Object, JSONObject>() {
+                .map(new Func1<Object, String>() {
                     @Override
-                    public JSONObject call(Object o) {
+                    public String call(Object o) {
                         try {
-                            JSONObject jsonObject = new JSONObject(new Gson().toJson(o));
-                            return jsonObject.getJSONObject(postEntity.getBody().get__internalId());
+                            LinkedTreeMap data = ((LinkedTreeMap<String, LinkedTreeMap>) o).get(postEntity.getBody().get__internalId());
+                            return (String) (data.get("objectId"));
                         } catch (Exception e) {
                             Logger.e(e.getCause(), "common save service save put internalId error: " + e.getMessage());
                         }
@@ -61,6 +62,33 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
                     }
                 });
 
+    }
+
+    public Observable<String> saveCollectEntry(String cid){
+        String classNameToSave = "Collection";
+
+        PostEntity.BodyEntity.ChildrenEntity childTagEntity = new PostEntity.BodyEntity.ChildrenEntity();
+        childTagEntity.setCid(cid);
+        childTagEntity.setClassName("Entry");
+        childTagEntity.setKey("entry");
+
+        final PostEntity postEntity = buildPostEntity(classNameToSave, childTagEntity);
+
+        SaveRequest saveRequest = new SaveRequest();
+        saveRequest.addRequest(postEntity);
+        return webService.save(saveRequest)
+                .map(new Func1<Object, String>() {
+                    @Override
+                    public String call(Object o) {
+                        try {
+                            LinkedTreeMap data = ((LinkedTreeMap<String, LinkedTreeMap>) o).get(postEntity.getBody().get__internalId());
+                            return (String) (data.get("objectId"));
+                        } catch (Exception e) {
+                            Logger.e(e.getCause(), "common save service save put internalId error: " + e.getMessage());
+                        }
+                        return null;
+                    }
+                });
     }
 
     @NonNull
@@ -107,7 +135,7 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
 
     }
 
-    public static class SaveRequest {
+    protected static class SaveRequest {
 
         public SaveRequest() {
             this.requests = new ArrayList<>();
@@ -133,7 +161,7 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         }
     }
 
-    public static class PostEntity {
+    protected static class PostEntity {
 
         /**
          * __children : [{"cid":"563c1d9560b25749ea071246","className":"_User","key":"user"},{"cid":"5597838ee4b08a686ce2319d","className":"Tag","key":"tag"}]
