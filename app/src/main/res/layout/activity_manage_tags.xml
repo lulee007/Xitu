@@ -7,20 +7,7 @@
 
     tools:context="com.lulee007.xitu.ManageTagsActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout_tag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable">
-
-        </android.support.design.widget.TabLayout>
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/app_bar_with_tab"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/tag_pager"

@@ -57,7 +57,7 @@ public class EntriesByTagActivity extends XTBaseActivity implements IEntriesByTa
             actionBar.setDisplayShowTitleEnabled(false);
             title.setText(tagTitle);
         }
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout_entries_by_tag);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.entry_pager);
         List<String> titles = new ArrayList<>();
         titles.add("热门");

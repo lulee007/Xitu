@@ -44,7 +44,8 @@
             android:theme="@style/XTActionBar"/>
         <activity
             android:name=".AuthorHomeActivity"/>
-        <activity android:name=".EntryWebPageActivity"/>
+        <activity android:name=".EntryWebPageActivity"
+            android:theme="@style/XTActionBar"/>
         <activity android:name=".EntriesByTagActivity"/>
         <activity
             android:name=".ManageTagsActivity"

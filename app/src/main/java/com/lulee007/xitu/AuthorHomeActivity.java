@@ -19,21 +19,27 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.lulee007.xitu.adapter.CommonFragmentPagerAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
+import com.lulee007.xitu.models.Author;
+import com.lulee007.xitu.presenter.AuthorHomePresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
-import com.lulee007.xitu.util.BlurTransformation;
 import com.lulee007.xitu.util.GlideCircleTransform;
+import com.lulee007.xitu.view.IAuthorHomeView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.OnOffsetChangedListener {
+public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.OnOffsetChangedListener, IAuthorHomeView {
 
     private ImageView authorIcon;
     private float oldAlpha;
     private static final int minIconHeight = 32;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbar;
+    private AuthorHomePresenter authorHomePresenter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +47,10 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         setContentView(R.layout.activity_author_home);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         authorIcon = (ImageView) findViewById(R.id.author_icon);
-        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.vp_author_home);
+         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+         viewPager = (ViewPager) findViewById(R.id.vp_author_home);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,7 +67,7 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
 //                Color.blue(color)
 //        ));
         final String url = getIntent().getStringExtra("url");
-        String userId=getIntent().getStringExtra("author_id");
+         userId=getIntent().getStringExtra("author_id");
 //        Glide.with(AuthorHomeActivity.this)
 //                .load(url)
 //                .bitmapTransform(new BlurTransformation(AuthorHomeActivity.this))
@@ -71,15 +77,10 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
                 .transform(new GlideCircleTransform(this))
                 .into(authorIcon);
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        List<Fragment> fragments=new ArrayList<>();
-        fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER,userId));
-        List<String > titles=new ArrayList<>();
-        titles.add("分享");
-        CommonFragmentPagerAdapter fragmentPagerAdapter=new CommonFragmentPagerAdapter(fragmentManager,fragments,titles);
-        viewPager.setAdapter(fragmentPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setBackgroundColor(Color.TRANSPARENT);
+
+
+        authorHomePresenter=new AuthorHomePresenter(this);
+        authorHomePresenter.getAuthorInfo(userId);
 
     }
 
@@ -139,6 +140,25 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         int newHeight = ((int) (alpha * 240 > minIconHeight ? alpha * 240 : minIconHeight));
 
         setAuthorIconSize(newHeight);
+
+    }
+
+    @Override
+    public void onGetAuthorInfoDone(Author author) {
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        List<Fragment> fragments=new ArrayList<>();
+        fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER,userId));
+        List<String > titles=new ArrayList<>();
+//        author.get
+        titles.add("分享");
+        CommonFragmentPagerAdapter fragmentPagerAdapter=new CommonFragmentPagerAdapter(fragmentManager,fragments,titles);
+        viewPager.setAdapter(fragmentPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    @Override
+    public void onGetAuthorInfoError() {
 
     }
 }

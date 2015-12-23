@@ -24,7 +24,7 @@ public class ManageTagsActivity extends XTBaseActivity {
         setContentView(R.layout.activity_manage_tags);
         setActionBarWithTitle(getString(R.string.manage_tag_activity_title));
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_tag);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.tag_pager);
         List<Fragment> fragments= new ArrayList<>();
         fragments.add(new TagWithUserStatusFragment());

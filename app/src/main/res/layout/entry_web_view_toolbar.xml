@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/author_view"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:minHeight="?attr/actionBarSize"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:theme="@style/XTActionBar">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/author_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/author_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
 
-        <ImageView
-            android:id="@+id/author_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp" />
-
-        <TextView
-            android:id="@+id/author_name"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@android:color/primary_text_dark"
-            android:textSize="18sp" />
-    </LinearLayout>
-</android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="18sp" />
+</LinearLayout>

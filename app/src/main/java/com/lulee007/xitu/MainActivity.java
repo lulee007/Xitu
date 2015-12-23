@@ -46,7 +46,7 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout_main);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

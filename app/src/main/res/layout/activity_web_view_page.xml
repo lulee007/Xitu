@@ -6,9 +6,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.lulee007.xitu.EntryWebPageActivity">
 
-    <include
-        android:id="@+id/entry_web_view_toolbar"
-        layout="@layout/entry_web_view_toolbar" />
 
     <RelativeLayout
 
@@ -61,8 +58,7 @@
         android:id="@+id/web_view_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/entry_detail_tool"
-        android:layout_below="@+id/entry_web_view_toolbar" />
+        android:layout_above="@+id/entry_detail_tool" />
 
     <include
         android:id="@+id/loading_data"

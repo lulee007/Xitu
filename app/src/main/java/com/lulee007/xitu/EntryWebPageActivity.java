@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +14,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.orhanobut.logger.Logger;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 public class EntryWebPageActivity extends XTBaseActivity {
 
@@ -32,30 +35,29 @@ public class EntryWebPageActivity extends XTBaseActivity {
     private View loadingDataView;
     private WebSettings webSettings;
     private ActionBar actionBar;
-    private Toolbar toolbar;
-    private LinearLayout authorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_page);
-
-        toolbar = (Toolbar) findViewById(R.id.entry_web_view_toolbar);
-        authorView = (LinearLayout) findViewById(R.id.author_view);
-        authorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.d("on author click!");
-
-            }
-        });
-        setSupportActionBar(toolbar);
-
-
-        actionBar = getSupportActionBar();
-
         webView = (WebView) findViewById(R.id.web_view_page);
         loadingDataView = findViewById(R.id.loading_data);
+
+        actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setCustomView(R.layout.entry_web_view_toolbar);
+            RxView.clicks(actionBar.getCustomView().findViewById(R.id.author_view))
+                    .throttleFirst(500, TimeUnit.MILLISECONDS)
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            Logger.d("on author click!");
+                        }
+                    });
+            actionBar.setDisplayShowCustomEnabled(true);
+        }
         webSettings = webView.getSettings();
         webView.setWebViewClient(new XTWebClient());
         webView.setWebChromeClient(new XTWebChromeClient());
@@ -75,10 +77,7 @@ public class EntryWebPageActivity extends XTBaseActivity {
         if (TextUtils.isEmpty(authorIcon)) {
             throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_AUTHOR_ICON + " cannot be null or empty");
         }
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
+
         ((TextView) findViewById(R.id.author_name)).setText(authorName);
         Glide.with(this).load(authorIcon).into((ImageView) findViewById(R.id.author_icon));
         webView.loadUrl(url);

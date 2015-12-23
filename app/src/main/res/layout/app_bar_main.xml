@@ -7,27 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable">
-
-        </android.support.design.widget.TabLayout>
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/app_bar_with_tab"/>
 
     <include layout="@layout/content_main" />
 
