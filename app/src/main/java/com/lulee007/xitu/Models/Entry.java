@@ -36,6 +36,8 @@ public class Entry {
      * originalUrl : https://ponyfoo.com/articles/javascript-developer-survey-results
      */
 
+    private Collection collection;
+
     private String category;
     /**
      * __type : Relation
@@ -301,6 +303,14 @@ public class Entry {
 
     public List<String> getTagsTitleArray() {
         return tagsTitleArray;
+    }
+
+    public Collection getCollection() {
+        return collection;
+    }
+
+    public void setCollection(Collection collection) {
+        this.collection = collection;
     }
 
     public static class TagsEntity {

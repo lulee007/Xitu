@@ -31,9 +31,6 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
         mView = view;
     }
 
-    public void bindViewListener(T1 view){
-        mView=view;
-    }
 
     protected void addSubscription(Subscription subscription) {
         if (subscription != null) {

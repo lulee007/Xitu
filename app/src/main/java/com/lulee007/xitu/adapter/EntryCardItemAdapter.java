@@ -8,9 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.R;
 import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Entry;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 /**
  * User: lulee007@live.com
@@ -19,7 +24,7 @@ import com.lulee007.xitu.models.Entry;
  */
 public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
 
-    private  EntryCardItemListener entryCardItemListener;
+    private EntryCardItemListener entryCardItemListener;
 
     @Override
     public RecyclerView.ViewHolder getViewHolder(View view) {
@@ -33,11 +38,11 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (isItemViewHolder(position)) {
             final Entry entry = getItem(position);
             if (entry != null) {
-              final   EntryCardViewHolder entryCardViewHolder = (EntryCardViewHolder) holder;
+                final EntryCardViewHolder entryCardViewHolder = (EntryCardViewHolder) holder;
                 entryCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -53,14 +58,42 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
                 entryCardViewHolder.tag.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(entryCardItemListener!=null){
+                        if (entryCardItemListener != null) {
                             entryCardItemListener.onTagClick(entry);
                         }
                     }
                 });
                 entryCardViewHolder.collectionCount.setText(entry.getCollectionCount() + "");
                 entryCardViewHolder.recommended.setVisibility(entry.isHot() ? View.VISIBLE : View.GONE);
-
+                if (entry.getCollection() == null) {
+                    Glide.with(entryCardViewHolder.itemView.getContext())
+                            .load(R.mipmap.ic_action_favorite_outline)
+                            .into(entryCardViewHolder.collected);
+                } else {
+                    Glide.with(entryCardViewHolder.itemView.getContext())
+                            .load(R.mipmap.ic_action_favorite)
+                            .into(entryCardViewHolder.collected);
+                }
+                RxView.clicks(entryCardViewHolder.collected)
+                        .throttleFirst(500, TimeUnit.MILLISECONDS)
+                        .subscribe(new Action1<Void>() {
+                            @Override
+                            public void call(Void aVoid) {
+                                if (entryCardItemListener != null) {
+                                    entryCardItemListener.onToCollectClick(entry,position);
+                                }
+                            }
+                        });
+                RxView.clicks(entryCardViewHolder.authorAvatar)
+                        .throttleFirst(500, TimeUnit.MILLISECONDS)
+                        .subscribe(new Action1<Void>() {
+                            @Override
+                            public void call(Void aVoid) {
+                                if (entryCardItemListener != null) {
+                                    entryCardItemListener.onAuthorIconClick(entry, entryCardViewHolder.authorAvatar);
+                                }
+                            }
+                        });
                 if (entry.getScreenshot() != null)
                     Glide.with(entryCardViewHolder.itemView.getContext())
                             .load(entry.getScreenshot().getUrl())
@@ -72,23 +105,6 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
                             .load(entry.getUser().getAvatar_large())
                             .crossFade()
                             .into(entryCardViewHolder.authorAvatar);
-                entryCardViewHolder.authorAvatar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(entryCardItemListener!=null){
-                            entryCardItemListener.onAuthorIconClick(entry, entryCardViewHolder.authorAvatar);
-                        }
-                    }
-                });
-
-                entryCardViewHolder.collected.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(entryCardItemListener!=null){
-                            entryCardItemListener.onToCollectClick(entry);
-                        }
-                    }
-                });
 
             }
         }
@@ -108,10 +124,12 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
         this.entryCardItemListener = entryCardItemListener;
     }
 
-    public interface EntryCardItemListener{
-        void onAuthorIconClick(Entry entry,ImageView icon);
+    public interface EntryCardItemListener {
+        void onAuthorIconClick(Entry entry, ImageView icon);
+
         void onTagClick(Entry entry);
-        void onToCollectClick(Entry entry);
+
+        void onToCollectClick(Entry entry,int position);
     }
 
     protected class EntryCardViewHolder extends RecyclerView.ViewHolder {

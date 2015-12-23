@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * User: lulee007@live.com
@@ -31,4 +32,9 @@ public  abstract class XTBaseFragment extends Fragment{
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+    public void showToast(String msg){
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -12,4 +12,10 @@ import java.util.List;
  */
 public interface IEntriesView extends IXTBaseView<Entry> {
 
+    void onCollected(int position);
+    void onCollectError();
+
+    void onUnCollect(int position);
+    void onUnCollectError();
+
 }

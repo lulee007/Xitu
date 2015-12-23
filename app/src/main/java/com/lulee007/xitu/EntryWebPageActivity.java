@@ -30,6 +30,7 @@ public class EntryWebPageActivity extends XTBaseActivity {
     public final static String BUNDLE_KEY_ENTRY_URL = "entry_url";
     public final static String BUNDLE_KEY_ENTRY_AUTHOR_NAME = "entry_author_name";
     public final static String BUNDLE_KEY_ENTRY_AUTHOR_ICON = "entry_author_icon";
+    private static final String BUNDLE_KEY_ENTRY_AUTHOR_ID = "author_id";
 
     private WebView webView;
     private View loadingDataView;
@@ -43,6 +44,25 @@ public class EntryWebPageActivity extends XTBaseActivity {
         webView = (WebView) findViewById(R.id.web_view_page);
         loadingDataView = findViewById(R.id.loading_data);
 
+        //check params
+        Intent intent = getIntent();
+        final String url = intent.getStringExtra(BUNDLE_KEY_ENTRY_URL);
+        final String authorName = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_NAME);
+        final String authorIcon = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ICON);
+        final String authorId = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ID);
+        if (TextUtils.isEmpty(url)) {
+            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_URL + " cannot be null or empty");
+        }
+        if (TextUtils.isEmpty(authorName)) {
+            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_AUTHOR_NAME + " cannot be null or empty");
+        }
+        if (TextUtils.isEmpty(authorIcon)) {
+            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_AUTHOR_ICON + " cannot be null or empty");
+        }
+        if (TextUtils.isEmpty(authorId)) {
+            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_AUTHOR_ID + " cannot be null or empty");
+        }
+
         actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -53,7 +73,8 @@ public class EntryWebPageActivity extends XTBaseActivity {
                     .subscribe(new Action1<Void>() {
                         @Override
                         public void call(Void aVoid) {
-                            Logger.d("on author click!");
+                            Intent intent = AuthorHomeActivity.buildIntent(EntryWebPageActivity.this,authorIcon,authorId);
+                            startActivity(intent);
                         }
                     });
             actionBar.setDisplayShowCustomEnabled(true);
@@ -63,20 +84,7 @@ public class EntryWebPageActivity extends XTBaseActivity {
         webView.setWebChromeClient(new XTWebChromeClient());
         webSettings.setJavaScriptEnabled(true);
 
-        //check params
-        Intent intent = getIntent();
-        String url = intent.getStringExtra(BUNDLE_KEY_ENTRY_URL);
-        String authorName = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_NAME);
-        String authorIcon = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ICON);
-        if (TextUtils.isEmpty(url)) {
-            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_URL + " cannot be null or empty");
-        }
-        if (TextUtils.isEmpty(authorName)) {
-            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_AUTHOR_NAME + " cannot be null or empty");
-        }
-        if (TextUtils.isEmpty(authorIcon)) {
-            throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_AUTHOR_ICON + " cannot be null or empty");
-        }
+
 
         ((TextView) findViewById(R.id.author_name)).setText(authorName);
         Glide.with(this).load(authorIcon).into((ImageView) findViewById(R.id.author_icon));
@@ -137,11 +145,13 @@ public class EntryWebPageActivity extends XTBaseActivity {
         }
     }
 
-    public static Intent buildEntryWebPageParams(Context context, String url, String authorName, String icon) {
+    public static Intent buildEntryWebPageParams(Context context, String url, String authorName, String icon,String authorId) {
         Intent intent = new Intent(context, EntryWebPageActivity.class);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_URL, url);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_AUTHOR_NAME, authorName);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_AUTHOR_ICON, icon);
+        intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_AUTHOR_ID, authorId);
+
         return intent;
 
     }

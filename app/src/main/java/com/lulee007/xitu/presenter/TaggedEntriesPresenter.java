@@ -4,10 +4,14 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.lulee007.xitu.base.XTBasePresenter;
+import com.lulee007.xitu.models.Collection;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.models.Subscribe;
+import com.lulee007.xitu.services.CollectionService;
+import com.lulee007.xitu.services.CommonSaveService;
 import com.lulee007.xitu.services.EntryService;
 import com.lulee007.xitu.services.SubscribeService;
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.IEntriesView;
 import com.orhanobut.logger.Logger;
 
@@ -84,6 +88,12 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                         return entryService.getEntryList(buildRequestParams(tagWhereString));
                     }
                 })
+                .flatMap(new Func1<List<Entry>, Observable<List<Entry>>>() {
+                    @Override
+                    public Observable<List<Entry>> call(final List<Entry> entries) {
+                        return getEntriesWithCollections(entries);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                     @Override
@@ -106,6 +116,70 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                     }
                 });
         addSubscription(subscription);
+    }
+
+    private Observable<List<Entry>> getEntriesWithCollections(final List<Entry> entries) {
+        if (entries == null || entries.size() == 0) {
+            return Observable.just(entries);
+        }
+        return Observable.from(entries)
+                .map(new Func1<Entry, HashMap<String, String>>() {
+                    @Override
+                    public HashMap<String, String> call(Entry entry) {
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("__type", "Pointer");
+                        map.put("className", "Entry");
+                        map.put("objectId", entry.getObjectId());
+                        return map;
+                    }
+                })
+                .toList()
+                .flatMap(new Func1<List<HashMap<String, String>>, Observable<List<Collection>>>() {
+                    @Override
+                    public Observable<List<Collection>> call(List<HashMap<String, String>> hashMaps) {
+                        String where = String.format("{\"entry\":{\"$in\":%s},\"user\":%s}",
+                                new Gson().toJson(hashMaps),
+                                new Gson().toJson(AuthUserHelper.getInstance().getUser()));
+
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put("include", "Entry");
+                        params.put("where", where);
+                        return new CollectionService().getCollection(params);
+                    }
+                })
+                .flatMap(new Func1<List<Collection>, Observable<Collection>>() {
+                    @Override
+                    public Observable<Collection> call(List<Collection> collections) {
+                        return Observable.from(collections);
+                    }
+                })
+                .flatMap(new Func1<Collection, Observable<List<Entry>>>() {
+                    @Override
+                    public Observable<List<Entry>> call(final Collection collection) {
+                        return Observable.from(entries)
+                                .filter(new Func1<Entry, Boolean>() {
+                                    @Override
+                                    public Boolean call(Entry entry) {
+                                        return entry.getObjectId().equals(collection.getEntry().getObjectId());
+                                    }
+                                })
+                                .map(new Func1<Entry, Entry>() {
+                                    @Override
+                                    public Entry call(Entry entry) {
+                                        Logger.d(entry.getObjectId());
+                                        entry.setCollection(collection);
+                                        return entry;
+                                    }
+                                })
+                                .toList()
+                                .map(new Func1<List<Entry>, List<Entry>>() {
+                                    @Override
+                                    public List<Entry> call(List<Entry> entry) {
+                                        return entries;
+                                    }
+                                });
+                    }
+                });
     }
 
     @NonNull
@@ -154,6 +228,12 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                         return entryService.getEntryList(params);
                     }
                 })
+                .flatMap(new Func1<List<Entry>, Observable<List<Entry>>>() {
+                    @Override
+                    public Observable<List<Entry>> call(List<Entry> entries) {
+                        return getEntriesWithCollections(entries);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                     @Override
@@ -184,6 +264,12 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                         return entryService.getEntryList(buildRequestParams(new Gson().toJson(hashMaps), pageOffset * pageIndex));
                     }
                 })
+                .flatMap(new Func1<List<Entry>, Observable<List<Entry>>>() {
+                    @Override
+                    public Observable<List<Entry>> call(List<Entry> entries) {
+                        return getEntriesWithCollections(entries);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Entry>>() {
                     @Override
@@ -200,4 +286,49 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
     }
 
 
+    public void onCollectViewClick(final Entry entry, final int position) {
+        Collection collection = entry.getCollection();
+        Subscription subscription = null;
+        if (collection != null) {
+            subscription = new CollectionService().unSubscribeEntry(collection.getObjectId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Boolean>() {
+                                   @Override
+                                   public void call(Boolean aBoolean) {
+                                       if (aBoolean == Boolean.TRUE) {
+                                           entry.setCollectionCount(entry.getCollectionCount()-1);
+                                           entry.setCollection(null);
+                                           ((IEntriesView) mView).onUnCollect(position);
+                                       }
+                                   }
+                               },
+                            new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    ((IEntriesView) mView).onUnCollectError();
+                                }
+                            }
+                    );
+        } else {
+            subscription = new CommonSaveService().saveCollectEntry(entry.getObjectId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<String>() {
+                                   @Override
+                                   public void call(String s) {
+                                       Collection newCollection = new Collection();
+                                       newCollection.setObjectId(s);
+                                       entry.setCollection(newCollection);
+                                       ((IEntriesView) mView).onCollected(position);
+                                   }
+                               },
+                            new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    ((IEntriesView) mView).onCollectError();
+                                }
+                            }
+                    );
+        }
+        addSubscription(subscription);
+    }
 }
