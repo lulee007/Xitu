@@ -42,6 +42,8 @@
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:text="12"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textSize="16sp" />
 
         <ImageView

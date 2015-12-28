@@ -48,8 +48,7 @@
             android:theme="@style/XTActionBar"/>
         <activity android:name=".EntriesByTagActivity"/>
         <activity
-            android:name=".ManageTagsActivity"
-            android:theme="@style/XTActionBar"/>
+            android:name=".ManageTagsActivity" />
     </application>
 
 </manifest>

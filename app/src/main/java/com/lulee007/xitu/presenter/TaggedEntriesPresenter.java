@@ -7,6 +7,7 @@ import com.lulee007.xitu.base.XTBasePresenter;
 import com.lulee007.xitu.models.Collection;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.models.Subscribe;
+import com.lulee007.xitu.models.Tag;
 import com.lulee007.xitu.services.CollectionService;
 import com.lulee007.xitu.services.CommonSaveService;
 import com.lulee007.xitu.services.EntryService;
@@ -195,11 +196,11 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                     @Override
                     public HashMap call(Subscribe subscribe) {
                         HashMap<String, String> tagMap = new HashMap<String, String>();
-                        Subscribe.TagEntity tag = subscribe.getTag();
+                        Tag tag = subscribe.getTag();
                         if (tag != null) {
-                            tagMap.put("__type", tag.get__type());
+                            tagMap.put("__type", "Pointer");
                             tagMap.put("objectId", tag.getObjectId());
-                            tagMap.put("className", tag.getClassName());
+                            tagMap.put("className", "Tag");
                             return tagMap;
                         } else {
                             return tagMap;

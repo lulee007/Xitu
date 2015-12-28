@@ -18,7 +18,7 @@ public class Collection {
      * objectId : 56403b2e60b259ca8e31cc4b
      */
 
-    private EntryEntity entry;
+    private Entry entry;
     /**
      * user : {"__type":"Pointer","className":"_User","objectId":"563c1d9560b25749ea071246"}
      * entry : {"__type":"Pointer","className":"Entry","objectId":"56403b2e60b259ca8e31cc4b"}
@@ -40,7 +40,7 @@ public class Collection {
         this.user = user;
     }
 
-    public void setEntry(EntryEntity entry) {
+    public void setEntry(Entry entry) {
         this.entry = entry;
     }
 
@@ -60,7 +60,7 @@ public class Collection {
         return user;
     }
 
-    public EntryEntity getEntry() {
+    public Entry getEntry() {
         return entry;
     }
 
@@ -111,38 +111,4 @@ public class Collection {
         }
     }
 
-    public static class EntryEntity {
-        private String __type;
-        private String className;
-        private String objectId;
-
-        public static EntryEntity objectFromData(String str) {
-
-            return new Gson().fromJson(str, EntryEntity.class);
-        }
-
-        public void set__type(String __type) {
-            this.__type = __type;
-        }
-
-        public void setClassName(String className) {
-            this.className = className;
-        }
-
-        public void setObjectId(String objectId) {
-            this.objectId = objectId;
-        }
-
-        public String get__type() {
-            return __type;
-        }
-
-        public String getClassName() {
-            return className;
-        }
-
-        public String getObjectId() {
-            return objectId;
-        }
-    }
 }

@@ -4,7 +4,6 @@
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
     android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
@@ -22,6 +21,7 @@
         android:layout_height="wrap_content"
         app:layout_collapseMode="pin"
         app:tabGravity="fill"
+        app:tabIndicatorColor="@android:color/white"
         app:tabMode="fixed" />
 
 </android.support.design.widget.AppBarLayout>

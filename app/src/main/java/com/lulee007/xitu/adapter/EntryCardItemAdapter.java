@@ -63,7 +63,7 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
                         }
                     }
                 });
-                entryCardViewHolder.collectionCount.setText(entry.getCollectionCount() + "");
+                entryCardViewHolder.collectionCount.setText(entry.getCollectionCount() > 0 ? String.valueOf(entry.getCollectionCount()) : "0");
                 entryCardViewHolder.recommended.setVisibility(entry.isHot() ? View.VISIBLE : View.GONE);
                 if (entry.getCollection() == null) {
                     Glide.with(entryCardViewHolder.itemView.getContext())
@@ -80,7 +80,7 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
                             @Override
                             public void call(Void aVoid) {
                                 if (entryCardItemListener != null) {
-                                    entryCardItemListener.onToCollectClick(entry,position);
+                                    entryCardItemListener.onToCollectClick(entry, position);
                                 }
                             }
                         });
@@ -129,7 +129,7 @@ public class EntryCardItemAdapter extends XTBaseAdapter<Entry> {
 
         void onTagClick(Entry entry);
 
-        void onToCollectClick(Entry entry,int position);
+        void onToCollectClick(Entry entry, int position);
     }
 
     protected class EntryCardViewHolder extends RecyclerView.ViewHolder {

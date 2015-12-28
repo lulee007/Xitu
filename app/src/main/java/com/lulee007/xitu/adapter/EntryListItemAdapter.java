@@ -21,13 +21,12 @@ import com.lulee007.xitu.util.DateUtil;
 public class EntryListItemAdapter extends XTBaseAdapter<Entry> {
     @Override
     public RecyclerView.ViewHolder getViewHolder(View view) {
-        RecyclerView.ViewHolder viewHolder = new EntryViewHolder(view);
-        return viewHolder;
+        return new EntryViewHolder(view);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.entry_list_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.entry_list_item, parent, false);
 
         return getViewHolder(view);
     }
@@ -41,17 +40,17 @@ public class EntryListItemAdapter extends XTBaseAdapter<Entry> {
                 entryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(itemListener!=null){
+                        if (itemListener != null) {
                             itemListener.onItemClick(entry);
                         }
                     }
                 });
                 entryViewHolder.title.setText(entry.getTitle());
-                entryViewHolder.hotIndex.setText(entry.getHotIndex() + "");
+                entryViewHolder.hotIndex.setText(String.valueOf(entry.getHotIndex()));
                 entryViewHolder.createTime.setText(DateUtil.upToNow(entry.getCreatedAt()));
                 entryViewHolder.author.setText(entry.getUser().getUsername());
 
-                entryViewHolder.collectionCount.setText(entry.getCollectionCount() + "");
+                entryViewHolder.collectionCount.setText(entry.getCollectionCount() > 0 ? String.valueOf(entry.getCollectionCount()) : "0");
                 if (entry.getScreenshot() != null)
                     Glide.with(entryViewHolder.itemView.getContext())
                             .load(entry.getScreenshot().getUrl())

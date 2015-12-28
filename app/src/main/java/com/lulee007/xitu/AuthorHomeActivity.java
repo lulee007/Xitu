@@ -21,10 +21,12 @@ import com.lulee007.xitu.adapter.CommonFragmentPagerAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.Author;
 import com.lulee007.xitu.presenter.AuthorHomePresenter;
+import com.lulee007.xitu.presenter.CollectionPresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
 import com.lulee007.xitu.util.GlideCircleTransform;
 import com.lulee007.xitu.view.IAuthorHomeView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
+import com.lulee007.xitu.view.fragment.SubscribedTagsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,12 +148,20 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
 
     @Override
     public void onGetAuthorInfoDone(Author author) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER, userId));
+        fragments.add(ListEntriesFragment.newInstanceForAuthor(CollectionPresenter.BY_COLLECTION, userId));
+        fragments.add(SubscribedTagsFragment.newInstanceForAuthor(userId));
+
+
         List<String> titles = new ArrayList<>();
 //        author.get
-        titles.add("分享");
+
+        titles.add(String.format("%d \r\n分享", author.getPostedEntriesCount()));
+        titles.add(String.format("%d \r\n收藏", author.getCollectedEntriesCount()));
+        titles.add(String.format("%d \r\n标签", author.getSubscribedTagsCount()));
         CommonFragmentPagerAdapter fragmentPagerAdapter = new CommonFragmentPagerAdapter(fragmentManager, fragments, titles);
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

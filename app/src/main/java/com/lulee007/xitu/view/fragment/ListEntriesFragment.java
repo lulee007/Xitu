@@ -2,6 +2,7 @@ package com.lulee007.xitu.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.lulee007.xitu.EntryWebPageActivity;
 import com.lulee007.xitu.adapter.EntryListItemAdapter;
 import com.lulee007.xitu.models.Entry;
+import com.lulee007.xitu.presenter.CollectionPresenter;
 import com.lulee007.xitu.presenter.HistoryPresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
 import com.lulee007.xitu.view.IEntriesByTagFragmentView;
@@ -99,6 +101,9 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
                 case HistoryPresenter.BY_HISTORY:
                     mPresenter = new HistoryPresenter(this);
                     break;
+                case CollectionPresenter.BY_COLLECTION:
+                    mPresenter=new CollectionPresenter(this,args.getString(BUNDLE_KEY_AUTHOR_ID));
+                    break;
             }
             if (p != null)
                 mPresenter = p;
@@ -121,4 +126,6 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
         );
         startActivity(intent);
     }
+
+
 }

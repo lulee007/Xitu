@@ -20,7 +20,12 @@ import com.lulee007.xitu.view.ITagFollowGuideView;
  */
 public class SubscribedTagsFragment extends BaseListFragment<Tag> implements ITagFollowGuideView, TagFollowAdapter.TagItemListener {
 
+    private static  final String BUNDLE_KEY_AUTHOR_ID="author_id";
+    private static final String BUNDLE_KEY_REFRESH_FLAG = "refresh_flag";
+    private static final String BUNDLE_KEY_NOT_SHOW_SUBSCRIBE_FLAG = "not_show_subscribe_flag";
 
+    private  boolean refreshFlag=false;
+    private  boolean notShowSubscribeFlag=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -34,6 +39,18 @@ public class SubscribedTagsFragment extends BaseListFragment<Tag> implements ITa
         mUltimateRecyclerView.enableDefaultSwipeRefresh(false);
 
         mPresenter = new SubscribedTagsPresenter(this);
+
+        Bundle args=getArguments();
+        String authorId=null;
+        if(args!=null){
+            authorId=args.getString(BUNDLE_KEY_AUTHOR_ID);
+            refreshFlag=args.getBoolean(BUNDLE_KEY_REFRESH_FLAG);
+            notShowSubscribeFlag=args.getBoolean(BUNDLE_KEY_NOT_SHOW_SUBSCRIBE_FLAG);
+        }
+        if(authorId!=null)
+            ((SubscribedTagsPresenter)mPresenter).setUserId(authorId);
+        if(notShowSubscribeFlag)
+            ((TagFollowAdapter)mListAdapter).hideSubscribeBtn();
         mPresenter.loadNew();
 
         return view;
@@ -43,11 +60,21 @@ public class SubscribedTagsFragment extends BaseListFragment<Tag> implements ITa
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         //第一次不进此，在oncreate view中进行第一次，这里相当于切换页面刷新
-        if(getUserVisibleHint()){
+        if(getUserVisibleHint() && !refreshFlag){
             if(mPresenter!=null){
                 mPresenter.loadNew();
             }
         }
+    }
+
+    public  static  SubscribedTagsFragment newInstanceForAuthor(String authorId){
+        Bundle args=new Bundle();
+        args.putString(BUNDLE_KEY_AUTHOR_ID, authorId);
+        args.putBoolean(BUNDLE_KEY_REFRESH_FLAG, true);
+        args.putBoolean(BUNDLE_KEY_NOT_SHOW_SUBSCRIBE_FLAG, true);
+        SubscribedTagsFragment subscribedTagsFragment=new SubscribedTagsFragment();
+        subscribedTagsFragment.setArguments(args);
+        return subscribedTagsFragment;
     }
 
     @Override

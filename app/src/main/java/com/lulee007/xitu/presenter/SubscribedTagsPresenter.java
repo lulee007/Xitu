@@ -27,6 +27,11 @@ import rx.functions.Func1;
 public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView> {
 
     private SubscribeService subscribeService;
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     private String userId;
 
     public SubscribedTagsPresenter(ITagFollowGuideView view) {
@@ -74,7 +79,7 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
                 .map(new Func1<Subscribe, Tag>() {
                     @Override
                     public Tag call(Subscribe subscribe) {
-                        Tag tag = Tag.objectFromData(new Gson().toJson(subscribe.getTag()));
+                        Tag tag = subscribe.getTag();
                         tag.setIsSubscribed(true);
                         tag.setSubscribedId(subscribe.getObjectId());
                         return tag;
