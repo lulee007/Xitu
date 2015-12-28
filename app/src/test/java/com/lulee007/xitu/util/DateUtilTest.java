@@ -2,9 +2,6 @@ package com.lulee007.xitu.util;
 
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
 public class DateUtilTest {
 
     @Test

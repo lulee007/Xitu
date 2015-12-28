@@ -2,12 +2,10 @@ package com.lulee007.xitu.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
 import com.lulee007.xitu.base.XTBasePresenter;
 import com.lulee007.xitu.models.Collection;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.services.CollectionService;
-import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.IEntriesByTagFragmentView;
 
 import java.util.HashMap;

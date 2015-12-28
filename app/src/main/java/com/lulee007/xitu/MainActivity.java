@@ -109,6 +109,8 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
             case R.id.nav_read_history:
                 switchFragment(item.getItemId());
                 break;
+            case R.id.nav_my_collection:
+
             default:
                 break;
         }

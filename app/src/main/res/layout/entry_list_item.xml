@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:text="123"
+                android:maxEms="11"
                 android:textSize="12sp" />
 
             <TextView

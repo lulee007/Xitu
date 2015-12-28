@@ -3,8 +3,6 @@ package com.lulee007.xitu.presenter;
 import android.support.annotation.NonNull;
 
 import com.lulee007.xitu.base.XTBasePresenter;
-import com.lulee007.xitu.services.SubscribeService;
-import com.lulee007.xitu.services.TagService;
 import com.lulee007.xitu.view.IManageTagsView;
 
 import java.util.HashMap;

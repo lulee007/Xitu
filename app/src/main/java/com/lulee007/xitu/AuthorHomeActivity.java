@@ -2,6 +2,7 @@ package com.lulee007.xitu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -23,6 +24,7 @@ import com.lulee007.xitu.models.Author;
 import com.lulee007.xitu.presenter.AuthorHomePresenter;
 import com.lulee007.xitu.presenter.CollectionPresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.util.GlideCircleTransform;
 import com.lulee007.xitu.view.IAuthorHomeView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
@@ -42,6 +44,8 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private String userId;
+    private boolean isCurrentUser;
+    private ImageView authorBlurView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,37 +57,24 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_author_home);
-
+         authorBlurView = (ImageView) findViewById(R.id.author_icon_blur);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         appBarLayout.addOnOffsetChangedListener(this);
         setAuthorIconSize(240);
-        getSupportActionBar().setTitle("掘金者");
         collapsingToolbar.setTitleEnabled(false);
-//        collapsingToolbar.setTitle("掘金者");
-//        collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-//        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
-//        int color = getResources().getColor(R.color.juejin_blue);
-//        collapsingToolbar.setContentScrimColor(Color.argb((int) (0.5 * 255),
-//                Color.red(color),
-//                Color.green(color),
-//                Color.blue(color)
-//        ));
+
         final String url = getIntent().getStringExtra("url");
         userId = getIntent().getStringExtra("author_id");
-//        Glide.with(AuthorHomeActivity.this)
-//                .load(url)
-//                .bitmapTransform(new BlurTransformation(AuthorHomeActivity.this))
-//                .into((ImageView) findViewById(R.id.author_icon_blur));
+        isCurrentUser = userId.equals(AuthUserHelper.getInstance().getUser().get("objectId"));
+
         Glide.with(this)
                 .load(url)
                 .transform(new GlideCircleTransform(this))
                 .into(authorIcon);
-
-
         authorHomePresenter = new AuthorHomePresenter(this);
         authorHomePresenter.getAuthorInfo(userId);
+        authorHomePresenter.loadUserBlurBackground(url);
 
     }
 
@@ -148,18 +139,18 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
 
     @Override
     public void onGetAuthorInfoDone(Author author) {
+        getSupportActionBar().setTitle(author.getUsername());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER, userId));
+        if (!isCurrentUser)
+            fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER, userId));
         fragments.add(ListEntriesFragment.newInstanceForAuthor(CollectionPresenter.BY_COLLECTION, userId));
         fragments.add(SubscribedTagsFragment.newInstanceForAuthor(userId));
 
-
         List<String> titles = new ArrayList<>();
-//        author.get
-
-        titles.add(String.format("%d \r\n分享", author.getPostedEntriesCount()));
+        if (!isCurrentUser)
+            titles.add(String.format("%d \r\n分享", author.getPostedEntriesCount()));
         titles.add(String.format("%d \r\n收藏", author.getCollectedEntriesCount()));
         titles.add(String.format("%d \r\n标签", author.getSubscribedTagsCount()));
         CommonFragmentPagerAdapter fragmentPagerAdapter = new CommonFragmentPagerAdapter(fragmentManager, fragments, titles);
@@ -170,6 +161,16 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
 
     @Override
     public void onGetAuthorInfoError() {
+
+    }
+
+    @Override
+    public void onUserBlurBgDownloaded(Bitmap bitmap) {
+        authorBlurView.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onUserBlurBgDownloadError() {
 
     }
 }

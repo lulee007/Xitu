@@ -12,7 +12,6 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Func1;
 
-import static java.security.MessageDigest.isEqual;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 

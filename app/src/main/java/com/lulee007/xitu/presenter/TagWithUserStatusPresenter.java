@@ -11,9 +11,6 @@ import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.ITagWithUserStatsView;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

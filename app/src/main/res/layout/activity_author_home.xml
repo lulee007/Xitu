@@ -32,7 +32,6 @@
                     android:id="@+id/author_icon_blur"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/entry_image_default"
                     android:scaleType="centerCrop" />
 
                 <ImageView

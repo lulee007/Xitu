@@ -3,7 +3,6 @@ package com.lulee007.xitu.services;
 import com.google.gson.Gson;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.models.Subscribe;
-import com.lulee007.xitu.models.Subscribe.TagEntity;
 
 import org.junit.After;
 import org.junit.Before;
