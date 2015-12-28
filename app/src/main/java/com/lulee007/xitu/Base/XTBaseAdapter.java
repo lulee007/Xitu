@@ -27,10 +27,10 @@ public abstract class XTBaseAdapter<T> extends UltimateViewAdapter {
         notifyDataSetChanged();
     }
 
-    public void insert(List<T> items){
-        if(items!=null){
-            items.addAll(0,items);
-            notifyItemRangeInserted(0,items.size());
+    public void insert(List<T> newItems){
+        if(newItems!=null){
+            this.items.addAll(0,newItems);
+            notifyItemRangeInserted(0, newItems.size());
         }
     }
 

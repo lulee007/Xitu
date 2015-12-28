@@ -173,6 +173,9 @@ public class ListEntriesFragmentPresenter extends XTBasePresenter<IEntriesByTagF
                             mView.refreshNoContent();
                             return;
                         }
+                        createdAt = entries.get(0).getCreatedAt();
+                        rankIndex = entries.get(0).getRankIndex();
+
                         mView.refresh(entries);
 
                     }

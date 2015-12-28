@@ -13,12 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.presenter.MainViewPresenter;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IMainView;
+import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 import com.lulee007.xitu.view.fragment.MainFragment;
 import com.orhanobut.logger.Logger;
 
@@ -34,8 +36,8 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
     private boolean doubleClickExit = false;
     private TabLayout tabLayout;
     private DrawerLayout drawer;
-    private FragmentTransaction fragmentTransaction;
     private Fragment currentFragment;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,8 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
         mainViewPresenter = new MainViewPresenter(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         currentFragment = new MainFragment(tabLayout);
         fragmentTransaction.replace(R.id.fragment_main, currentFragment);
         fragmentTransaction.commit();
@@ -70,7 +72,6 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -104,9 +105,40 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
             case R.id.nav_editors:
                 startActivity(AuthorsActivity.class);
                 break;
+            case R.id.nav_home:
+            case R.id.nav_read_history:
+                switchFragment(item.getItemId());
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    private void switchFragment(int id) {
+        switch (id){
+            case R.id.nav_read_history:
+                currentFragment=ListEntriesFragment.newInstanceForHistory();
+                tabLayout.setVisibility(View.GONE);
+                getSupportActionBar().setTitle(R.string.read_history);
+                break;
+            case R.id.nav_home:
+                currentFragment = new MainFragment(tabLayout);
+                tabLayout.setVisibility(View.VISIBLE);
+                getSupportActionBar().setTitle(R.string.app_name);
+
+                break;
+            default:
+                break;
+
+        }
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_main, currentFragment);
+        fragmentTransaction.commit();
+        if (drawer.isDrawerOpen(Gravity.LEFT)) {
+            drawer.closeDrawer(Gravity.LEFT);
         }
 
-        return true;
     }
 
     @Override

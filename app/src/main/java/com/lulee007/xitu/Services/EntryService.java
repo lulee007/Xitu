@@ -32,7 +32,7 @@ public class EntryService extends XTBaseService<EntryService.EntryWebService> {
         Observable<EntryDataEnvelope> getEntries(@QueryMap HashMap<String, String> params);
     }
 
-    public class EntryDataEnvelope extends BaseDataEnvelope<List<Entry>> {
+    protected class EntryDataEnvelope extends BaseDataEnvelope<List<Entry>> {
 
     }
 

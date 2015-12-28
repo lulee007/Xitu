@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.lulee007.xitu.EntryWebPageActivity;
 import com.lulee007.xitu.adapter.EntryListItemAdapter;
 import com.lulee007.xitu.models.Entry;
+import com.lulee007.xitu.presenter.HistoryPresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
 import com.lulee007.xitu.view.IEntriesByTagFragmentView;
 
@@ -56,6 +57,14 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
         return fragment;
     }
 
+    public static ListEntriesFragment newInstanceForHistory() {
+        Bundle args = new Bundle();
+        args.putInt(BUNDLE_KEY_REQUEST_TYPE, HistoryPresenter.BY_HISTORY);
+        ListEntriesFragment fragment = new ListEntriesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -87,8 +96,12 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
                     whereMap.put("tagsTitleArray", args.getString(BUNDLE_KEY_TAG_NAME));
                     p = new ListEntriesFragmentPresenter(this, type, whereMap);
                     break;
+                case HistoryPresenter.BY_HISTORY:
+                    mPresenter = new HistoryPresenter(this);
+                    break;
             }
-            mPresenter = p;
+            if (p != null)
+                mPresenter = p;
             if (mPresenter != null)
                 mPresenter.loadNew();
 

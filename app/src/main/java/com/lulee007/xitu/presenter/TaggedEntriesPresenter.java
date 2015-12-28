@@ -242,6 +242,8 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                             mView.refreshNoContent();
                             return;
                         }
+                        createdAt = entries.get(0).getCreatedAt();
+
                         mView.refresh(entries);
 
                     }
@@ -296,7 +298,7 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                    @Override
                                    public void call(Boolean aBoolean) {
                                        if (aBoolean == Boolean.TRUE) {
-                                           entry.setCollectionCount(entry.getCollectionCount()-1);
+                                           entry.setCollectionCount(entry.getCollectionCount() - 1);
                                            entry.setCollection(null);
                                            ((IEntriesView) mView).onUnCollect(position);
                                        }
@@ -318,7 +320,7 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                        Collection newCollection = new Collection();
                                        newCollection.setObjectId(s);
                                        entry.setCollection(newCollection);
-                                       entry.setCollectionCount(entry.getCollectionCount()+1);
+                                       entry.setCollectionCount(entry.getCollectionCount() + 1);
                                        ((IEntriesView) mView).onCollected(position);
                                    }
                                },
