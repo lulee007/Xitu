@@ -1,5 +1,6 @@
 package com.lulee007.xitu.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mikepenz.materialize.MaterializeBuilder;
 
 /**
@@ -54,5 +56,10 @@ public class XTBaseActivity extends AppCompatActivity {
                 return  true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 }

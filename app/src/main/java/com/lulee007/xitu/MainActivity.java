@@ -16,10 +16,13 @@ import android.view.View;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.presenter.MainViewPresenter;
 import com.lulee007.xitu.util.AuthUserHelper;
+import com.lulee007.xitu.util.IconFontUtil;
 import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IMainView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 import com.lulee007.xitu.view.fragment.MainFragment;
+import com.mikepenz.iconics.Iconics;
+import com.mikepenz.iconics.typeface.GenericFont;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -83,9 +86,9 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                 .withActionBarDrawerToggle(true)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.home),
-                        new PrimaryDrawerItem().withName(R.string.my_collection),
-                        new PrimaryDrawerItem().withName(R.string.read_history),
+                        new PrimaryDrawerItem().withName(R.string.home).withIcon(IconFontUtil.getIcon(this,"home")),
+                        new PrimaryDrawerItem().withName(R.string.my_collection).withIcon(IconFontUtil.getIcon(this, "person")),
+                        new PrimaryDrawerItem().withName(R.string.read_history).withIcon(IconFontUtil.getIcon(this, "history")),
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.settings),
                         new SecondaryDrawerItem().withName(R.string.editors),
