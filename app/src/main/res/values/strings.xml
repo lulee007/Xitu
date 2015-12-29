@@ -18,6 +18,12 @@
     <string name="register_or_login">注册.登陆</string>
     <string name="title_activity_settings">设置</string>
 
+    <!-- icon font text -->
+    <string name="icon_like">&#xe602;</string>
+    <string name="icon_liked">&#xe601;</string>
+    <string name="icon_share">&#xe600;</string>
+    <string name="icon_view">&#xe603;</string>
+    <string name="icon_check">&#xe604;</string>
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

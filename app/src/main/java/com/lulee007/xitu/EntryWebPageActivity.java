@@ -43,6 +43,7 @@ public class EntryWebPageActivity extends XTBaseActivity {
         setContentView(R.layout.activity_web_view_page);
         webView = (WebView) findViewById(R.id.web_view_page);
         loadingDataView = findViewById(R.id.loading_data);
+        TextView commentCount = (TextView) findViewById(R.id.comment_count);
 
         //check params
         Intent intent = getIntent();

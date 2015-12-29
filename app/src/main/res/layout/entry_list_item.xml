@@ -41,18 +41,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="123"
-                android:maxEms="11"
+                android:ellipsize="end"
+                android:maxEms="8"
+                android:maxLines="1"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/entry_create_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_toRightOf="@+id/entry_author"
                 android:paddingLeft="5dp"
-                android:text="123"
                 android:textSize="12sp" />
 
             <TextView

@@ -21,7 +21,5 @@ public class XTApplication extends Application {
         //内存泄露检测
         LeakCanary.install(this);
 
-
-
     }
 }

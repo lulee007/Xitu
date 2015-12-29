@@ -40,10 +40,10 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
-            android:text="12"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="12"
             android:textSize="16sp" />
 
         <ImageView
@@ -51,7 +51,6 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerVertical="true"
-
             android:layout_toLeftOf="@+id/entry_collection_count"
             android:src="@mipmap/ic_action_favorite_outline" />
     </RelativeLayout>

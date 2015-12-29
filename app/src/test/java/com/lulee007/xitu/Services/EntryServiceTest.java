@@ -80,9 +80,9 @@ public class EntryServiceTest {
                     @Override
                     public HashMap call(Subscribe subscribe) {
                         HashMap<String ,String > hashMap=new HashMap<String, String>();
-                        hashMap.put("__type",subscribe.getTag().get__type());
+                        hashMap.put("__type","Pointer");
                         hashMap.put("objectId",subscribe.getTag().getObjectId());
-                        hashMap.put("className",subscribe.getTag().getClassName());
+                        hashMap.put("className","Tag");
                         return hashMap;
                     }
                 })
