@@ -11,6 +11,7 @@ import com.lulee007.xitu.adapter.CommonFragmentPagerAdapter;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.view.fragment.SubscribedTagsFragment;
 import com.lulee007.xitu.view.fragment.TagWithUserStatusFragment;
+import com.mikepenz.materialize.MaterializeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ public class ManageTagsActivity extends XTBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_tags);
+        new MaterializeBuilder().withActivity(this).build();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setActionBarWithTitle(getString(R.string.manage_tag_activity_title));

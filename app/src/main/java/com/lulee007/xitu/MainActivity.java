@@ -2,13 +2,11 @@ package com.lulee007.xitu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -22,22 +20,33 @@ import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IMainView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 import com.lulee007.xitu.view.fragment.MainFragment;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.orhanobut.logger.Logger;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
-public class MainActivity extends XTBaseActivity implements NavigationView.OnNavigationItemSelectedListener, IMainView {
+public class MainActivity extends XTBaseActivity implements IMainView {
 
     private MainViewPresenter mainViewPresenter;
     private boolean doubleClickExit = false;
     private TabLayout tabLayout;
-    private DrawerLayout drawer;
     private Fragment currentFragment;
     private FragmentManager fragmentManager;
+    private Drawer appDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +57,77 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.mipmap.profile_bg)
+                .addProfiles(
+                        new ProfileDrawerItem()
+                                .withEmail("lulee007@live.com")
+                                .withName("lulee007")
+                                .withIcon(R.mipmap.entry_image_default)
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean current) {
+                        return false;
+                    }
+                })
+                .build();
+
+
+        appDrawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withAccountHeader(headerResult)
+                .withActionBarDrawerToggle(true)
+                .withActionBarDrawerToggleAnimated(true)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.home),
+                        new PrimaryDrawerItem().withName(R.string.my_collection),
+                        new PrimaryDrawerItem().withName(R.string.read_history),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName(R.string.settings),
+                        new SecondaryDrawerItem().withName(R.string.editors),
+                        new SecondaryDrawerItem().withName(R.string.feedback),
+                        new SecondaryDrawerItem().withName(R.string.share)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        // position start with 1
+                        switch (position) {
+                            case 1:
+                                switchFragment(position);
+                                break;
+                            case 2:
+                                HashMap <String,String> userMap=AuthUserHelper.getInstance().getUser();
+                                Intent intent=AuthorHomeActivity.buildIntent(MainActivity.this,"","");
+                                startActivity(intent);
+                                break;
+                            case 3:
+                                switchFragment(position);
+                                break;
+                            case 5:
+                                startActivity(AuthorsActivity.class);
+                                break;
+                            case 6:
+                                startActivity(SettingsActivity.class);
+                                break;
+                            default:
+                                //0 header 4 divider
+                                break;
+                        }
+                        Logger.d(position + "");
+                        return false;
+                    }
+                })
+                .build();
+
+
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         mainViewPresenter = new MainViewPresenter(this);
-
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         currentFragment = new MainFragment(tabLayout);
@@ -78,53 +146,25 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
             case R.id.action_add_tag:
                 mainViewPresenter.showManageTagActivity();
                 break;
         }
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_settings:
-                startActivity(SettingsActivity.class);
-                break;
-            case R.id.nav_editors:
-                startActivity(AuthorsActivity.class);
-                break;
-            case R.id.nav_home:
-            case R.id.nav_read_history:
-                switchFragment(item.getItemId());
-                break;
-            case R.id.nav_my_collection:
-
-            default:
-                break;
-        }
-        return true;
-    }
-
     private void switchFragment(int id) {
-        switch (id){
-            case R.id.nav_read_history:
-                currentFragment=ListEntriesFragment.newInstanceForHistory();
+        switch (id) {
+            case 3:
+                currentFragment = ListEntriesFragment.newInstanceForHistory();
                 tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(R.string.read_history);
                 break;
-            case R.id.nav_home:
+            case 1:
                 currentFragment = new MainFragment(tabLayout);
                 tabLayout.setVisibility(View.VISIBLE);
                 getSupportActionBar().setTitle(R.string.app_name);
@@ -137,16 +177,13 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_main, currentFragment);
         fragmentTransaction.commit();
-        if (drawer.isDrawerOpen(Gravity.LEFT)) {
-            drawer.closeDrawer(Gravity.LEFT);
-        }
 
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(Gravity.LEFT)) {
-            drawer.closeDrawer(Gravity.LEFT);
+        if (appDrawer.isDrawerOpen()) {
+            appDrawer.closeDrawer();
             return;
         }
         if (!doubleClickExit) {
@@ -202,6 +239,16 @@ public class MainActivity extends XTBaseActivity implements NavigationView.OnNav
     @Override
     public void showNeedLoginDialog() {
 
+    }
+
+    @Override
+    public void showChangeUserName() {
+
+    }
+
+    @Override
+    public void showLoginOptionPage() {
+        startActivity(LoginOptionsActivity.class);
     }
 
 }

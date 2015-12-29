@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.base.XTBaseActivity;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialize.MaterializeBuilder;
 import com.orhanobut.logger.Logger;
 
 public class LoginOptionsActivity extends XTBaseActivity implements View.OnClickListener{
@@ -20,6 +23,7 @@ public class LoginOptionsActivity extends XTBaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_options);
+        new MaterializeBuilder().withActivity(this).build();
 
         phoneBtn=(Button)findViewById(R.id.phone_login);
         skipBtn=(Button)findViewById(R.id.skip_login);

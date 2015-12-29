@@ -42,7 +42,7 @@ public class MainFragment extends XTBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, null);
+        View view = inflater.inflate(R.layout.fragment_main, container,false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.vp_main_view);
 
         List<Fragment> fragments = new ArrayList<>();

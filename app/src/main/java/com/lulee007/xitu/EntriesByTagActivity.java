@@ -20,6 +20,7 @@ import com.lulee007.xitu.presenter.EntriesByTagPresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
 import com.lulee007.xitu.view.IEntriesByTagView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
+import com.mikepenz.materialize.MaterializeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class EntriesByTagActivity extends XTBaseActivity implements IEntriesByTa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_home);
+        new MaterializeBuilder().withActivity(this).build();
 
         String tagTitle = getIntent().getStringExtra(BUNDLE_KEY_TAG_TITLE);
 

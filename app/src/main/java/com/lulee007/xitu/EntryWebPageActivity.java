@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.base.XTBaseActivity;
+import com.mikepenz.materialize.MaterializeBuilder;
 import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.TimeUnit;
@@ -45,6 +46,8 @@ public class EntryWebPageActivity extends XTBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_page);
+        new MaterializeBuilder().withActivity(this).build();
+
         webView = (WebView) findViewById(R.id.web_view_page);
         loadingDataView = findViewById(R.id.loading_data);
 

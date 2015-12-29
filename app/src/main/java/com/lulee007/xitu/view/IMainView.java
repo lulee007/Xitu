@@ -7,4 +7,8 @@ public interface IMainView {
     void showManageTagActivity();
 
     void showNeedLoginDialog();
+
+    void showChangeUserName();
+
+    void showLoginOptionPage();
 }

@@ -29,6 +29,7 @@ import com.lulee007.xitu.util.GlideCircleTransform;
 import com.lulee007.xitu.view.IAuthorHomeView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 import com.lulee007.xitu.view.fragment.SubscribedTagsFragment;
+import com.mikepenz.materialize.MaterializeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_home);
+        new MaterializeBuilder().withActivity(this).build();
+
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         authorIcon = (ImageView) findViewById(R.id.author_icon);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
@@ -64,7 +67,7 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         setAuthorIconSize(240);
         collapsingToolbar.setTitleEnabled(false);
 
-        final String url = getIntent().getStringExtra("url");
+        String url = getIntent().getStringExtra("url");
         userId = getIntent().getStringExtra("author_id");
         isCurrentUser = userId.equals(AuthUserHelper.getInstance().getUser().get("objectId"));
 

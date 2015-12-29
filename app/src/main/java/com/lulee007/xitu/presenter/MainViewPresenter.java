@@ -34,4 +34,12 @@ public class MainViewPresenter {
             mainView.showNeedLoginDialog();
         }
     }
+
+    public void toggleUserNameClick() {
+        if(!AuthUserHelper.getInstance().isLoggedIn()){
+            mainView.showChangeUserName();
+        }else{
+            mainView.showLoginOptionPage();
+        }
+    }
 }

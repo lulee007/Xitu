@@ -14,6 +14,8 @@ import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
+import com.mikepenz.materialize.MaterializeBuilder;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -30,6 +32,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        new MaterializeBuilder().withActivity(this).build();
 
         setupActionBar();
         this.addPreferencesFromResource(R.xml.settings);

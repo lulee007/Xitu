@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.fragment.TagWithUserStatusFragment;
+import com.mikepenz.materialize.MaterializeBuilder;
 import com.orhanobut.logger.Logger;
 
 public class TagFollowGuideActivity extends XTBaseActivity {
@@ -19,6 +20,7 @@ public class TagFollowGuideActivity extends XTBaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_follow_guide);
+        new MaterializeBuilder().withActivity(this).build();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

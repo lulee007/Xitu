@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.mikepenz.materialize.MaterializeBuilder;
+
 /**
  * User: lulee007@live.com
  * Date: 2015-12-08
@@ -18,6 +20,7 @@ public class XTBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null) {
             actionBar.setElevation(0);

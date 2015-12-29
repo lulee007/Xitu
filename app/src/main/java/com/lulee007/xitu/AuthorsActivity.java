@@ -16,6 +16,7 @@ import com.lulee007.xitu.presenter.AuthorsPresenter;
 import com.lulee007.xitu.util.DataStateViewHelper;
 import com.lulee007.xitu.view.IAuthorsView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.mikepenz.materialize.MaterializeBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class AuthorsActivity extends XTBaseActivity implements IAuthorsView, Dat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authors);
+        new MaterializeBuilder().withActivity(this).build();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
