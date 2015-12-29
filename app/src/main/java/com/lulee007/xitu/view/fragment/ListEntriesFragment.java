@@ -122,7 +122,9 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
                 ((Entry) item).getUrl(),
                 ((Entry) item).getUser().getUsername(),
                 ((Entry) item).getUser().getAvatar_large(),
-                ((Entry) item).getUser().getObjectId()
+                ((Entry) item).getUser().getObjectId(),
+                ((Entry) item).getCommentsCount(),
+                ((Entry) item).getCollectionCount()
         );
         startActivity(intent);
     }

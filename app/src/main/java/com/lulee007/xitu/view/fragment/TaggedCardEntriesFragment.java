@@ -74,7 +74,9 @@ public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implement
                 ((Entry) item).getUrl(),
                 ((Entry) item).getUser().getUsername(),
                 ((Entry) item).getUser().getAvatar_large(),
-                ((Entry) item).getUser().getObjectId()
+                ((Entry) item).getUser().getObjectId(),
+                ((Entry) item).getCommentsCount(),
+                ((Entry) item).getCollectionCount()
 
         );
         startActivity(intent);

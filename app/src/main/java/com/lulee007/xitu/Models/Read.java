@@ -1,8 +1,5 @@
 package com.lulee007.xitu.models;
 
-import com.avos.avoscloud.AVClassName;
-import com.avos.avoscloud.AVObject;
-
 /**
  * User: lulee007@live.com
  * Date: 2015-12-07
@@ -10,16 +7,9 @@ import com.avos.avoscloud.AVObject;
  */
 
 
-@AVClassName("View")
-public class Read extends AVObject {
+public class Read {
     public Read() {
     }
 
-    public Read(Entry var1) {
-        this.put("entry", var1);
-    }
 
-    public Read(String var1) {
-        super(var1);
-    }
 }

@@ -85,6 +85,8 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:cardview-v7:23.1.0'
 
+    compile 'com.squareup.okhttp:okhttp:2.7.0'
+
     //retrofit
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.orhanobut:logger:1.11'
@@ -101,5 +103,5 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
 
 //    compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
-    compile 'jp.wasabeef:glide-transformations:1.3.1'
+//    compile 'jp.wasabeef:glide-transformations:1.3.1'
 }

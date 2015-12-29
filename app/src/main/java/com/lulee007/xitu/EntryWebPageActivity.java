@@ -31,11 +31,15 @@ public class EntryWebPageActivity extends XTBaseActivity {
     public final static String BUNDLE_KEY_ENTRY_AUTHOR_NAME = "entry_author_name";
     public final static String BUNDLE_KEY_ENTRY_AUTHOR_ICON = "entry_author_icon";
     private static final String BUNDLE_KEY_ENTRY_AUTHOR_ID = "author_id";
+    private static final String BUNDLE_KEY_ENTRY_COMMENT_COUNT = "comment_count";
+    private static final String BUNDLE_KEY_ENTRY_COLLECTION_COUNT = "collection_count";
 
     private WebView webView;
     private View loadingDataView;
     private WebSettings webSettings;
     private ActionBar actionBar;
+    private String authorIcon;
+    private String authorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +47,15 @@ public class EntryWebPageActivity extends XTBaseActivity {
         setContentView(R.layout.activity_web_view_page);
         webView = (WebView) findViewById(R.id.web_view_page);
         loadingDataView = findViewById(R.id.loading_data);
-        TextView commentCount = (TextView) findViewById(R.id.comment_count);
 
         //check params
         Intent intent = getIntent();
-        final String url = intent.getStringExtra(BUNDLE_KEY_ENTRY_URL);
-        final String authorName = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_NAME);
-        final String authorIcon = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ICON);
-        final String authorId = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ID);
+        String url = intent.getStringExtra(BUNDLE_KEY_ENTRY_URL);
+        String authorName = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_NAME);
+        authorIcon = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ICON);
+        authorId = intent.getStringExtra(BUNDLE_KEY_ENTRY_AUTHOR_ID);
+        int commentCount = intent.getIntExtra(BUNDLE_KEY_ENTRY_COMMENT_COUNT, 0);
+        int collectionCount = intent.getIntExtra(BUNDLE_KEY_ENTRY_COLLECTION_COUNT, 0);
         if (TextUtils.isEmpty(url)) {
             throw new IllegalArgumentException(BUNDLE_KEY_ENTRY_URL + " cannot be null or empty");
         }
@@ -74,7 +79,7 @@ public class EntryWebPageActivity extends XTBaseActivity {
                     .subscribe(new Action1<Void>() {
                         @Override
                         public void call(Void aVoid) {
-                            Intent intent = AuthorHomeActivity.buildIntent(EntryWebPageActivity.this,authorIcon,authorId);
+                            Intent intent = AuthorHomeActivity.buildIntent(EntryWebPageActivity.this, authorIcon, authorId);
                             startActivity(intent);
                         }
                     });
@@ -85,12 +90,11 @@ public class EntryWebPageActivity extends XTBaseActivity {
         webView.setWebChromeClient(new XTWebChromeClient());
         webSettings.setJavaScriptEnabled(true);
 
-
-
+        ((TextView) findViewById(R.id.comment_count)).setText(String.valueOf(commentCount));
         ((TextView) findViewById(R.id.author_name)).setText(authorName);
+        ((TextView) findViewById(R.id.entry_collection_count)).setText(String.valueOf(collectionCount));
         Glide.with(this).load(authorIcon).into((ImageView) findViewById(R.id.author_icon));
         webView.loadUrl(url);
-//        webSettings.set
     }
 
     @Override
@@ -146,12 +150,14 @@ public class EntryWebPageActivity extends XTBaseActivity {
         }
     }
 
-    public static Intent buildEntryWebPageParams(Context context, String url, String authorName, String icon,String authorId) {
+    public static Intent buildEntryWebPageParams(Context context, String url, String authorName, String icon, String authorId,int commentCount,int collectionCount) {
         Intent intent = new Intent(context, EntryWebPageActivity.class);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_URL, url);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_AUTHOR_NAME, authorName);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_AUTHOR_ICON, icon);
         intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_AUTHOR_ID, authorId);
+        intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_COMMENT_COUNT, commentCount);
+        intent.putExtra(EntryWebPageActivity.BUNDLE_KEY_ENTRY_COLLECTION_COUNT, collectionCount);
 
         return intent;
 
