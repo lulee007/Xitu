@@ -4,6 +4,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+
+import retrofit.RetrofitError;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -57,5 +63,32 @@ public class CommonSaveServiceTest {
                 })
                 .toBlocking().single();
         assertThat(o.toString(),not(equalTo("{}")));
+    }
+
+    @Test
+    public void testSaveRegisterPhone() throws Exception {
+      HashMap result= commonSaveService.saveRegisterPhone("1", "2", "3")
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        try {
+                            System.out.println(inputStream2String(((RetrofitError) throwable).getResponse().getBody().in()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        fail();
+                    }
+                })
+                .toBlocking().first();
+        assertThat(result,not(equalTo(null)));
+    }
+
+    public   static   String   inputStream2String(InputStream is)   throws IOException {
+        ByteArrayOutputStream   baos   =   new ByteArrayOutputStream();
+        int   i=-1;
+        while((i=is.read())!=-1){
+            baos.write(i);
+        }
+        return   baos.toString();
     }
 }

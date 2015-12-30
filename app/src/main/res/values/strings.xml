@@ -32,5 +32,14 @@
     <string name="phone">手机号</string>
     <string name="user_name">用户名</string>
     <string name="pwd">密码</string>
+    <string name="register_by_phone">手机注册</string>
+    <string name="register">注册</string>
+    <string name="login_phone">已有手机号,立即去登陆</string>
+    <string name="login_by_phone">手机登陆</string>
+    <string name="verify_code">验证码</string>
+    <string name="login_confirm">确定</string>
+    <string name="login">登陆</string>
+    <string name="forgot_pwd">忘记密码?</string>
+    <string name="register_phone">注册账号</string>
 
 </resources>

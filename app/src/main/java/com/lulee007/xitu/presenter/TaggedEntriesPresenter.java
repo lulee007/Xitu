@@ -80,7 +80,10 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
 
 
     public void loadNew() {
-
+        if(!AuthUserHelper.getInstance().isLoggedIn()){
+            mView.noData();
+            return;
+        }
         Subscription subscription = getSubscribedTags()
                 .flatMap(new Func1<List<HashMap>, Observable<List<Entry>>>() {
                     @Override

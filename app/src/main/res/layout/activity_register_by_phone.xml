@@ -12,46 +12,77 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/app_bar"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/phone_InputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/phone"
-                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone" />
+                android:hint="@string/phone"
+                android:inputType="phone" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/user_name_InputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/user_name"
-                android:inputType="textPersonName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/user_name" />
+                android:hint="@string/user_name"
+                android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/pwd_InputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/pwd"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/pwd" />
+                android:hint="@string/pwd"
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:id="@+id/register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/add_tag_btn_selector"
+            android:text="@string/register"
+            android:enabled="false"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/login_phone"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="@string/login_phone"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/juejin_blue"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/skip_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/skip_login"
+        android:layout_margin="@dimen/activity_horizontal_margin" />
 </RelativeLayout>

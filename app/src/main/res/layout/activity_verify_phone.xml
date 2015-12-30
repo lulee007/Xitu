@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    tools:context="com.lulee007.xitu.VerifyPhoneActivity">
+
+    <include layout="@layout/app_bar" />
+
+    <ImageView
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/icon_juejin"
+        android:layout_width="100.0dip"
+        android:layout_height="100.0dip"
+        android:layout_below="@id/app_bar"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/icon_juejin" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/verify_InputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/icon_juejin"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/verify_code" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/verify_InputLayout"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@drawable/add_tag_btn_selector"
+        android:text="@string/login_confirm" />
+
+</RelativeLayout>

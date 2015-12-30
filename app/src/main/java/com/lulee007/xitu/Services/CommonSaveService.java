@@ -8,9 +8,8 @@ import com.lulee007.xitu.base.XTBaseService;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,9 +30,32 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         super(CommonSaveWebService.class);
     }
 
+    public Observable<HashMap> saveRegisterPhone(String phoneNumber, String userName, String pwd) {
+        final String internalId = UUID.randomUUID().toString();
+        String dataStr = String.format("{\"requests\":[{\"body\":{\"__children\":[],\"__internalId\":\"%s\",\"mobilePhoneNumber\":\"%s\",\"password\":\"%s\",\"username\":\"%s\"},\"method\":\"POST\",\"path\":\"/1.1/users\"}]}",
+                internalId,
+                phoneNumber,
+                pwd,
+                userName
+        );
+
+        HashMap data = new Gson().fromJson(dataStr, HashMap.class);
+        return webService.save(data)
+                .map(new Func1<HashMap, HashMap>() {
+                    @Override
+                    public HashMap call(HashMap o) {
+                        return o;
+                    }
+                });
+
+    }
+
     protected interface CommonSaveWebService {
         @POST("/batch/save")
         Observable<Object> save(@Body SaveRequest request);
+
+        @POST("/batch/save")
+        Observable<HashMap> save(@Body HashMap request);
     }
 
     public Observable<String> saveSubscription(String cid) {
@@ -64,7 +86,7 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
 
     }
 
-    public Observable<String> saveCollectEntry(String cid){
+    public Observable<String> saveCollectEntry(String cid) {
         String classNameToSave = "Collection";
 
         PostEntity.BodyEntity.ChildrenEntity childTagEntity = new PostEntity.BodyEntity.ChildrenEntity();

@@ -32,7 +32,7 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
     }
 
 
-    protected void addSubscription(Subscription subscription) {
+    public void addSubscription(Subscription subscription) {
         if (subscription != null) {
             mCompositeSubscription.add(subscription);
         }
