@@ -60,7 +60,6 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
         }
         subscribeDone = (FloatingActionButton) view.findViewById(R.id.subscribe_done);
         if (subscribeDone != null && showConfirm) {
-
             RxView.clicks(subscribeDone).throttleFirst(500, TimeUnit.MILLISECONDS)
                     .subscribe(new Action1<Void>() {
                         @Override
@@ -69,7 +68,6 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
                         }
                     });
             subscribeDone.setVisibility(View.VISIBLE);
-
         }
 
         mPresenter = new TagWithUserStatusPresenter(this);

@@ -44,10 +44,13 @@ public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implement
         mListAdapter.setItemListener(this);
         ((EntryCardItemAdapter) mListAdapter).setEntryCardItemListener(this);
         mUltimateRecyclerView.setAdapter(mListAdapter);
-        mPresenter = new TaggedEntriesPresenter(this);
-        mPresenter.loadNew();
+
         mDataStateViewHelper.setNoDataViewRsid(R.layout.no_entries);
         mDataStateViewHelper.setNoDataBtnId(R.id.add_tag_btn);
+
+        mPresenter = new TaggedEntriesPresenter(this);
+        mPresenter.loadNew();
+
         return view;
     }
 

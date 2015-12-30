@@ -13,9 +13,6 @@
     <string name="share">分享</string>
     <string name="register_or_login">注册.登陆</string>
     <string name="title_activity_settings">设置</string>
-    <!-- Strings related to Settings -->
-
-
 
     <string name="wb_login">微博登陆</string>
     <string name="phone_login">手机登陆/注册</string>
@@ -32,5 +29,8 @@
     <string name="action_share">分享</string>
     <string name="transition_name_author_icon">author_icon_image_view</string>
     <string name="manage_tag_activity_title">关注标签</string>
+    <string name="phone">手机号</string>
+    <string name="user_name">用户名</string>
+    <string name="pwd">密码</string>
 
 </resources>

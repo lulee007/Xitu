@@ -1,9 +1,11 @@
 package com.lulee007.xitu.adapter;
 
+import android.animation.Animator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.R;
 import com.lulee007.xitu.base.XTBaseAdapter;
 import com.lulee007.xitu.models.Entry;
+import com.marshalchen.ultimaterecyclerview.animators.internal.ViewHelper;
 
 import java.util.concurrent.TimeUnit;
 

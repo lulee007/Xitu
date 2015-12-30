@@ -125,12 +125,9 @@ public class MainActivity extends XTBaseActivity implements IMainView {
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        mainViewPresenter = new MainViewPresenter(this);
+        mainViewPresenter = new MainViewPresenter(this,this);
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        currentFragment = new MainFragment(tabLayout);
-        fragmentTransaction.replace(R.id.fragment_main, currentFragment);
-        fragmentTransaction.commit();
+
         mainViewPresenter.init();
         Logger.d("主页onCreate结束");
 
@@ -209,6 +206,9 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                 if (resultCode == XTConstant.ACTIVITY_RESULT_CODE.TAG_FOLLOW_GUIDE_SUBSCRIBE_DONE
                         && currentFragment instanceof MainFragment) {
                     ((MainFragment) currentFragment).notifyChildRefreshEntries();
+                }else if(currentFragment==null){
+                    // first in from tag_follow_guide
+                    showMainFragment();
                 }
                 break;
             default:
@@ -224,7 +224,10 @@ public class MainActivity extends XTBaseActivity implements IMainView {
 
     @Override
     public void showMainFragment() {
-
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        currentFragment = new MainFragment(tabLayout);
+        fragmentTransaction.replace(R.id.fragment_main, currentFragment);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override

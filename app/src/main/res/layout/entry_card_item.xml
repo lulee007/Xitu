@@ -22,8 +22,7 @@
             android:id="@+id/entry_screenshot"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/icon_login_choice" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"

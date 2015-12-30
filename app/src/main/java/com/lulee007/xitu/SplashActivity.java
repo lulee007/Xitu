@@ -30,7 +30,7 @@ public class SplashActivity extends XTBaseActivity implements ISplashView {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         this.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        splashPresenter = new SplashPresenter(this);
+        splashPresenter = new SplashPresenter(this,this);
         splashPresenter.start();
 
     }

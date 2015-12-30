@@ -1,5 +1,8 @@
 package com.lulee007.xitu.presenter;
 
+import android.content.Context;
+
+import com.github.pwittchen.prefser.library.Prefser;
 import com.lulee007.xitu.view.ISplashView;
 
 import java.util.concurrent.TimeUnit;
@@ -16,21 +19,24 @@ import rx.functions.Func1;
  */
 public class SplashPresenter {
 
+    private final Prefser prefser;
+    private final String KEY_IsFirstLoad = "isFirstLoad";
     ISplashView splashView;
 
-    public SplashPresenter(ISplashView view){
-        splashView=view;
+    public SplashPresenter(ISplashView view, Context context) {
+        prefser = new Prefser(context);
+        splashView = view;
     }
 
-    public void start(){
+    public void start() {
         splashView.startLoadingAnim();
         Observable.timer(3, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .map(new Func1<Long, Object>() {
                     @Override
                     public Object call(Long aLong) {
-                        if(isFirstLoad()){
+                        if (isFirstLoad()) {
                             splashView.startLoginOptionsActivity();
-                        }else{
+                        } else {
                             splashView.startMainActivity();
                         }
                         return null;
@@ -38,8 +44,11 @@ public class SplashPresenter {
                 }).subscribe();
     }
 
-    private boolean isFirstLoad(){
-
-        return true;
+    private boolean isFirstLoad() {
+        Boolean isFirstLoad = prefser.get(KEY_IsFirstLoad, Boolean.class, Boolean.TRUE);
+        if (isFirstLoad) {
+            prefser.put(KEY_IsFirstLoad, Boolean.FALSE);
+        }
+        return isFirstLoad;
     }
 }

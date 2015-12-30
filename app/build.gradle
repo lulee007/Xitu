@@ -73,8 +73,9 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     //An image loading and caching library for Android focused on smooth scrolling
     compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'info.android15.nucleus:nucleus:2.0.1'
+    compile 'com.github.pwittchen:prefser:2.0.5'
+    compile 'io.reactivex:rxandroid:1.1.0'
+//    compile 'info.android15.nucleus:nucleus:2.0.1'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     compile('com.mikepenz:materialdrawer:4.6.2@aar') {
         transitive = true

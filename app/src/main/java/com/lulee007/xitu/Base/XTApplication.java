@@ -2,6 +2,7 @@ package com.lulee007.xitu.base;
 
 import android.app.Application;
 
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.util.IconFontUtil;
 import com.lulee007.xitu.util.XTConstant;
 import com.mikepenz.iconics.Iconics;
@@ -19,6 +20,9 @@ public class XTApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AuthUserHelper.init(this);
+
         //pretty logger
         Logger.init("XTAppLog");
 
@@ -27,11 +31,10 @@ public class XTApplication extends Application {
 
         //only required if you add a custom or generic font on your own
         Iconics.init(getApplicationContext());
-
-        //register custom fonts like this (or also provide a font definition file)
         //Generic font creation process
         GenericFont xtIconFont = IconFontUtil.buildXTFont();
-
         Iconics.registerFont(xtIconFont);
+
+
     }
 }

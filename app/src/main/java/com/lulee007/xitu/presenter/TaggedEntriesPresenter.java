@@ -66,7 +66,7 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
     }
 
     private HashMap<String, String> buildSubscribeListParams(HashMap userMap) {
-        String userWhereString = "{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"563c1d9560b25749ea071246\"}";
+        String userWhereString =new Gson().toJson(AuthUserHelper.getInstance().getUser());
         if (userMap != null) {
             userWhereString = new Gson().toJson(userMap);
         }
