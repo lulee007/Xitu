@@ -60,7 +60,7 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_author_home);
-         authorBlurView = (ImageView) findViewById(R.id.author_icon_blur);
+        authorBlurView = (ImageView) findViewById(R.id.author_icon_blur);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         appBarLayout.addOnOffsetChangedListener(this);

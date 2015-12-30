@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
     tools:context="com.lulee007.xitu.TagFollowGuideActivity">
 
+    <include layout="@layout/app_bar" />
 
     <FrameLayout
         android:id="@+id/tags_content"
+        android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"

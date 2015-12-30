@@ -2,10 +2,12 @@ package com.lulee007.xitu;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
+import com.lulee007.xitu.base.XTBaseActivity;
 import com.mikepenz.materialize.MaterializeBuilder;
 
-public class LoginByPhoneActivity extends Activity {
+public class LoginByPhoneActivity extends XTBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,5 +15,7 @@ public class LoginByPhoneActivity extends Activity {
         setContentView(R.layout.activity_login_by_phone);
         new MaterializeBuilder().withActivity(this).build();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 }

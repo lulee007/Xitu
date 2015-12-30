@@ -6,9 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +19,6 @@ import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IMainView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 import com.lulee007.xitu.view.fragment.MainFragment;
-import com.mikepenz.iconics.Iconics;
-import com.mikepenz.iconics.typeface.GenericFont;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -86,7 +82,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                 .withActionBarDrawerToggle(true)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.home).withIcon(IconFontUtil.getIcon(this,"home")),
+                        new PrimaryDrawerItem().withName(R.string.home).withIcon(IconFontUtil.getIcon(this, "home")),
                         new PrimaryDrawerItem().withName(R.string.my_collection).withIcon(IconFontUtil.getIcon(this, "person")),
                         new PrimaryDrawerItem().withName(R.string.read_history).withIcon(IconFontUtil.getIcon(this, "history")),
                         new DividerDrawerItem(),
@@ -99,30 +95,29 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // position start with 1
+
                         switch (position) {
                             case 1:
                                 switchFragment(position);
-                                break;
+                                return false;
                             case 2:
-                                HashMap <String,String> userMap=AuthUserHelper.getInstance().getUser();
-                                Intent intent=AuthorHomeActivity.buildIntent(MainActivity.this,"","");
+                                HashMap<String, String> userMap = AuthUserHelper.getInstance().getUser();
+                                Intent intent = AuthorHomeActivity.buildIntent(MainActivity.this, "", "");
                                 startActivity(intent);
-                                break;
+                                return true;
                             case 3:
                                 switchFragment(position);
-                                break;
+                                return false;
                             case 5:
-                                startActivity(AuthorsActivity.class);
-                                break;
-                            case 6:
                                 startActivity(SettingsActivity.class);
-                                break;
+                                return true;
+                            case 6:
+                                startActivity(AuthorsActivity.class);
+                                return true;
                             default:
                                 //0 header 4 divider
-                                break;
+                                return true;
                         }
-                        Logger.d(position + "");
-                        return false;
                     }
                 })
                 .build();
@@ -212,10 +207,10 @@ public class MainActivity extends XTBaseActivity implements IMainView {
         switch (requestCode) {
             case XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE:
                 if (resultCode == XTConstant.ACTIVITY_RESULT_CODE.TAG_FOLLOW_GUIDE_SUBSCRIBE_DONE
-                        && currentFragment instanceof MainFragment){
-                    ((MainFragment)currentFragment).notifyChildRefreshEntries();
+                        && currentFragment instanceof MainFragment) {
+                    ((MainFragment) currentFragment).notifyChildRefreshEntries();
                 }
-                    break;
+                break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }

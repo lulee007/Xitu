@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.lulee007.xitu.EntryWebPageActivity">
+
+    <include layout="@layout/app_bar" />
 
 
     <RelativeLayout
@@ -59,9 +60,12 @@
         android:id="@+id/web_view_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+
         android:layout_above="@+id/entry_detail_tool" />
 
     <include
         android:id="@+id/loading_data"
+
         layout="@layout/loading_data_progressbar" />
 </RelativeLayout>

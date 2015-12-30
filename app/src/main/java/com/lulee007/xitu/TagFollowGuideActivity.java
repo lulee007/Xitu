@@ -2,6 +2,8 @@ package com.lulee007.xitu;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,7 +24,9 @@ public class TagFollowGuideActivity extends XTBaseActivity {
         setContentView(R.layout.activity_tag_follow_guide);
         new MaterializeBuilder().withActivity(this).build();
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("关注标签");
         }

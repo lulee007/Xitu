@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
     tools:context="com.lulee007.xitu.AuthorsActivity">
+
+    <include layout="@layout/app_bar" />
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/rv_authors"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/app_bar"
         app:recyclerviewClipToPadding="true"
+
         app:recyclerviewScrollbars="vertical" />
 </RelativeLayout>

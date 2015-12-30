@@ -14,7 +14,6 @@
         <!-- Support library compatibility -->
         <!--<item name="elevation">0dp</item>-->
 
-
         <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
         <item name="android:windowBackground">@color/background_light</item>
@@ -23,30 +22,9 @@
 
     </style>
 
-
-    <!--带ActionBar页面-->
-    <style name="XTActionBar" parent="@style/AppTheme">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-
-
-        <!-- Remove shadow below action bar Android < 5.0 -->
-        <item name="android:windowContentOverlay">@null</item>
-        <!-- remove shadow below action bar 5.0 -->
-        <!-- <item name="android:elevation">0dp</item> -->
-        <!-- Support library compatibility -->
-        <item name="elevation">0dp</item>
-        <item name="android:windowBackground">@color/background_light</item>
-
-
-
-    </style>
-
     <!--use for custom action bar with toolbar etc-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--页面切换动画-->
     <style name="activityAnimation" parent="@android:style/Animation">
@@ -62,6 +40,4 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-
-    <color name="light_gray">#f4f4f4</color>
 </resources>

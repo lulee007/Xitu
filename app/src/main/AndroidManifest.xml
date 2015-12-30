@@ -16,7 +16,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -28,27 +28,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:theme="@style/XTActionBar"/>
-        <activity android:name=".LoginOptionsActivity"/>
-        <activity android:name=".RegisterByPhoneActivity"/>
-        <activity android:name=".LoginByPhoneActivity"/>
-        <activity android:name=".LoginByWeiboActivity"/>
-        <activity
-            android:name=".TagFollowGuideActivity"
-            android:theme="@style/XTActionBar"/>
-        <activity
-            android:name=".AuthorsActivity"
-            android:theme="@style/XTActionBar"/>
-        <activity
-            android:name=".AuthorHomeActivity"/>
-        <activity android:name=".EntryWebPageActivity"
-            android:theme="@style/XTActionBar"/>
-        <activity android:name=".EntriesByTagActivity"/>
-        <activity
-            android:name=".ManageTagsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".LoginOptionsActivity" />
+        <activity android:name=".RegisterByPhoneActivity" />
+        <activity android:name=".LoginByPhoneActivity" />
+        <activity android:name=".LoginByWeiboActivity" />
+        <activity android:name=".TagFollowGuideActivity" />
+        <activity android:name=".AuthorsActivity" />
+        <activity android:name=".AuthorHomeActivity" />
+        <activity android:name=".EntryWebPageActivity" />
+        <activity android:name=".EntriesByTagActivity" />
+        <activity android:name=".ManageTagsActivity" />
     </application>
 
 </manifest>

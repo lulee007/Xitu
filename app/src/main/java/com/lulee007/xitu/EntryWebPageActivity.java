@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,8 @@ public class EntryWebPageActivity extends XTBaseActivity {
         setContentView(R.layout.activity_web_view_page);
         new MaterializeBuilder().withActivity(this).build();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         webView = (WebView) findViewById(R.id.web_view_page);
         loadingDataView = findViewById(R.id.loading_data);
 

@@ -3,7 +3,9 @@ package com.lulee007.xitu;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class LoginByWeiboActivity extends Activity {
+import com.lulee007.xitu.base.XTBaseActivity;
+
+public class LoginByWeiboActivity extends XTBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

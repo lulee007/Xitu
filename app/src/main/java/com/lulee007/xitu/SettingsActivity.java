@@ -11,6 +11,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
@@ -34,6 +35,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         setContentView(R.layout.activity_settings);
         new MaterializeBuilder().withActivity(this).build();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         setupActionBar();
         this.addPreferencesFromResource(R.xml.settings);
     }

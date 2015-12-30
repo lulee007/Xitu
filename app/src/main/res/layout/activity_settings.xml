@@ -5,6 +5,8 @@
     android:fitsSystemWindows="true"
 
     android:orientation="vertical">
+    <include layout="@layout/app_bar" />
+
     <ListView
         android:id="@android:id/list"
         android:padding="@dimen/activity_horizontal_margin"
