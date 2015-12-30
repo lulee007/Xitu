@@ -100,10 +100,7 @@ public abstract class XTBaseService<T> {
 
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
-                    if (hostname.equalsIgnoreCase("api.leancloud.cn"))
-                        return true;
-                    else
-                        return false;
+                    return hostname.equalsIgnoreCase("api.leancloud.cn");
                 }
             });
             okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);

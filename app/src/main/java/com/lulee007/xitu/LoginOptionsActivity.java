@@ -63,5 +63,5 @@ public class LoginOptionsActivity extends XTBaseActivity implements View.OnClick
     private boolean isFirstLoad(){
 
         return true;
-    };
+    }
 }

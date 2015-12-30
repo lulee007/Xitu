@@ -301,14 +301,14 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                        if (aBoolean == Boolean.TRUE) {
                                            entry.setCollectionCount(entry.getCollectionCount() - 1);
                                            entry.setCollection(null);
-                                           ((IEntriesView) mView).onUnCollect(position);
+                                           mView.onUnCollect(position);
                                        }
                                    }
                                },
                             new Action1<Throwable>() {
                                 @Override
                                 public void call(Throwable throwable) {
-                                    ((IEntriesView) mView).onUnCollectError();
+                                    mView.onUnCollectError();
                                 }
                             }
                     );
@@ -322,13 +322,13 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                        newCollection.setObjectId(s);
                                        entry.setCollection(newCollection);
                                        entry.setCollectionCount(entry.getCollectionCount() + 1);
-                                       ((IEntriesView) mView).onCollected(position);
+                                       mView.onCollected(position);
                                    }
                                },
                             new Action1<Throwable>() {
                                 @Override
                                 public void call(Throwable throwable) {
-                                    ((IEntriesView) mView).onCollectError();
+                                    mView.onCollectError();
                                 }
                             }
                     );

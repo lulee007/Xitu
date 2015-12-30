@@ -5,9 +5,7 @@
     <color name="colorAccent">#007fff</color>
     <color name="juejin_blue">#ff007fff</color>
 
-    <color name="black_overlay">#66000000</color>
     <color name="background_material_light">#ffffff</color>
-    <color name="black">#00000000</color>
     <color name="foreground_material_light">#ffffff</color>
     <color name="background_light">#ffffff</color>
 

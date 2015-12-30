@@ -110,7 +110,7 @@ public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implement
     @Override
     public void onCollected(int position) {
         showToast("已收藏");
-        ((EntryCardItemAdapter)mListAdapter).notifyItemChanged(position);
+        mListAdapter.notifyItemChanged(position);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implement
     @Override
     public void onUnCollect(int position) {
         showToast("取消了收藏");
-        ((EntryCardItemAdapter)mListAdapter).notifyItemChanged(position);
+        mListAdapter.notifyItemChanged(position);
     }
 
     @Override

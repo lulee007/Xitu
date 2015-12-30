@@ -153,12 +153,12 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        ((ITagFollowGuideView) mView).onUnSubscribeTag(position);
+                        mView.onUnSubscribeTag(position);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        ((ITagFollowGuideView) mView).onUnSubscribeTagError();
+                        mView.onUnSubscribeTagError();
                     }
                 });
         addSubscription(subscription);

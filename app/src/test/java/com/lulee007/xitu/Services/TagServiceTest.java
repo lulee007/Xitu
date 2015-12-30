@@ -55,8 +55,8 @@ public class TagServiceTest {
                     @Override
                     public List<Tag> call(List<Tag> o, List<Tag> o2) {
                         List<Tag> tas = new ArrayList<Tag>();
-                        tas.addAll((List<Tag>) o);
-                        tas.addAll((List<Tag>) o2);
+                        tas.addAll(o);
+                        tas.addAll(o2);
                         return tas;
                     }
                 })

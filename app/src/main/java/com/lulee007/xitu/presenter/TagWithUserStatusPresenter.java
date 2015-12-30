@@ -271,12 +271,12 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        ((ITagWithUserStatsView) mView).onUnSubscribeTag(position);
+                        mView.onUnSubscribeTag(position);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        ((ITagWithUserStatsView) mView).onUnSubscribeTagError();
+                        mView.onUnSubscribeTagError();
                     }
                 });
         addSubscription(subscription);
@@ -290,12 +290,12 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
                     @Override
                     public void call(String o) {
                         Logger.json(o.toString());
-                            ((ITagWithUserStatsView) mView).onSubscribeTag( o, position);
+                            mView.onSubscribeTag(o, position);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        ((ITagWithUserStatsView) mView).onSubscribeTagError();
+                        mView.onSubscribeTagError();
                     }
                 });
         addSubscription(subscription);

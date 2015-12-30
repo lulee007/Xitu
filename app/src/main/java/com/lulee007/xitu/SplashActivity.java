@@ -50,9 +50,9 @@ public class SplashActivity extends XTBaseActivity implements ISplashView {
      * @return
      */
     private AnimatorSet CustomAnimator(ImageView imageView, float alphaFrom, float alphaTo, float scaleXFrom, float scaleXTo, float scaleYFrom, float scaleYTo, long startDelay, long duration) {
-        ObjectAnimator var12 = ObjectAnimator.ofFloat(imageView, "alpha", new float[]{alphaFrom, alphaTo});
-        ObjectAnimator var13 = ObjectAnimator.ofFloat(imageView, "scaleX", new float[]{scaleXFrom, scaleXTo});
-        ObjectAnimator var14 = ObjectAnimator.ofFloat(imageView, "scaleY", new float[]{scaleYFrom, scaleYTo});
+        ObjectAnimator var12 = ObjectAnimator.ofFloat(imageView, "alpha", alphaFrom, alphaTo);
+        ObjectAnimator var13 = ObjectAnimator.ofFloat(imageView, "scaleX", scaleXFrom, scaleXTo);
+        ObjectAnimator var14 = ObjectAnimator.ofFloat(imageView, "scaleY", scaleYFrom, scaleYTo);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(var12).with(var13).with(var14);
         animatorSet.setDuration(duration);
