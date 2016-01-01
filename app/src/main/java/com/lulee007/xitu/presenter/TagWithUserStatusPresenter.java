@@ -204,12 +204,15 @@ public class TagWithUserStatusPresenter extends XTBasePresenter<ITagWithUserStat
                                                     });
                                         }
                                     })
+
                                     .map(new Func1<Integer, List<Tag>>() {
                                         @Override
                                         public List<Tag> call(Integer integer) {
                                             return tags;
                                         }
-                                    });
+                                    })
+                                    .switchIfEmpty(Observable.just(tags))
+                                    ;
                         }
 
                     }

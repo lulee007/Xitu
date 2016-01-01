@@ -66,7 +66,7 @@ public class RegisterByPhonePresenter extends XTBasePresenter {
                         new Action1<Account>() {
                             @Override
                             public void call(Account account) {
-                                AuthUserHelper.getInstance().saveUser(account);
+                                AuthUserHelper.getInstance().saveUserDetail(account);
                                 String phone = account.getMobilePhoneNumber();
                                 registerByPhoneView.onRegisterSuccess(phone);
                             }

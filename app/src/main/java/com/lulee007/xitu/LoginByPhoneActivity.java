@@ -158,7 +158,33 @@ public class LoginByPhoneActivity extends XTBaseActivity implements ILoginByPhon
 
     @Override
     public void onLoginError(LeanCloudError error) {
-        sweetAlertDialog.setTitleText("登陆失败")
+        String toastText=null;
+        switch (error.getCode()) {
+            case 100:
+                toastText = "服务器异常";
+                break;
+            case 124:
+                toastText = "连接服务器超时";
+                break;
+            case 127:
+                toastText = "手机号码无效";
+                break;
+            case 201:
+                toastText = "密码错误";
+                break;
+            case 210:
+                toastText="用户名和密码不匹配";
+                break;
+            case 211:
+            case 213:
+                toastText = "该手机没有被注册过";
+                break;
+            default:
+                toastText = "未知错误";
+                break;
+        }
+
+        sweetAlertDialog.setTitleText(toastText)
                 .setConfirmText("确认")
                 .setConfirmClickListener(null)
                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);

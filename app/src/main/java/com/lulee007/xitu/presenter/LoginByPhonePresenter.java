@@ -40,7 +40,7 @@ public class LoginByPhonePresenter extends XTBasePresenter {
                         new Action1<Account>() {
                             @Override
                             public void call(Account s) {
-                                AuthUserHelper.getInstance().saveUser(s);
+                                AuthUserHelper.getInstance().saveUserDetail(s);
                                 loginByPhoneView.onLoginSuccess();
                             }
                         },
