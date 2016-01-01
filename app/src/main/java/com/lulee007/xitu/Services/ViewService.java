@@ -16,26 +16,24 @@ import rx.functions.Func1;
  * Date: 2015-12-28
  * Time: 10:34
  */
-public class ViewService  extends XTBaseService<ViewService.ViewWebService>{
-
+public class ViewService extends XTBaseService<ViewService.ViewWebService> {
 
 
     public ViewService() {
         super(ViewWebService.class);
-        webService=restAdapter.create(ViewWebService.class);
     }
 
-    protected interface  ViewWebService{
+    protected interface ViewWebService {
         @GET("/classes/View")
-        Observable<ViewDataEnvelope> getViewedEntries(@QueryMap HashMap<String,String> params);
+        Observable<ViewDataEnvelope> getViewedEntries(@QueryMap HashMap<String, String> params);
     }
 
 
-    protected class ViewDataEnvelope extends BaseDataEnvelope<List<View>>{
+    protected class ViewDataEnvelope extends BaseDataEnvelope<List<View>> {
 
     }
 
-    public Observable<List<View>> getViewedEntries(HashMap<String,String> params){
+    public Observable<List<View>> getViewedEntries(HashMap<String, String> params) {
         return webService.getViewedEntries(params)
                 .map(new Func1<ViewDataEnvelope, List<View>>() {
                     @Override

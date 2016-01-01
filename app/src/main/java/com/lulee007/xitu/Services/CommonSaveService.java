@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.lulee007.xitu.base.XTBaseService;
+import com.lulee007.xitu.models.Account;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.orhanobut.logger.Logger;
 
@@ -30,7 +31,17 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         super(CommonSaveWebService.class);
     }
 
-    public Observable<HashMap> saveRegisterPhone(String phoneNumber, String userName, String pwd) {
+
+
+    protected interface CommonSaveWebService {
+        @POST("/batch/save")
+        Observable<Object> save(@Body SaveRequest request);
+
+        @POST("/batch/save")
+        Observable<LinkedTreeMap> save(@Body HashMap request);
+    }
+
+    public Observable<Account> saveRegisterPhone(String phoneNumber, String userName, String pwd) {
         final String internalId = UUID.randomUUID().toString();
         String dataStr = String.format("{\"requests\":[{\"body\":{\"__children\":[],\"__internalId\":\"%s\",\"mobilePhoneNumber\":\"%s\",\"password\":\"%s\",\"username\":\"%s\"},\"method\":\"POST\",\"path\":\"/1.1/users\"}]}",
                 internalId,
@@ -41,21 +52,13 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
 
         HashMap data = new Gson().fromJson(dataStr, HashMap.class);
         return webService.save(data)
-                .map(new Func1<HashMap, HashMap>() {
+                .map(new Func1<LinkedTreeMap, Account>() {
                     @Override
-                    public HashMap call(HashMap o) {
-                        return o;
+                    public Account call(LinkedTreeMap o) {
+                        return Account.objectFromData(new Gson().toJson(o.get(internalId)));
                     }
                 });
 
-    }
-
-    protected interface CommonSaveWebService {
-        @POST("/batch/save")
-        Observable<Object> save(@Body SaveRequest request);
-
-        @POST("/batch/save")
-        Observable<HashMap> save(@Body HashMap request);
     }
 
     public Observable<String> saveSubscription(String cid) {

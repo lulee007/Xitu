@@ -10,12 +10,12 @@
     <include layout="@layout/app_bar" />
 
     <ImageView
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:id="@+id/icon_juejin"
         android:layout_width="100.0dip"
         android:layout_height="100.0dip"
         android:layout_below="@id/app_bar"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:src="@mipmap/icon_juejin" />
 
 
@@ -27,19 +27,22 @@
         android:layout_margin="@dimen/activity_vertical_margin">
 
         <EditText
+            android:id="@+id/verify_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="@string/verify_code" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:id="@+id/verify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/verify_InputLayout"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:background="@drawable/add_tag_btn_selector"
-        android:text="@string/login_confirm" />
+        android:text="@string/login_confirm"
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
 
 </RelativeLayout>

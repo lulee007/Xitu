@@ -19,12 +19,8 @@ import rx.functions.Func1;
 public class EntryService extends XTBaseService<EntryService.EntryWebService> {
 
 
-    private EntryWebService entryWebService;
-
-
     public EntryService() {
         super(EntryWebService.class);
-        entryWebService = restAdapter.create(EntryWebService.class);
     }
 
     protected interface EntryWebService {
@@ -63,12 +59,11 @@ public class EntryService extends XTBaseService<EntryService.EntryWebService> {
      */
 
     /**
-     *
      * @param params
      * @return
      */
-    public Observable<List<Entry>> getEntryList(HashMap<String ,String > params) {
-        return this.entryWebService.getEntries(params)
+    public Observable<List<Entry>> getEntryList(HashMap<String, String> params) {
+        return this.webService.getEntries(params)
                 .map(new Func1<EntryDataEnvelope, List<Entry>>() {
                     @Override
                     public List<Entry> call(EntryDataEnvelope entryDataEnvelope) {
@@ -76,8 +71,6 @@ public class EntryService extends XTBaseService<EntryService.EntryWebService> {
                     }
                 });
     }
-
-
 
 
 }

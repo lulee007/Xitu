@@ -2,11 +2,16 @@ package com.lulee007.xitu.base;
 
 import android.support.annotation.NonNull;
 
+import com.lulee007.xitu.models.LeanCloudError;
 import com.orhanobut.logger.Logger;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit.RetrofitError;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -41,7 +46,30 @@ public abstract class XTBasePresenter<T1 extends IXTBaseView> {
     public void unSubscribeAll() {
         mView = null;
         mCompositeSubscription.unsubscribe();
-        Logger.d("unsubscribe all");
+        Logger.d("unSubscribe all");
+    }
+
+    protected LeanCloudError parseError(RetrofitError error){
+        if(error!=null){
+            try {
+                String body= inputStream2String(error.getResponse().getBody().in());
+                return LeanCloudError.objectFromData(body);
+            } catch (IOException e) {
+                Logger.e(e.fillInStackTrace(),"get error_detail_json error");
+            }
+            return null;
+        }else {
+            return  null;
+        }
+    }
+
+    public static String inputStream2String(InputStream is) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i = -1;
+        while ((i = is.read()) != -1) {
+            byteArrayOutputStream.write(i);
+        }
+        return byteArrayOutputStream.toString();
     }
 
     protected void onLoadMoreComplete(List items){

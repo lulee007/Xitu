@@ -2,7 +2,11 @@ package com.lulee007.xitu;
 
 import org.junit.Test;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -16,6 +20,33 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void rxDelayTest() throws  Exception{
+        Observable.timer(3, TimeUnit.SECONDS)
+                .doOnNext(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        System.out.println("timer: do on next 1"+new Date());
+                    }
+                })
+                .delay(3,TimeUnit.SECONDS)
+                .doOnNext(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        System.out.println("timer: do on next 2"+new Date());
+
+                    }
+                })
+                .delay(3, TimeUnit.SECONDS)
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        System.out.println("subscribe"+new Date());
+                    }
+                });
+        Thread.sleep(12000);
     }
 
     @Test

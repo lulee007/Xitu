@@ -21,11 +21,9 @@ import rx.functions.Func1;
  */
 public class SubscribeService extends XTBaseService<SubscribeService.SubscribeWebService> {
 
-    private SubscribeWebService tagWebService;
 
     public SubscribeService(){
         super(SubscribeWebService.class);
-        tagWebService=restAdapter.create(SubscribeWebService.class);
     }
 
     protected   interface SubscribeWebService {
@@ -57,7 +55,7 @@ public class SubscribeService extends XTBaseService<SubscribeService.SubscribeWe
      * @return
      */
     public Observable<List<Subscribe>> getSubscribes(HashMap<String,String> params){
-        return tagWebService.getSubscribeList(params).map(new Func1<SubscribeDataEnvelope, List<Subscribe>>() {
+        return webService.getSubscribeList(params).map(new Func1<SubscribeDataEnvelope, List<Subscribe>>() {
             @Override
             public List<Subscribe> call(SubscribeDataEnvelope subscribeDataEnvelope) {
                 return subscribeDataEnvelope.results;
@@ -67,7 +65,7 @@ public class SubscribeService extends XTBaseService<SubscribeService.SubscribeWe
 
 
     public Observable<Boolean> unSubscribe(String objectId){
-        return tagWebService.unSubscribe(objectId)
+        return webService.unSubscribe(objectId)
                 .map(new Func1<Object ,Boolean>() {
                     @Override
                     public Boolean call(Object o) {

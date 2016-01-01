@@ -5,6 +5,7 @@ import android.content.Context;
 import com.github.pwittchen.prefser.library.Prefser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lulee007.xitu.models.Account;
 
 import java.util.HashMap;
 
@@ -32,10 +33,15 @@ public class AuthUserHelper {
     }
 
     public void saveUser(HashMap user){
-        HashMap tempUser= new Gson().fromJson("{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"563c1d9560b25749ea071246\"}", new TypeToken<HashMap>() {
-        }.getType());
         prefser.put("user",user);
         prefser.put(KEY_IsLoggedIn,Boolean.FALSE);
+    }
+
+    public void saveUser(Account account){
+        prefser.put("user_detail",account);
+        HashMap tempUser= new Gson().fromJson(String.format("{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"%s\"}", account.getObjectId()), new TypeToken<HashMap>() {
+        }.getType());
+        saveUser(tempUser);
     }
 
     public void deleteUser(){
