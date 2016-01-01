@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.lulee007.xitu.util.ActivitiesHelper;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mikepenz.materialize.MaterializeBuilder;
 
@@ -23,6 +24,7 @@ public class XTBaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ActivitiesHelper.instance().add(this);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null) {
             actionBar.setElevation(0);
@@ -61,5 +63,11 @@ public class XTBaseActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivitiesHelper.instance().remove(this);
     }
 }

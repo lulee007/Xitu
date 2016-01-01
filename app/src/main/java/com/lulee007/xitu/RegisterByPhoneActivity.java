@@ -5,12 +5,14 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.LeanCloudError;
 import com.lulee007.xitu.presenter.RegisterByPhonePresenter;
+import com.lulee007.xitu.util.ActivitiesHelper;
 import com.lulee007.xitu.view.IRegisterByPhoneView;
 import com.mikepenz.materialize.MaterializeBuilder;
 
@@ -130,6 +132,22 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
                         sweetAlertDialog.show();
                     }
                 });
+        RxView.clicks(findViewById(R.id.skip_register))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        startActivity(MainActivity.class);
+                        ActivitiesHelper.instance().finishAllBut(MainActivity.class);
+                    }
+                });
+        RxView.clicks(findViewById(R.id.login_phone))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        startActivity(LoginByPhoneActivity.class);
+                        ActivitiesHelper.instance().finish(RegisterByPhoneActivity.class);
+                    }
+                });
 
     }
 
@@ -146,7 +164,7 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
         sweetAlertDialog
                 .setTitleText("注册成功")
                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-        Observable.timer(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+        Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .doOnNext(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
@@ -154,7 +172,7 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
                             sweetAlertDialog.dismissWithAnimation();
                     }
                 })
-                .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .delay(250, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {

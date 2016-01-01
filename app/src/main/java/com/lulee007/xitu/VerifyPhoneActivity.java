@@ -11,6 +11,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.LeanCloudError;
 import com.lulee007.xitu.presenter.VerifyPhonePresenter;
+import com.lulee007.xitu.util.ActivitiesHelper;
 import com.lulee007.xitu.view.IVerifyPhoneView;
 import com.mikepenz.materialize.MaterializeBuilder;
 
@@ -77,6 +78,8 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
+                        startActivity(MainActivity.class);
+                        ActivitiesHelper.instance().finishAllBut(MainActivity.class);
                         sweetAlertDialog = new SweetAlertDialog(VerifyPhoneActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                         sweetAlertDialog.setTitleText("正在验证中...");
                         sweetAlertDialog.setCancelable(false);
@@ -92,7 +95,7 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
         sweetAlertDialog.setTitleText("验证成功!")
                 .setConfirmText("完成")
                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-        Observable.timer(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+        Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .doOnNext(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
@@ -100,11 +103,12 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
                             sweetAlertDialog.dismissWithAnimation();
                     }
                 })
-                .delay(500,TimeUnit.MILLISECONDS,AndroidSchedulers.mainThread())
+                .delay(250,TimeUnit.MILLISECONDS,AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
                         startActivity(MainActivity.class);
+                        ActivitiesHelper.instance().finishAllBut(MainActivity.class);
                     }
                 });
     }

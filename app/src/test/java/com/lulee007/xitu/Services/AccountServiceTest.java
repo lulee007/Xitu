@@ -1,5 +1,7 @@
 package com.lulee007.xitu.services;
 
+import com.lulee007.xitu.models.Account;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +10,7 @@ import java.util.HashMap;
 
 import rx.functions.Action1;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -36,5 +39,12 @@ public class AccountServiceTest {
                     }
                 }).toBlocking().single();
         assertThat(result,not(null));
+    }
+
+    @Test
+    public void testLogin() throws Exception {
+        Account account=accountService.login("13073299956","ILulee_262810")
+                .toBlocking().single();
+        assertThat(account.getObjectId(),equalTo("568390f460b2c297d014f7d2"));
     }
 }

@@ -60,6 +60,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/add_tag_btn_selector"
             android:text="@string/login"
+            android:enabled="false"
             android:textColor="@android:color/white"
             android:textSize="22sp" />
 
@@ -73,7 +74,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:text="@string/forgot_pwd"
-        android:textColor="@color/md_grey_400" />
+        android:textColor="@color/clickable_text_gray_color" />
 
     <TextView
         android:id="@+id/register_phone"
@@ -83,5 +84,5 @@
         android:layout_below="@id/login_layout"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:text="@string/register_phone"
-        android:textColor="@color/juejin_blue" />
+        android:textColor="@color/clickable_text_blue_color" />
 </RelativeLayout>

@@ -73,7 +73,7 @@
             android:layout_margin="@dimen/activity_vertical_margin"
             android:text="@string/login_phone"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/juejin_blue"
+            android:textColor="@color/clickable_text_blue_color"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -83,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:textColor="@color/clickable_text_gray_color"
         android:text="@string/skip_login"
         android:layout_margin="@dimen/activity_horizontal_margin" />
 </RelativeLayout>
