@@ -1,5 +1,6 @@
 package com.lulee007.xitu.view.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import com.lulee007.xitu.R;
 import com.lulee007.xitu.adapter.TagFollowAdapter;
 import com.lulee007.xitu.models.Tag;
 import com.lulee007.xitu.presenter.TagWithUserStatusPresenter;
+import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.ITagWithUserStatsView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
@@ -64,6 +66,7 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
                     .subscribe(new Action1<Void>() {
                         @Override
                         public void call(Void aVoid) {
+                            getActivity().setResult(Activity.RESULT_OK);
                             getActivity().finish();
                         }
                     });

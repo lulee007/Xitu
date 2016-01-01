@@ -125,7 +125,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        mainViewPresenter = new MainViewPresenter(this,this);
+        mainViewPresenter = new MainViewPresenter(this, this);
         fragmentManager = getSupportFragmentManager();
 
         mainViewPresenter.init();
@@ -201,18 +201,21 @@ public class MainActivity extends XTBaseActivity implements IMainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode) {
-            case XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE:
-                if (resultCode == XTConstant.ACTIVITY_RESULT_CODE.TAG_FOLLOW_GUIDE_SUBSCRIBE_DONE
-                        && currentFragment instanceof MainFragment) {
-                    ((MainFragment) currentFragment).notifyChildRefreshEntries();
-                }else if(currentFragment==null){
-                    // first in from tag_follow_guide
-                    showMainFragment();
-                }
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE:
+                    if ( currentFragment instanceof MainFragment) {
+                        ((MainFragment) currentFragment).notifyChildRefreshEntries();
+                    } else if (currentFragment == null) {
+                        // first in from tag_follow_guide
+                        showMainFragment();
+                    }
+                    break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

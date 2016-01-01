@@ -61,7 +61,7 @@ public class TagFollowGuideActivity extends XTBaseActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(XTConstant.ACTIVITY_RESULT_CODE.TAG_FOLLOW_GUIDE_SUBSCRIBE_DONE);
+        setResult(RESULT_OK);
         super.onBackPressed();
     }
 }

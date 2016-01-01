@@ -1,6 +1,7 @@
 package com.lulee007.xitu.view.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +21,7 @@ import com.lulee007.xitu.adapter.EntryCardItemAdapter;
 import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.presenter.TaggedEntriesPresenter;
 import com.lulee007.xitu.util.DataStateViewHelper;
+import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IEntriesView;
 
 /**
@@ -27,7 +29,6 @@ import com.lulee007.xitu.view.IEntriesView;
  */
 public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implements IEntriesView, EntryCardItemAdapter.EntryCardItemListener {
 
-    private static final int ON_TAG_FOLLOW_ACTIVITY_REQUEST = 1;
 
     public TaggedCardEntriesFragment() {
         // Required empty public constructor
@@ -57,18 +58,9 @@ public class TaggedCardEntriesFragment extends BaseListFragment<Entry> implement
 
     @Override
     public void onNoDataButtonClick() {
-        startActivityForResult(new Intent(getContext(), TagFollowGuideActivity.class), ON_TAG_FOLLOW_ACTIVITY_REQUEST);
+        getActivity().startActivityForResult(new Intent(getContext(), TagFollowGuideActivity.class), XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ON_TAG_FOLLOW_ACTIVITY_REQUEST) {
-            mDataStateViewHelper.setView(DataStateViewHelper.DateState.LOADING);
-            mPresenter.refresh();
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
 
     @Override
     public void onItemClick(Object item) {
