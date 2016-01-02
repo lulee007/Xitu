@@ -1,5 +1,7 @@
 package com.lulee007.xitu.view;
 
+import com.lulee007.xitu.models.Account;
+
 public interface IMainView {
     void showTagFollowGuideActivity();
     void showMainFragment();
@@ -11,4 +13,8 @@ public interface IMainView {
     void showChangeUserName();
 
     void showLoginOptionPage();
+
+    void fillAccountHeader(Account userDetail);
+
+    void showChangeUserIcon();
 }

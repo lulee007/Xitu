@@ -45,11 +45,11 @@ public class SplashPresenter {
     }
 
     private boolean isFirstLoad() {
-        return true;
-//        Boolean isFirstLoad = prefser.get(KEY_IsFirstLoad, Boolean.class, Boolean.TRUE);
-//        if (isFirstLoad) {
-//            prefser.put(KEY_IsFirstLoad, Boolean.FALSE);
-//        }
-//        return isFirstLoad;
+//        return true;
+        Boolean isFirstLoad = prefser.get(KEY_IsFirstLoad, Boolean.class, Boolean.TRUE);
+        if (isFirstLoad) {
+            prefser.put(KEY_IsFirstLoad, Boolean.FALSE);
+        }
+        return isFirstLoad;
     }
 }

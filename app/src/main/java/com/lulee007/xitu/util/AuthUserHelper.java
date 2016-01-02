@@ -54,4 +54,8 @@ public class AuthUserHelper {
     public static void init(Context context) {
         prefser = new Prefser(context);
     }
+
+    public Account getUserDetail() {
+      return  prefser.get("user_detail",Account.class,null);
+    }
 }

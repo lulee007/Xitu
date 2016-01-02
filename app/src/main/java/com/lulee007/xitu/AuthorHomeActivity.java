@@ -71,13 +71,16 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         userId = getIntent().getStringExtra("author_id");
         isCurrentUser = userId.equals(AuthUserHelper.getInstance().getUser().get("objectId"));
 
-        Glide.with(this)
-                .load(url)
-                .transform(new GlideCircleTransform(this))
-                .into(authorIcon);
         authorHomePresenter = new AuthorHomePresenter(this);
         authorHomePresenter.getAuthorInfo(userId);
-        authorHomePresenter.loadUserBlurBackground(url);
+
+        if(url!=null) {
+            authorHomePresenter.loadUserBlurBackground(url);
+            Glide.with(this)
+                    .load(url)
+                    .transform(new GlideCircleTransform(this))
+                    .into(authorIcon);
+        }
 
     }
 

@@ -15,9 +15,8 @@ public class Account {
      * role : guest
      * totalCollectionsCount : 0
      * subscribedTagsCount : 0
-     * sessionToken : yvyk3ili8afg2o43lpsxn126o
      * followersCount : 0
-     * updatedAt : 2015-12-30T08:09:14.655Z
+     * updatedAt : 2016-01-02T06:10:44.745Z
      * postedEntriesCount : 0
      * commentedEntriesCount : 0
      * collectedEntriesCount : 0
@@ -27,10 +26,13 @@ public class Account {
      * totalHotIndex : 0
      * emailVerified : false
      * totalCommentsCount : 0
+     * installation : {"__type":"Pointer","className":"_Installation","objectId":"9hCg0aBc9spmN9aLnjMGgsopCbfr38Ge"}
      * blacklist : false
      * mobilePhoneNumber : 13073299956
      * apply : false
      * followeesCount : 0
+     * authData : null
+     * avatar_large : http://ac-mhke0kuv.clouddn.com/uTFC7YuRpY8NYcHRqTDv4czdOrkE6KNr4VJcE3SB
      * mobilePhoneVerified : true
      */
 
@@ -38,7 +40,6 @@ public class Account {
     private String role;
     private int totalCollectionsCount;
     private int subscribedTagsCount;
-    private String sessionToken;
     private int followersCount;
     private String updatedAt;
     private int postedEntriesCount;
@@ -50,10 +51,19 @@ public class Account {
     private int totalHotIndex;
     private boolean emailVerified;
     private int totalCommentsCount;
+    /**
+     * __type : Pointer
+     * className : _Installation
+     * objectId : 9hCg0aBc9spmN9aLnjMGgsopCbfr38Ge
+     */
+
+    private InstallationEntity installation;
     private boolean blacklist;
     private String mobilePhoneNumber;
     private boolean apply;
     private int followeesCount;
+    private Object authData;
+    private String avatar_large;
     private boolean mobilePhoneVerified;
 
     public static Account objectFromData(String str) {
@@ -75,10 +85,6 @@ public class Account {
 
     public void setSubscribedTagsCount(int subscribedTagsCount) {
         this.subscribedTagsCount = subscribedTagsCount;
-    }
-
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
     }
 
     public void setFollowersCount(int followersCount) {
@@ -125,6 +131,10 @@ public class Account {
         this.totalCommentsCount = totalCommentsCount;
     }
 
+    public void setInstallation(InstallationEntity installation) {
+        this.installation = installation;
+    }
+
     public void setBlacklist(boolean blacklist) {
         this.blacklist = blacklist;
     }
@@ -139,6 +149,14 @@ public class Account {
 
     public void setFolloweesCount(int followeesCount) {
         this.followeesCount = followeesCount;
+    }
+
+    public void setAuthData(Object authData) {
+        this.authData = authData;
+    }
+
+    public void setAvatar_large(String avatar_large) {
+        this.avatar_large = avatar_large;
     }
 
     public void setMobilePhoneVerified(boolean mobilePhoneVerified) {
@@ -159,10 +177,6 @@ public class Account {
 
     public int getSubscribedTagsCount() {
         return subscribedTagsCount;
-    }
-
-    public String getSessionToken() {
-        return sessionToken;
     }
 
     public int getFollowersCount() {
@@ -209,6 +223,10 @@ public class Account {
         return totalCommentsCount;
     }
 
+    public InstallationEntity getInstallation() {
+        return installation;
+    }
+
     public boolean isBlacklist() {
         return blacklist;
     }
@@ -225,7 +243,50 @@ public class Account {
         return followeesCount;
     }
 
+    public Object getAuthData() {
+        return authData;
+    }
+
+    public String getAvatar_large() {
+        return avatar_large;
+    }
+
     public boolean isMobilePhoneVerified() {
         return mobilePhoneVerified;
+    }
+
+    public static class InstallationEntity {
+        private String __type;
+        private String className;
+        private String objectId;
+
+        public static InstallationEntity objectFromData(String str) {
+
+            return new Gson().fromJson(str, InstallationEntity.class);
+        }
+
+        public void set__type(String __type) {
+            this.__type = __type;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        public void setObjectId(String objectId) {
+            this.objectId = objectId;
+        }
+
+        public String get__type() {
+            return __type;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public String getObjectId() {
+            return objectId;
+        }
     }
 }

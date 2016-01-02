@@ -27,6 +27,9 @@ public class MainViewPresenter {
         } else {
             mainView.showMainFragment();
         }
+        if(AuthUserHelper.getInstance().isLoggedIn()){
+            mainView.fillAccountHeader(AuthUserHelper.getInstance().getUserDetail());
+        }
     }
 
     private boolean isFirstTimeIn() {
@@ -46,8 +49,16 @@ public class MainViewPresenter {
     }
 
     public void toggleUserNameClick() {
-        if (!AuthUserHelper.getInstance().isLoggedIn()) {
+        if (AuthUserHelper.getInstance().isLoggedIn()) {
             mainView.showChangeUserName();
+        } else {
+            mainView.showLoginOptionPage();
+        }
+    }
+
+    public void toggleUserIconClick() {
+        if (AuthUserHelper.getInstance().isLoggedIn()) {
+            mainView.showChangeUserIcon();
         } else {
             mainView.showLoginOptionPage();
         }

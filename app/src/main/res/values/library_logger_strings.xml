@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_logger"></string>
+	<!-- Author section -->
+	<string name="library_logger_author">orhanobut</string>
+	<string name="library_logger_authorWebsite">https://github.com/orhanobut/logger</string>
+	<!-- Library section -->
+	<string name="library_logger_libraryName">Logger</string>
+	<string name="library_logger_libraryDescription">Simple, pretty and powerful logger for android</string>
+	<string name="library_logger_libraryWebsite">https://github.com/orhanobut/logger</string>
+	<string name="library_logger_libraryVersion"></string>
+	<!-- OpenSource section -->
+	<string name="library_logger_isOpenSource">true</string>
+	<string name="library_logger_repositoryLink">https://github.com/orhanobut/logger</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_logger_classPath">com.github.orhanobut.logger</string>
+	<!-- License section -->
+	<string name="library_logger_licenseId">apache_2_0</string>
+	<!-- Custom variables section -->
+</resources>

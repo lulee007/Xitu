@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_prefser"></string>
+	<!-- Author section -->
+	<string name="library_prefser_author">pwittchen</string>
+	<string name="library_prefser_authorWebsite">https://github.com/pwittchen/prefser</string>
+	<!-- Library section -->
+	<string name="library_prefser_libraryName">Prefser</string>
+	<string name="library_prefser_libraryDescription">Wrapper for Android SharedPreferences with object serialization and RxJava Observables</string>
+	<string name="library_prefser_libraryWebsite">https://github.com/pwittchen/prefser</string>
+	<string name="library_prefser_libraryVersion">2.0.5</string>
+	<!-- OpenSource section -->
+	<string name="library_prefser_isOpenSource">true</string>
+	<string name="library_prefser_repositoryLink">https://github.com/pwittchen/prefser</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_prefser_classPath">com.github.pwittchen.prefser</string>
+	<!-- License section -->
+	<string name="library_prefser_licenseId">apache_2_0</string>
+	<!-- Custom variables section -->
+</resources>
