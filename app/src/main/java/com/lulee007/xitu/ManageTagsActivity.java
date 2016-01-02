@@ -44,4 +44,10 @@ public class ManageTagsActivity extends XTBaseActivity {
         tabLayout.setupWithViewPager(viewPager);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
+    }
 }

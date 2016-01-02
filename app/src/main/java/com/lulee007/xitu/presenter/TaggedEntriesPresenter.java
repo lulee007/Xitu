@@ -183,7 +183,9 @@ public class TaggedEntriesPresenter extends XTBasePresenter<IEntriesView> {
                                     }
                                 });
                     }
-                });
+                })
+                .switchIfEmpty(Observable.just(entries))
+                ;
     }
 
     @NonNull

@@ -204,6 +204,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case XTConstant.ACTIVITY_REQUEST_CODE.TAG_FOLLOW_GUIDE:
+                case XTConstant.ACTIVITY_REQUEST_CODE.MANAGE_TAG:
                     if ( currentFragment instanceof MainFragment) {
                         ((MainFragment) currentFragment).notifyChildRefreshEntries();
                     } else if (currentFragment == null) {
@@ -237,7 +238,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
     public void showManageTagActivity() {
         Intent intent = new Intent(this, ManageTagsActivity.class);
         intent.putExtra(ManageTagsActivity.INTENT_KEY_USER, AuthUserHelper.getInstance().getUser().toString());
-        startActivity(intent);
+        startActivityForResult(intent, XTConstant.ACTIVITY_REQUEST_CODE.MANAGE_TAG);
     }
 
     @Override

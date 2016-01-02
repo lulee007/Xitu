@@ -4,6 +4,7 @@ public interface XTConstant {
 
     interface ACTIVITY_REQUEST_CODE {
         int TAG_FOLLOW_GUIDE=200;
+        int MANAGE_TAG = 201;
     }
 
     interface XT_FONT{
