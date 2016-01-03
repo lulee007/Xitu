@@ -1,11 +1,11 @@
 package com.lulee007.xitu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -13,6 +13,7 @@ import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.LeanCloudError;
 import com.lulee007.xitu.presenter.RegisterByPhonePresenter;
 import com.lulee007.xitu.util.ActivitiesHelper;
+import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IRegisterByPhoneView;
 import com.mikepenz.materialize.MaterializeBuilder;
 
@@ -33,6 +34,7 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
     RegisterByPhonePresenter registerByPhonePresenter;
     private Button registerPhone;
     private SweetAlertDialog sweetAlertDialog = null;
+    private boolean needLoginResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.register_by_phone);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        needLoginResult = getIntent().getBooleanExtra(LoginOptionsActivity.INTENT_KEY_NEED_LOGIN_RESULT, false);
 
         final TextInputLayout phoneInputLayout = (TextInputLayout) findViewById(R.id.phone_InputLayout);
         final EditText phoneNumber = (EditText) findViewById(R.id.phone);
@@ -136,16 +140,27 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        startActivity(MainActivity.class);
-                        ActivitiesHelper.instance().finishAllBut(MainActivity.class);
+                        if (needLoginResult) {
+                            setResult(RESULT_FIRST_USER);
+                            finish();
+                        } else {
+                            startActivity(MainActivity.class);
+                            ActivitiesHelper.instance().finishAllBut(MainActivity.class);
+                        }
                     }
                 });
         RxView.clicks(findViewById(R.id.login_phone))
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        startActivity(LoginByPhoneActivity.class);
-                        ActivitiesHelper.instance().finish(RegisterByPhoneActivity.class);
+                        if (needLoginResult) {
+                            Intent intent = new Intent(RegisterByPhoneActivity.this, LoginByPhoneActivity.class);
+                            intent.putExtra(LoginOptionsActivity.INTENT_KEY_NEED_LOGIN_RESULT, true);
+                            startActivityForResult(intent, XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE);
+                        } else {
+                            startActivity(LoginByPhoneActivity.class);
+                            ActivitiesHelper.instance().finish(RegisterByPhoneActivity.class);
+                        }
                     }
                 });
 
@@ -176,7 +191,13 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        startActivity(VerifyPhoneActivity.class);
+                        if (needLoginResult) {
+                            Intent intent = new Intent(RegisterByPhoneActivity.this, VerifyPhoneActivity.class);
+                            intent.putExtra(LoginOptionsActivity.INTENT_KEY_NEED_LOGIN_RESULT, true);
+                            startActivityForResult(intent, XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE);
+                        }else {
+                            startActivity(VerifyPhoneActivity.class);
+                        }
                     }
                 });
     }
@@ -213,5 +234,15 @@ public class RegisterByPhoneActivity extends XTBaseActivity implements IRegister
         registerPhone.setEnabled(true);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_FIRST_USER) {
+            if (needLoginResult && requestCode == XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE) {
+                setResult(RESULT_FIRST_USER);
+                finish();
+                return;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

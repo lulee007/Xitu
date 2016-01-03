@@ -1,5 +1,6 @@
 package com.lulee007.xitu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import com.lulee007.xitu.base.XTBaseActivity;
 import com.lulee007.xitu.models.LeanCloudError;
 import com.lulee007.xitu.presenter.VerifyPhonePresenter;
 import com.lulee007.xitu.util.ActivitiesHelper;
+import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IVerifyPhoneView;
 import com.mikepenz.materialize.MaterializeBuilder;
 
@@ -32,6 +34,7 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
     private TextInputLayout verifyTextInputLayout;
     private EditText verifyCodeEditText;
     private Button verifyButton;
+    private boolean needLoginResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
         verifyTextInputLayout = (TextInputLayout) findViewById(R.id.verify_InputLayout);
         verifyCodeEditText = (EditText) findViewById(R.id.verify_code);
         verifyButton = (Button) findViewById(R.id.verify);
+
+        needLoginResult = getIntent().getBooleanExtra(LoginOptionsActivity.INTENT_KEY_NEED_LOGIN_RESULT, false);
 
         new MaterializeBuilder().withActivity(this).build();
 
@@ -107,8 +112,13 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        startActivity(MainActivity.class);
-                        ActivitiesHelper.instance().finishAllBut(MainActivity.class);
+                        if (needLoginResult) {
+                            setResult(RESULT_FIRST_USER);
+                            finish();
+                        }else {
+                            startActivity(MainActivity.class);
+                            ActivitiesHelper.instance().finishAllBut(MainActivity.class);
+                        }
                     }
                 });
     }
@@ -121,4 +131,6 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);
 
     }
+
+
 }

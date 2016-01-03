@@ -1,5 +1,6 @@
 package com.lulee007.xitu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -37,7 +38,6 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -119,9 +119,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                                 switchFragment(position);
                                 return false;
                             case 2:
-                                Account account = AuthUserHelper.getInstance().getUserDetail();
-                                Intent intent = AuthorHomeActivity.buildIntent(MainActivity.this, account.getAvatar_large(), account.getObjectId());
-                                startActivity(intent);
+                                mainViewPresenter.toggleMyHomeClick(MainActivity.this);
                                 return true;
                             case 3:
                                 switchFragment(position);
@@ -251,8 +249,18 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                         showMainFragment();
                     }
                     break;
+
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
+            }
+        } else if (resultCode == Activity.RESULT_FIRST_USER) {
+            switch (requestCode) {
+                case XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE:
+                    mainViewPresenter.updateUserHeader();
+                    if (currentFragment instanceof MainFragment) {
+                        ((MainFragment) currentFragment).notifyChildRefreshEntries();
+                    }
+                    break;
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -282,16 +290,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
 
     @Override
     public void showNeedLoginDialog() {
-        new SweetAlertDialog(this).setTitleText("需要登陆")
-                .setContentText("登陆后即可使用更多功能")
-                .setConfirmText("现在去登陆")
-                .setCancelText("取消")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        showLoginOptionPage();
-                    }
-                }).show();
+        AuthUserHelper.getInstance().showNeedLoginDialog(this);
     }
 
     @Override
@@ -314,7 +313,9 @@ public class MainActivity extends XTBaseActivity implements IMainView {
 
     @Override
     public void showLoginOptionPage() {
-        startActivity(LoginOptionsActivity.class);
+        Intent intent = new Intent(this, LoginOptionsActivity.class);
+        intent.putExtra(LoginOptionsActivity.INTENT_KEY_NEED_LOGIN_RESULT, true);
+        startActivityForResult(intent, XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.lulee007.xitu.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.github.pwittchen.prefser.library.Prefser;
+import com.lulee007.xitu.AuthorHomeActivity;
+import com.lulee007.xitu.MainActivity;
+import com.lulee007.xitu.models.Account;
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.IMainView;
 
@@ -60,5 +64,19 @@ public class MainViewPresenter {
         } else {
             mainView.showLoginOptionPage();
         }
+    }
+
+    public void toggleMyHomeClick(Context context) {
+        if(AuthUserHelper.getInstance().isLoggedIn()) {
+            Account account = AuthUserHelper.getInstance().getUserDetail();
+            Intent intent = AuthorHomeActivity.buildIntent(context, account.getAvatar_large(), account.getObjectId());
+            context.startActivity(intent);
+        }else{
+            mainView.showNeedLoginDialog();
+        }
+    }
+
+    public void updateUserHeader() {
+        mainView.fillAccountHeader(AuthUserHelper.getInstance().getUserDetail());
     }
 }

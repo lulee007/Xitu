@@ -74,7 +74,9 @@ public class AuthUserHelper {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         Intent intent = new Intent(context, LoginOptionsActivity.class);
+                        intent.putExtra(LoginOptionsActivity.INTENT_KEY_NEED_LOGIN_RESULT,true);
                         ((Activity) context).startActivityForResult(intent, XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE);
+                        sweetAlertDialog.dismiss();
                     }
                 }).show();
     }
