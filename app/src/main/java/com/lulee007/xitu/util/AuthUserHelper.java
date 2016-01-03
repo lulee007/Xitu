@@ -48,6 +48,7 @@ public class AuthUserHelper {
 
     public void deleteUser(){
         prefser.remove("user");
+        prefser.remove("user_detail");
         prefser.put(KEY_IsLoggedIn,Boolean.FALSE);
     }
 

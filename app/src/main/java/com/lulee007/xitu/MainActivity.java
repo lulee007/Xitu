@@ -22,8 +22,6 @@ import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.IMainView;
 import com.lulee007.xitu.view.fragment.ListEntriesFragment;
 import com.lulee007.xitu.view.fragment.MainFragment;
-import com.mikepenz.aboutlibraries.Libs;
-import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -41,6 +39,9 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+
+//import com.mikepenz.aboutlibraries.Libs;
+//import com.mikepenz.aboutlibraries.LibsBuilder;
 
 public class MainActivity extends XTBaseActivity implements IMainView {
 
@@ -133,16 +134,25 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                             case 6:
                                 startActivity(AuthorsActivity.class);
                                 return true;
+                            // will produce edittext typeed text not appear correctly
                             case 9:
-                                new LibsBuilder()
-                                        //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
-                                        .withLibraries("logger","prefser","ultimaterecyclerview","sweetalert","rxjava")
-                                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                                        .withAutoDetect(true)
-                                        .withActivityTitle("开源库")
-                                                //start the activity
-                                        .start(MainActivity.this);
+//                                new LibsBuilder()
+//                                        //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+//                                        .withLibraries("logger","prefser","ultimaterecyclerview","sweetalert","rxjava")
+//                                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+//                                        .withAutoDetect(false)
+//                                        .withActivityTitle("开源库")
+//                                                //start the activity
+//                                        .start(MainActivity.this);
                                 return true;
+                            case 10:
+                                AuthUserHelper.getInstance().deleteUser();
+                                appDrawer.removeItemByPosition(10);
+                                if (currentFragment instanceof MainFragment) {
+                                    ((MainFragment) currentFragment).notifyChildRefreshEntries();
+                                }
+                                return false;
+
                             default:
                                 //0 header 4 divider
                                 return true;
@@ -311,6 +321,8 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                 profileDrawerItem.withIcon(userDetail.getAvatar_large());
             }
             headerResult.addProfiles(profileDrawerItem);
+
+            appDrawer.addItem(new SecondaryDrawerItem().withName("退出"));
         }
     }
 
