@@ -27,9 +27,7 @@ public class MainViewPresenter {
         } else {
             mainView.showMainFragment();
         }
-        if(AuthUserHelper.getInstance().isLoggedIn()){
-            mainView.fillAccountHeader(AuthUserHelper.getInstance().getUserDetail());
-        }
+        mainView.fillAccountHeader(AuthUserHelper.getInstance().getUserDetail());
     }
 
     private boolean isFirstTimeIn() {

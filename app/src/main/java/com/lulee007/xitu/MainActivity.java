@@ -34,8 +34,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -66,11 +68,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.mipmap.profile_bg)
-                .addProfiles(
-                        new ProfileDrawerItem()
-                                .withEmail("登陆.注册")
-                                .withIcon(R.mipmap.empty_avatar_user)
-                )
+
                 .withSelectionListEnabled(false)
                 .withOnAccountHeaderSelectionViewClickListener(new AccountHeader.OnAccountHeaderSelectionViewClickListener() {
                     @Override
@@ -151,6 +149,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                                 if (currentFragment instanceof MainFragment) {
                                     ((MainFragment) currentFragment).notifyChildRefreshEntries();
                                 }
+                                fillAccountHeader(null);
                                 return false;
 
                             default:
@@ -283,7 +282,16 @@ public class MainActivity extends XTBaseActivity implements IMainView {
 
     @Override
     public void showNeedLoginDialog() {
-
+        new SweetAlertDialog(this).setTitleText("需要登陆")
+                .setContentText("登陆后即可使用更多功能")
+                .setConfirmText("现在去登陆")
+                .setCancelText("取消")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        showLoginOptionPage();
+                    }
+                }).show();
     }
 
     @Override
@@ -312,7 +320,11 @@ public class MainActivity extends XTBaseActivity implements IMainView {
     @Override
     public void fillAccountHeader(Account userDetail) {
         if (userDetail != null) {
-            headerResult.removeProfile(0);
+            ArrayList pro = headerResult.getProfiles();
+            if (pro != null && pro.size() > 0)
+                for (int i = 0; i < pro.size(); i++) {
+                    headerResult.removeProfile(0);
+                }
             ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem();
             profileDrawerItem.withEmail(userDetail.getUsername());
             if (userDetail.getAvatar_large() == null) {
@@ -323,6 +335,17 @@ public class MainActivity extends XTBaseActivity implements IMainView {
             headerResult.addProfiles(profileDrawerItem);
 
             appDrawer.addItem(new SecondaryDrawerItem().withName("退出"));
+        } else {
+            ArrayList pro = headerResult.getProfiles();
+            if (pro != null && pro.size() > 0)
+                for (int i = 0; i < pro.size(); i++) {
+                    headerResult.removeProfile(0);
+                }
+            headerResult.addProfiles(
+                    new ProfileDrawerItem()
+                            .withEmail("登陆.注册")
+                            .withIcon(R.mipmap.empty_avatar_user)
+            );
         }
     }
 
