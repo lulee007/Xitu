@@ -22,4 +22,6 @@ public interface IXTBaseView<T> {
 
     void noMore();
     void noData();
+
+
 }

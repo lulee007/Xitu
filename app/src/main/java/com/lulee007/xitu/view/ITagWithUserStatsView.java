@@ -13,4 +13,6 @@ public interface ITagWithUserStatsView  extends IXTBaseView<Tag>{
     void onSubscribeTagError();
 
     void onSubscribeTag(String objectId, int position);
+
+    void showNeedLoginDialog();
 }

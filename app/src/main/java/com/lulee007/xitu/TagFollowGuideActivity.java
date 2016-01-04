@@ -1,5 +1,6 @@
 package com.lulee007.xitu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -16,6 +17,8 @@ import com.orhanobut.logger.Logger;
 public class TagFollowGuideActivity extends XTBaseActivity {
 
 
+    private TagWithUserStatusFragment tagWithUserStatusFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Logger.d("在TagFollow页：OnCreate开始");
@@ -30,7 +33,7 @@ public class TagFollowGuideActivity extends XTBaseActivity {
         if (actionBar != null) {
             actionBar.setTitle("关注标签");
         }
-        TagWithUserStatusFragment tagWithUserStatusFragment = new TagWithUserStatusFragment();
+        tagWithUserStatusFragment = new TagWithUserStatusFragment();
         Bundle arguments = new Bundle();
         arguments.putBoolean(TagWithUserStatusFragment.BUNDLE_KEY_SHOW_HEADER, true);
         tagWithUserStatusFragment.setArguments(arguments);
@@ -63,5 +66,16 @@ public class TagFollowGuideActivity extends XTBaseActivity {
     public void onBackPressed() {
         setResult(RESULT_OK);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_FIRST_USER) {
+            if (requestCode == XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE) {
+                tagWithUserStatusFragment.notifyUserLoggedIn();
+                return;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

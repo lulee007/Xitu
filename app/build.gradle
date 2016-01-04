@@ -4,6 +4,10 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def AVOSCloud_App_Id = properties.getProperty('AVOSCloud.AppId')
 def AVOSCloud_App_Key = properties.getProperty('AVOSCloud.AppKey')
+def BUGHD_ProjectId = properties.getProperty('bughd.projectId')
+def BUGHD_ApiToken = properties.getProperty('bughd.apiToken')
+def BUGHD_GeneralToken = properties.getProperty('bughd.generalToken')
+def FIR_ApiToken = properties.getProperty('fir.apiToken')
 
 android {
     compileSdkVersion 23
@@ -13,13 +17,15 @@ android {
         applicationId "com.lulee007.xitu"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
 
         buildConfigField "String", "AVOSCloud_App_Id", "\"${AVOSCloud_App_Id}\""
         buildConfigField "String", "AVOSCloud_App_Key", "\"${AVOSCloud_App_Key}\""
 
+        manifestPlaceholders = [ BUG_HD_SDK_GENERAL_KEY:"${BUGHD_GeneralToken}" ]
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -49,6 +55,24 @@ android {
         }
     }
 }
+
+apply plugin: 'im.fir.plugin.gradle'//必填
+fir {
+
+//必填 上传 fir.im apk 字段，否则无法上传 APP 到 fir.im
+    apiToken "${FIR_ApiToken}"
+
+//可选 上传fir.im 中显示的changelog
+    changeLog '替换为你的更新日志'
+}
+
+//可选 如需实现自动上传符号表到 BugHD 功能，为必填项
+bughd {
+    projectId "${BUGHD_ProjectId}"
+    apiToken "${BUGHD_ApiToken}"
+}
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -80,4 +104,7 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
         transitive = true
     }
+
+    compile 'im.fir:fir-sdk:latest.integration@aar'
+
 }

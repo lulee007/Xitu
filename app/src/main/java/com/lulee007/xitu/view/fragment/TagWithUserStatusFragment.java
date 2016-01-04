@@ -15,6 +15,7 @@ import com.lulee007.xitu.R;
 import com.lulee007.xitu.adapter.TagFollowAdapter;
 import com.lulee007.xitu.models.Tag;
 import com.lulee007.xitu.presenter.TagWithUserStatusPresenter;
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.util.XTConstant;
 import com.lulee007.xitu.view.ITagWithUserStatsView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -152,5 +153,14 @@ public class TagWithUserStatusFragment extends BaseListFragment<Tag> implements 
     @Override
     public void onSubscribeTag(String objectId, int position) {
         ((TagFollowAdapter) mListAdapter).onSubscribeDataChanged(objectId, position, true);
+    }
+
+    @Override
+    public void showNeedLoginDialog() {
+        AuthUserHelper.getInstance().showNeedLoginDialog(getActivity());
+    }
+
+    public void notifyUserLoggedIn() {
+        mPresenter.loadNew();
     }
 }

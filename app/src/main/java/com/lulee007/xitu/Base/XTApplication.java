@@ -10,6 +10,8 @@ import com.mikepenz.iconics.typeface.GenericFont;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 
+import im.fir.sdk.FIR;
+
 /**
  * User: lulee007@live.com
  * Date: 2015-12-07
@@ -35,6 +37,7 @@ public class XTApplication extends Application {
         GenericFont xtIconFont = IconFontUtil.buildXTFont();
         Iconics.registerFont(xtIconFont);
 
+        FIR.init(this);
 
     }
 }
