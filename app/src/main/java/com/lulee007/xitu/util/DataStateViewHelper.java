@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.lulee007.xitu.R;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
@@ -147,6 +148,7 @@ public class DataStateViewHelper {
             }else if(rsid==noDataViewRsid && noDataBtnId>0){
                 View btn=contentView.findViewById(noDataBtnId);
                 if(btn!=null){
+
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

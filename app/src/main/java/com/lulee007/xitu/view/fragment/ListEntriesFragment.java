@@ -13,6 +13,7 @@ import com.lulee007.xitu.models.Entry;
 import com.lulee007.xitu.presenter.CollectionPresenter;
 import com.lulee007.xitu.presenter.HistoryPresenter;
 import com.lulee007.xitu.presenter.ListEntriesFragmentPresenter;
+import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.view.IEntriesByTagFragmentView;
 
 import java.util.HashMap;
@@ -114,6 +115,8 @@ public class ListEntriesFragment extends BaseListFragment<Entry> implements IEnt
 
         return view;
     }
+
+
 
     @Override
     public void onItemClick(Object item) {

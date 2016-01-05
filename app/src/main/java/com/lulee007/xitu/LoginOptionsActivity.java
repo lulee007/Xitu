@@ -57,7 +57,7 @@ public class LoginOptionsActivity extends XTBaseActivity implements View.OnClick
                     if (!needLoginResult) {
                         startActivity(RegisterByPhoneActivity.class);
                     } else {
-                        intent = new Intent(LoginOptionsActivity.this, RegisterByPhonePresenter.class);
+                        intent = new Intent(LoginOptionsActivity.this, RegisterByPhoneActivity.class);
                         intent.putExtra(INTENT_KEY_NEED_LOGIN_RESULT, true);
                         startActivityForResult(intent, XTConstant.ACTIVITY_REQUEST_CODE.LOGIN_BY_PHONE);
                     }

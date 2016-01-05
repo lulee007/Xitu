@@ -100,49 +100,39 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                 .withActionBarDrawerToggle(true)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.home).withIcon(IconFontUtil.getIcon(this, "home")),
-                        new PrimaryDrawerItem().withName(R.string.my_collection).withIcon(IconFontUtil.getIcon(this, "person")),
-                        new PrimaryDrawerItem().withName(R.string.read_history).withIcon(IconFontUtil.getIcon(this, "history")),
+                        new PrimaryDrawerItem().withIdentifier(R.string.home) .withName(R.string.home).withIcon(IconFontUtil.getIcon(this, "home")),
+                        new PrimaryDrawerItem().withIdentifier(R.string.my_collection).withName(R.string.my_collection).withIcon(IconFontUtil.getIcon(this, "person")),
+                        new PrimaryDrawerItem().withIdentifier(R.string.read_history).withName(R.string.read_history).withIcon(IconFontUtil.getIcon(this, "history")),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.settings),
-                        new SecondaryDrawerItem().withName(R.string.editors),
-                        new SecondaryDrawerItem().withName(R.string.feedback),
-                        new SecondaryDrawerItem().withName(R.string.share),
-                        new SecondaryDrawerItem().withName(R.string.abount_open)
+                        new SecondaryDrawerItem().withIdentifier(R.string.settings).withName(R.string.settings),
+                        new SecondaryDrawerItem().withIdentifier(R.string.editors).withName(R.string.editors),
+                        new SecondaryDrawerItem().withIdentifier(R.string.feedback).withName(R.string.feedback),
+                        new SecondaryDrawerItem().withIdentifier(R.string.share).withName(R.string.share)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // position start with 1
 
-                        switch (position) {
-                            case 1:
-                                switchFragment(position);
-                                return false;
-                            case 2:
+                        switch (drawerItem.getIdentifier()) {
+                            case R.string.home:
+                                return switchFragment(position);
+                            case R.string.my_collection:
                                 mainViewPresenter.toggleMyHomeClick(MainActivity.this);
                                 return true;
-                            case 3:
-                                switchFragment(position);
-                                return false;
-                            case 5:
+                            case R.string.read_history:
+                                return switchFragment(position);
+                            case R.string.settings:
                                 startActivity(SettingsActivity.class);
                                 return true;
-                            case 6:
+                            case R.string.editors:
                                 startActivity(AuthorsActivity.class);
                                 return true;
-                            // will produce edittext typeed text not appear correctly
-                            case 9:
-//                                new LibsBuilder()
-//                                        //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
-//                                        .withLibraries("logger","prefser","ultimaterecyclerview","sweetalert","rxjava")
-//                                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-//                                        .withAutoDetect(false)
-//                                        .withActivityTitle("开源库")
-//                                                //start the activity
-//                                        .start(MainActivity.this);
+                            case R.string.feedback:
                                 return true;
-                            case 10:
+                            case R.string.share:
+                                return true;
+                            case R.string.logout:
                                 AuthUserHelper.getInstance().deleteUser();
                                 appDrawer.removeItemByPosition(10);
                                 if (currentFragment instanceof MainFragment) {
@@ -190,9 +180,15 @@ public class MainActivity extends XTBaseActivity implements IMainView {
     }
 
 
-    private void switchFragment(int id) {
+    private boolean switchFragment(int id) {
+
         switch (id) {
             case 3:
+                if(!AuthUserHelper.getInstance().isLoggedIn()){
+                    appDrawer.setSelection(R.string.home,false);
+                    AuthUserHelper.getInstance().showNeedLoginDialog(this);
+                    return true;
+                }
                 currentFragment = ListEntriesFragment.newInstanceForHistory();
                 tabLayout.setVisibility(View.GONE);
                 getSupportActionBar().setTitle(R.string.read_history);
@@ -210,6 +206,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_main, currentFragment);
         fragmentTransaction.commit();
+        return false;
 
     }
 
@@ -337,7 +334,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
             }
             headerResult.addProfiles(profileDrawerItem);
 
-            appDrawer.addItem(new SecondaryDrawerItem().withName("退出"));
+            appDrawer.addItem(new SecondaryDrawerItem().withName(R.string.logout).withIdentifier(R.string.logout));
         } else {
             ArrayList pro = headerResult.getProfiles();
             if (pro != null && pro.size() > 0)
