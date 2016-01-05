@@ -69,7 +69,7 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
 
         String url = getIntent().getStringExtra("url");
         userId = getIntent().getStringExtra("author_id");
-        isCurrentUser = userId.equals(AuthUserHelper.getInstance().getUser().get("objectId"));
+        isCurrentUser =AuthUserHelper.getInstance().isCurrentUser(userId);
 
         authorHomePresenter = new AuthorHomePresenter(this);
         authorHomePresenter.getAuthorInfo(userId);

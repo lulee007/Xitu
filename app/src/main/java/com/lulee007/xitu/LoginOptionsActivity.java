@@ -46,9 +46,10 @@ public class LoginOptionsActivity extends XTBaseActivity implements View.OnClick
         Intent intent = null;
         switch (view.getId()) {
             case R.id.weibo_login:
-                intent = new Intent(this, LoginByWeiboActivity.class);
-                intent.putExtra("showDialog", false);
-                this.startActivity(intent);
+                showToast("待开发...");
+//                intent = new Intent(this, LoginByWeiboActivity.class);
+//                intent.putExtra("showDialog", false);
+//                this.startActivity(intent);
                 break;
             case R.id.phone_login:
                 if (isFirstLoad()) {

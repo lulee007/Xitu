@@ -80,4 +80,12 @@ public class AuthUserHelper {
                     }
                 }).show();
     }
+
+    public boolean isCurrentUser(String userId) {
+        Account account=getUserDetail();
+        if(account==null)return false;
+        else {
+            return account.getObjectId().equals(userId);
+        }
+    }
 }
