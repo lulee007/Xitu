@@ -18,8 +18,8 @@ android {
         applicationId "com.lulee007.xitu"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.1.2"
 
         buildConfigField "String", "AVOSCloud_App_Id", "\"${AVOSCloud_App_Id}\""
         buildConfigField "String", "AVOSCloud_App_Key", "\"${AVOSCloud_App_Key}\""
@@ -27,18 +27,18 @@ android {
         manifestPlaceholders = [
                 BUG_HD_SDK_GENERAL_KEY:"${BUGHD_GeneralToken}",
                 UMENG_APPKEY:"${UMENG_App_Key}",
-                UMENG_CHANNEL:"default_channel"
+                UMENG_CHANNEL:"_default_channel"
         ]
     }
     productFlavors {
-        default_channel{}
-        wandoujia{}
-        _360{}
-        yingyongbao{}
-        xiaomi{}
+        _default_channel{}
         baidu{}
         huawei{}
         jifeng{}
+        qihoo360{}
+        wandoujia{}
+        xiaomi{}
+        yingyongbao{}
     }
     productFlavors.all { flavor ->
         flavor.manifestPlaceholders = [ UMENG_CHANNEL:name ]
