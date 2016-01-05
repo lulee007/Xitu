@@ -34,6 +34,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -231,6 +232,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                         }
                     }).subscribe();
         } else {
+            MobclickAgent.onKillProcess(this);
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }

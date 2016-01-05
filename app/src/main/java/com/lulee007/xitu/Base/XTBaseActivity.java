@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.lulee007.xitu.util.ActivitiesHelper;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mikepenz.materialize.MaterializeBuilder;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * User: lulee007@live.com
@@ -69,5 +70,14 @@ public class XTBaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivitiesHelper.instance().remove(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

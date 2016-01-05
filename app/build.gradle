@@ -8,6 +8,7 @@ def BUGHD_ProjectId = properties.getProperty('bughd.projectId')
 def BUGHD_ApiToken = properties.getProperty('bughd.apiToken')
 def BUGHD_GeneralToken = properties.getProperty('bughd.generalToken')
 def FIR_ApiToken = properties.getProperty('fir.apiToken')
+def UMENG_App_Key = properties.getProperty('umeng.appKey')
 
 android {
     compileSdkVersion 23
@@ -23,7 +24,24 @@ android {
         buildConfigField "String", "AVOSCloud_App_Id", "\"${AVOSCloud_App_Id}\""
         buildConfigField "String", "AVOSCloud_App_Key", "\"${AVOSCloud_App_Key}\""
 
-        manifestPlaceholders = [ BUG_HD_SDK_GENERAL_KEY:"${BUGHD_GeneralToken}" ]
+        manifestPlaceholders = [
+                BUG_HD_SDK_GENERAL_KEY:"${BUGHD_GeneralToken}",
+                UMENG_APPKEY:"${UMENG_App_Key}",
+                UMENG_CHANNEL:"default_channel"
+        ]
+    }
+    productFlavors {
+        default_channel{}
+        wandoujia{}
+        _360{}
+        yingyongbao{}
+        xiaomi{}
+        baidu{}
+        huawei{}
+        jifeng{}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [ UMENG_CHANNEL:name ]
     }
 
     buildTypes {
@@ -106,5 +124,7 @@ dependencies {
     }
 
     compile 'im.fir:fir-sdk:latest.integration@aar'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
 
 }

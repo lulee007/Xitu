@@ -1,6 +1,8 @@
 package com.lulee007.xitu.base;
 
 import android.app.Application;
+import android.content.Context;
+import android.text.TextUtils;
 
 import com.lulee007.xitu.util.AuthUserHelper;
 import com.lulee007.xitu.util.IconFontUtil;
@@ -9,6 +11,7 @@ import com.mikepenz.iconics.Iconics;
 import com.mikepenz.iconics.typeface.GenericFont;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
+import com.umeng.analytics.MobclickAgent;
 
 import im.fir.sdk.FIR;
 
@@ -39,5 +42,8 @@ public class XTApplication extends Application {
 
         FIR.init(this);
 
+        MobclickAgent.setDebugMode(true);
+
     }
+
 }

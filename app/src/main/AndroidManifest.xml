@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme" >
 
         <meta-data android:value="${BUG_HD_SDK_GENERAL_KEY}" android:name="BUG_HD_SDK_GENERAL_KEY" />
-
+        <meta-data android:value="${UMENG_APPKEY}" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="${UMENG_CHANNEL}" android:name="UMENG_CHANNEL"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
