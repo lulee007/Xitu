@@ -29,7 +29,7 @@ public class MainFragment extends XTBaseFragment {
     private TabLayout parentTabLayout;
     private TaggedCardEntriesFragment taggedCardEntriesFragment;
 
-    public MainFragment(TabLayout tabLayout) {
+    public void setParentTabLayout(TabLayout tabLayout) {
         // Required empty public constructor
         parentTabLayout = tabLayout;
     }

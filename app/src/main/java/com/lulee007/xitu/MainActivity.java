@@ -194,7 +194,9 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                 getSupportActionBar().setTitle(R.string.read_history);
                 break;
             case 1:
-                currentFragment = new MainFragment(tabLayout);
+                MainFragment mainFragment=new MainFragment();
+                mainFragment.setParentTabLayout(tabLayout);
+                currentFragment = mainFragment;
                 tabLayout.setVisibility(View.VISIBLE);
                 getSupportActionBar().setTitle(R.string.app_name);
 
@@ -275,7 +277,9 @@ public class MainActivity extends XTBaseActivity implements IMainView {
     @Override
     public void showMainFragment() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        currentFragment = new MainFragment(tabLayout);
+        MainFragment mainFragment=new MainFragment();
+        mainFragment.setParentTabLayout(tabLayout);
+        currentFragment = mainFragment;
         fragmentTransaction.replace(R.id.fragment_main, currentFragment);
         fragmentTransaction.commitAllowingStateLoss();
     }
