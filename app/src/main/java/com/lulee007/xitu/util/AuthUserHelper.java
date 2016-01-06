@@ -15,10 +15,13 @@ import java.util.HashMap;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AuthUserHelper {
+    public static final String P__KEY_USER_DETAIL = "user_detail";
+    public static final String P_KEY_USER = "user";
+    public static  final String P_KEY_IS_LOGGED_IN = "user_isLoggedIn";
+
     private static AuthUserHelper ourInstance = new AuthUserHelper();
 
     private static Prefser prefser;
-    final String KEY_IsLoggedIn = "user_isLoggedIn";
 
     public static AuthUserHelper getInstance() {
         return ourInstance;
@@ -28,22 +31,22 @@ public class AuthUserHelper {
     }
 
     public boolean isLoggedIn() {
-        return prefser.get(KEY_IsLoggedIn, Boolean.class, Boolean.FALSE);
+        return prefser.get(P_KEY_IS_LOGGED_IN, Boolean.class, Boolean.FALSE);
     }
 
     public HashMap getUser() {
 
-        return prefser.get("user", HashMap.class, null);
+        return prefser.get(P_KEY_USER, HashMap.class, null);
 
     }
 
     public void saveUser(HashMap user) {
-        prefser.put("user", user);
-        prefser.put(KEY_IsLoggedIn, Boolean.TRUE);
+        prefser.put(P_KEY_USER, user);
+        prefser.put(P_KEY_IS_LOGGED_IN, Boolean.TRUE);
     }
 
     public void saveUserDetail(Account account) {
-        prefser.put("user_detail", account);
+        prefser.put(P__KEY_USER_DETAIL, account);
         if (account.isMobilePhoneVerified()) {
             HashMap tempUser = new Gson().fromJson(String.format("{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"%s\"}", account.getObjectId()), new TypeToken<HashMap>() {
             }.getType());
@@ -52,9 +55,9 @@ public class AuthUserHelper {
     }
 
     public void deleteUser() {
-        prefser.remove("user");
-        prefser.remove("user_detail");
-        prefser.put(KEY_IsLoggedIn, Boolean.FALSE);
+        prefser.remove(P_KEY_USER);
+        prefser.remove(P__KEY_USER_DETAIL);
+        prefser.put(P_KEY_IS_LOGGED_IN, Boolean.FALSE);
     }
 
     public static void init(Context context) {
@@ -62,7 +65,7 @@ public class AuthUserHelper {
     }
 
     public Account getUserDetail() {
-        return prefser.get("user_detail", Account.class, null);
+        return prefser.get(P__KEY_USER_DETAIL, Account.class, null);
     }
 
     public void showNeedLoginDialog(final Context context) {
