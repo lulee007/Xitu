@@ -18,8 +18,8 @@ android {
         applicationId "com.lulee007.xitu"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.1.7"
+        versionCode 7
+        versionName "1.1.8"
 
         buildConfigField "String", "AVOSCloud_App_Id", "\"${AVOSCloud_App_Id}\""
         buildConfigField "String", "AVOSCloud_App_Key", "\"${AVOSCloud_App_Key}\""

@@ -85,8 +85,6 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        startActivity(MainActivity.class);
-                        ActivitiesHelper.instance().finishAllBut(MainActivity.class);
                         sweetAlertDialog = new SweetAlertDialog(VerifyPhoneActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                         sweetAlertDialog.setTitleText("正在验证中...");
                         sweetAlertDialog.setCancelable(false);
