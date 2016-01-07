@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.lulee007.xitu.util.AuthUserHelper;
+import com.lulee007.xitu.util.DrawerImageLoaderHelper;
 import com.lulee007.xitu.util.IconFontUtil;
 import com.lulee007.xitu.util.XTConstant;
 import com.mikepenz.iconics.Iconics;
@@ -27,6 +28,8 @@ public class XTApplication extends Application {
         super.onCreate();
 
         AuthUserHelper.init(this);
+
+        DrawerImageLoaderHelper.init();
 
         //pretty logger
         Logger.init("XTAppLog");
