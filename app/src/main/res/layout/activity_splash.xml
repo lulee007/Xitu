@@ -4,12 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/juejin_blue"
-    android:gravity="center_horizontal"
     android:paddingTop="140.0dip">
 
     <ImageView
         android:id="@+id/logo_icon"
         android:layout_width="110.0dip"
+        android:layout_centerHorizontal="true"
         android:layout_height="110.0dip"
         android:src="@mipmap/logo_icon" />
 
@@ -17,7 +17,19 @@
         android:id="@+id/logo_word"
         android:layout_width="80.0dip"
         android:layout_height="80.0dip"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/logo_icon"
-        android:layout_marginLeft="15.0dip"
         android:src="@mipmap/logo_word" />
+    <TextView
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+        android:textColor="@color/md_white_1000"
+        android:autoLink="web"
+        android:textColorLink="@color/md_white_1000"
+        android:layout_alignParentBottom="true"
+        android:text="@string/demo_author"
+        />
 </RelativeLayout>

@@ -47,7 +47,7 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
         /**
          * include	tag
          limit	100
-         where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9560b25749ea071246"}}
+         where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9xxxx749ea071246"}}
          order	-createdAt
          */
         HashMap<String, String> params = new HashMap<>();

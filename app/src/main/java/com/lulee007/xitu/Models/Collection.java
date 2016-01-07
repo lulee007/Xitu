@@ -8,7 +8,7 @@ public class Collection {
     /**
      * __type : Pointer
      * className : _User
-     * objectId : 563c1d9560b25749ea071246
+     * objectId : 563c1d9xxxx749ea071246
      */
 
     private UserEntity user;
@@ -20,7 +20,7 @@ public class Collection {
 
     private Entry entry;
     /**
-     * user : {"__type":"Pointer","className":"_User","objectId":"563c1d9560b25749ea071246"}
+     * user : {"__type":"Pointer","className":"_User","objectId":"563c1d9xxxx749ea071246"}
      * entry : {"__type":"Pointer","className":"Entry","objectId":"56403b2e60b259ca8e31cc4b"}
      * createdAt : 2015-11-10T01:44:43.588Z
      * updatedAt : 2015-11-10T01:44:43.671Z

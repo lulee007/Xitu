@@ -23,7 +23,7 @@ public class CollectionServiceTest {
 
     @Test
     public void testUnSubscribeEntry() throws Exception {
-        Boolean result= collectionService.unSubscribeEntry("567a23f960b2855b7d328a6f")
+        Boolean result= collectionService.unSubscribeEntry("567a23fxxxx960b2855b7d328a6f")
                 .toBlocking().single();
         assertThat(result,equalTo(Boolean.TRUE));
     }

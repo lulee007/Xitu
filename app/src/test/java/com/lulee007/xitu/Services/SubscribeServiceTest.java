@@ -26,7 +26,7 @@ public class SubscribeServiceTest {
         params.put("limit", "500");
         params.put("order", "-createAt");
         params.put("include", "tag");
-        params.put("where", "{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"563c1d9560b25749ea071246\"}}");
+        params.put("where", "{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"563c1d9xxxx749ea071246\"}}");
         int count = subscribeService.getSubscribes(params)
                 .flatMap(new Func1<List<Subscribe>, Observable<?>>() {
                     @Override

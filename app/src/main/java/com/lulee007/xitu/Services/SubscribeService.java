@@ -44,7 +44,7 @@ public class SubscribeService extends XTBaseService<SubscribeService.SubscribeWe
     /** 获取用户所有的订阅标签
      * order	-createAt
      include	tag
-     where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9560b25749ea071246"}}
+     where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9xxxx749ea071246"}}
      limit	500
      */
 

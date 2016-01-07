@@ -43,7 +43,7 @@ public class HistoryPresenter extends XTBasePresenter<IEntriesByTagFragmentView>
         /**
          * order	-createdAt
          include	entry,user,entry.user
-         where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9560b25749ea071246"}}
+         where	{"user":{"__type":"Pointer","className":"_User","objectId":"563c1d9xxxx749ea071246"}}
          limit	20
          */
         HashMap<String, String> params = new HashMap<String, String>();

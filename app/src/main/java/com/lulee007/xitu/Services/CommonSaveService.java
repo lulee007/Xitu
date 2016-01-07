@@ -133,7 +133,7 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
 
         PostEntity.BodyEntity.ChildrenEntity childrenEntity = new PostEntity.BodyEntity.ChildrenEntity();
         childrenEntity.setCid((String) AuthUserHelper.getInstance().getUser().get("objectId"));
-//            childrenEntity.setCid("563c1d9560b25749ea071246");
+//            childrenEntity.setCid("563c1d9xxxx749ea071246");
         childrenEntity.setClassName("_User");
         childrenEntity.setKey("user");
         //user
@@ -189,13 +189,13 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
     protected static class PostEntity {
 
         /**
-         * __children : [{"cid":"563c1d9560b25749ea071246","className":"_User","key":"user"},{"cid":"5597838ee4b08a686ce2319d","className":"Tag","key":"tag"}]
+         * __children : [{"cid":"563c1d9xxxx749ea071246","className":"_User","key":"user"},{"cid":"5597838ee4b08a686ce2319d","className":"Tag","key":"tag"}]
          * __internalId : 81f07941-ec59-400c-86c5-9be00d4133d6
          */
 
         private BodyEntity body;
         /**
-         * body : {"__children":[{"cid":"563c1d9560b25749ea071246","className":"_User","key":"user"},{"cid":"5597838ee4b08a686ce2319d","className":"Tag","key":"tag"}],"__internalId":"81f07941-ec59-400c-86c5-9be00d4133d6"}
+         * body : {"__children":[{"cid":"563c1d9xxxx749ea071246","className":"_User","key":"user"},{"cid":"5597838ee4b08a686ce2319d","className":"Tag","key":"tag"}],"__internalId":"81f07941-ec59-400c-86c5-9be00d4133d6"}
          * method : POST
          * path : /1.1/classes/Subscribe
          */
@@ -235,7 +235,7 @@ public class CommonSaveService extends XTBaseService<CommonSaveService.CommonSav
         public static class BodyEntity {
             private String __internalId;
             /**
-             * cid : 563c1d9560b25749ea071246
+             * cid : 563c1d9xxxx749ea071246
              * className : _User
              * key : user
              */

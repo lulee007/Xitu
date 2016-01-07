@@ -43,8 +43,8 @@ public class AccountServiceTest {
 
     @Test
     public void testLogin() throws Exception {
-        Account account=accountService.login("13073299956","ILulee_262810")
+        Account account=accountService.login("131222xxx56","xxxxx0")
                 .toBlocking().single();
-        assertThat(account.getObjectId(),equalTo("568390f460b2c297d014f7d2"));
+        assertThat(account.getObjectId(),equalTo("xxxxxxxb2c297d014f7d2"));
     }
 }

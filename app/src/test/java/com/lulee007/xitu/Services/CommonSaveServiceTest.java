@@ -29,7 +29,7 @@ public class CommonSaveServiceTest {
 
     @Test
     public void saveSubscription() throws Exception {
-        Object o = commonSaveService.saveSubscription("5597a04de4b08a686ce56e63")
+        Object o = commonSaveService.saveSubscription("5597a04de4b0xxxx8a686ce56e63")
                 .map(new Func1<Object, Object>() {
                     @Override
                     public Object call(Object o) {
@@ -52,7 +52,7 @@ public class CommonSaveServiceTest {
 
     @Test
     public void testSaveCollectEntry() throws Exception {
-        Object o = commonSaveService.saveCollectEntry("567a1c8f00b06f9f616f5134")
+        Object o = commonSaveService.saveCollectEntry("567a1c8xxxf00b06f9f616f5134")
                 .map(new Func1<Object, Object>() {
                     @Override
                     public Object call(Object o) {
@@ -73,7 +73,7 @@ public class CommonSaveServiceTest {
 
     @Test
     public void testSaveRegisterPhone() throws Exception {
-        Account result = commonSaveService.saveRegisterPhone("13073211244", "21211111", "3")
+        Account result = commonSaveService.saveRegisterPhone("13122211244", "21211111", "3")
                 .doOnError(new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {

@@ -33,7 +33,7 @@ public class ViewServiceTest {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("order", "-createdAt");
         params.put("include", "entry,user,entry.user");
-        params.put("where", "{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"563c1d9560b25749ea071246\"}}");
+        params.put("where", "{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"563c1d9xxxx749ea071246\"}}");
         params.put("limit", "20");
         Integer count = viewService.getViewedEntries(params)
                 .flatMap(new Func1<List<View>, Observable<?>>() {
