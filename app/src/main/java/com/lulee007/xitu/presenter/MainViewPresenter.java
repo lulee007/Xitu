@@ -26,12 +26,12 @@ public class MainViewPresenter {
     }
 
     public void init() {
+        mainView.fillAccountHeader(AuthUserHelper.getInstance().getUserDetail());
         if (isFirstTimeIn()) {
             mainView.showTagFollowGuideActivity();
         } else {
             mainView.showMainFragment();
         }
-        mainView.fillAccountHeader(AuthUserHelper.getInstance().getUserDetail());
     }
 
     private boolean isFirstTimeIn() {

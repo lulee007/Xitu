@@ -147,7 +147,7 @@ public class LoginByPhoneActivity extends XTBaseActivity implements ILoginByPhon
                         loginByPhonePresenter.login(phoneNumber.getText().toString(),
                                 pwd.getText().toString());
                         sweetAlertDialog = new SweetAlertDialog(LoginByPhoneActivity.this, SweetAlertDialog.PROGRESS_TYPE);
-                        sweetAlertDialog.setTitleText("正在注册中...");
+                        sweetAlertDialog.setTitleText("正在登陆中...");
                         sweetAlertDialog.setCancelable(false);
                         sweetAlertDialog.show();
 

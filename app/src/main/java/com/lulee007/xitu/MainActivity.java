@@ -43,8 +43,6 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
-//import com.mikepenz.aboutlibraries.Libs;
-//import com.mikepenz.aboutlibraries.LibsBuilder;
 
 public class MainActivity extends XTBaseActivity implements IMainView {
 
@@ -134,7 +132,7 @@ public class MainActivity extends XTBaseActivity implements IMainView {
                                 return true;
                             case R.string.logout:
                                 AuthUserHelper.getInstance().deleteUser();
-                                appDrawer.removeItemByPosition(10);
+                                appDrawer.removeItem(R.string.logout);
                                 if (currentFragment instanceof MainFragment) {
                                     ((MainFragment) currentFragment).notifyChildRefreshEntries();
                                 }
