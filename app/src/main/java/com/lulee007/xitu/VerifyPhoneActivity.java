@@ -56,6 +56,8 @@ public class VerifyPhoneActivity extends XTBaseActivity implements IVerifyPhoneV
 
         verifyPhonePresenter = new VerifyPhonePresenter(this);
 
+        verifyButton.setEnabled(false);
+
         Subscription verifySubscription = RxTextView.textChanges(verifyCodeEditText).skip(1)
                 .map(new Func1<CharSequence, Boolean>() {
                     @Override
