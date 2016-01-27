@@ -1,0 +1,9 @@
+Google_Market#Google电子市场
+安卓市场#安卓市场
+Goapk_Market#安智市场
+
+Eoe_Market#优亿市场
+GFan_Market#机锋市场
+Yingyonghui_Market#应用汇市场
+Unicom_Market#联通wo市场
+ali_market#阿里云商店
