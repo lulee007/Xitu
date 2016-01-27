@@ -1,6 +1,8 @@
 #Xitu
 本项目仅仅用户学习目的,在 Android Studio 下使用`单元测试`,以及使用`开源库`进行快速开发
 ## 截图
+**对gif图进行了压缩，结果这画面也是醉了，颜色都变了**  
+
 ![unlogin](https://github.com/lulee007/Xitu/raw/master/screenshot/xt_unlogin_bro.gif) ![register](https://github.com/lulee007/Xitu/raw/master/screenshot/xt_register.gif)
 ![login](https://github.com/lulee007/Xitu/raw/master/screenshot/xt_login.gif) ![login_bro](https://github.com/lulee007/Xitu/raw/master/screenshot/xt_login_bro.gif)
 ## 单元测试
@@ -59,3 +61,4 @@ signConfig.keyPassword=xxx
 bughd.apiToken=xxxx
 ```
 xt_keystore.jks 放在项目根目录下
+=======
