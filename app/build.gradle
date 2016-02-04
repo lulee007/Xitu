@@ -49,6 +49,9 @@ android {
         exclude 'META-INF/LICENSE.txt'
 
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 //apply plugin: 'im.fir.plugin.gradle'//必填
