@@ -38,7 +38,7 @@ public class SubscribedTagsPresenter extends XTBasePresenter<ITagFollowGuideView
         super(view);
         pageOffset = 100;
         subscribeService = new SubscribeService();
-        userId = (String) AuthUserHelper.getInstance().getUser().get("objectId");
+        userId = AuthUserHelper.getInstance().getUser() == null ? null : (String) AuthUserHelper.getInstance().getUser().get("objectId");
 
     }
 

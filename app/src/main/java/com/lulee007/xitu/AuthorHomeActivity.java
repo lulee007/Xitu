@@ -151,12 +151,15 @@ public class AuthorHomeActivity extends XTBaseActivity implements AppBarLayout.O
         List<Fragment> fragments = new ArrayList<>();
         if (!isCurrentUser)
             fragments.add(ListEntriesFragment.newInstanceForAuthor(ListEntriesFragmentPresenter.BY_USER, userId));
+
         fragments.add(ListEntriesFragment.newInstanceForAuthor(CollectionPresenter.BY_COLLECTION, userId));
         fragments.add(SubscribedTagsFragment.newInstanceForAuthor(userId));
 
         List<String> titles = new ArrayList<>();
+
         if (!isCurrentUser)
             titles.add(String.format("%d \r\n分享", author.getPostedEntriesCount()));
+
         titles.add(String.format("%d \r\n收藏", author.getCollectedEntriesCount()));
         titles.add(String.format("%d \r\n标签", author.getSubscribedTagsCount()));
         CommonFragmentPagerAdapter fragmentPagerAdapter = new CommonFragmentPagerAdapter(fragmentManager, fragments, titles);
