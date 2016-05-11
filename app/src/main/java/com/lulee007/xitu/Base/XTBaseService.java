@@ -37,13 +37,16 @@ public abstract class XTBaseService<T> {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("X-Uluru-Application-Production", BuildConfig.DEBUG ? "0" : "1");
-                request.addHeader("X-avoscloud-Application-Id", BuildConfig.AVOSCloud_App_Id);
-                request.addHeader("X-avoscloud-Session-Token", "");
+                request.addHeader("X-LC-Prod",BuildConfig.DEBUG ? "0" : "1");
+                request.addHeader("X-LC-Session","");
+                request.addHeader("X-LC-Id", BuildConfig.AVOSCloud_App_Id);
                 request.addHeader("Accept", "application/json");
-                request.addHeader("Content-Type", "application/json");
-                request.addHeader("User-Agent", "AVOS Cloud android-v3.12 SDK");
-                request.addHeader("x-avoscloud-request-sign", signRequest());
+                request.addHeader("User-Agent", "AVOS Cloud android-v3.13.8 SDK");
+                request.addHeader("X-LC-Sign", signRequest());
+                request.addHeader("X-Android-RS","1");
+                request.addHeader("Content-Type", "application/json;charset=utf-8");
+                request.addHeader("Content-Type", "application/json;charset=utf-8");
+
             }
         };
 
