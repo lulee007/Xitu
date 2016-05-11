@@ -45,7 +45,6 @@ public abstract class XTBaseService<T> {
                 request.addHeader("X-LC-Sign", signRequest());
                 request.addHeader("X-Android-RS","1");
                 request.addHeader("Content-Type", "application/json;charset=utf-8");
-                request.addHeader("Content-Type", "application/json;charset=utf-8");
 
             }
         };
